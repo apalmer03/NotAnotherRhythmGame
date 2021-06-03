@@ -66,7 +66,7 @@ public class NoteSystem : MonoBehaviour
     beats = new float[200];
     for (var i = 0; i < 200; i++)
     {
-      beats[i] = i + 3;
+      beats[i] = i + 5;
     }
 
     beatsShownInAdvance = Mathf.Abs(leftPos.x / speed) / secPerBeat;
