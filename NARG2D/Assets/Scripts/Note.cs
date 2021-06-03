@@ -34,30 +34,4 @@ public class Note : MonoBehaviour
     transform.Translate(Vector2.right * speed * Time.deltaTime);
   }
 
-  /*
-  void OnCollisionStay2D(Collision2D collision)
-  {
-      if (Input.anyKey)
-      {
-
-          if (collision.gameObject.tag == "Circle")
-          {
-              circleRenderer.material.SetColor("_Color", Color.green);
-              StartCoroutine(Waitforit());
-              //Destroy(this.gameObject);
-          }
-
-      }
-  }
-  */
-
-  // void OnCollisionEnter2D(Collision2D collision)
-  // {
-
-  //     if (collision.gameObject.tag == "Capsule")
-  //     {
-  //         Destroy(this.gameObject);
-  //     }
-  // }
-
 }

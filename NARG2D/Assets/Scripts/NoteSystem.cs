@@ -33,14 +33,14 @@ public class NoteSystem : MonoBehaviour
   public float firstBeatOffset;
 
   // keep all the position-in-beats of notes in the song
-  float[] notes;
+  float[] beats;
 
   // the index of the next note to be spawned
   int nextIndex = 0;
 
-  int beatsShownInAdvance = 0;
+  float beatsShownInAdvance = 0;
 
-  int currentBeat = 0;
+  public int currentBeat = 0;
 
   float marginOfError = 0.3f;
 
@@ -63,11 +63,13 @@ public class NoteSystem : MonoBehaviour
     dspSongTime = (float)AudioSettings.dspTime;
 
     // Initialize notes array
-    notes = new float[200];
+    beats = new float[200];
     for (var i = 0; i < 200; i++)
     {
-      notes[i] = i;
+      beats[i] = i + 3;
     }
+
+    beatsShownInAdvance = Mathf.Abs(leftPos.x / speed) / secPerBeat;
 
     // Start the music
     musicSource.Play();
@@ -80,26 +82,16 @@ public class NoteSystem : MonoBehaviour
     songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
     // determine how many beats since the song started
     songPositionInBeats = songPosition / secPerBeat;
-    // update current beat if passed
-    if (songPositionInBeats > notes[currentBeat])
-    {
-      currentBeat++;
-    }
 
-    if (nextIndex < notes.Length && notes[nextIndex] < songPositionInBeats + beatsShownInAdvance)
+    if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
     {
       SpawnNote();
       //initialize the fields of the music note
       nextIndex++;
     }
-
     if (Input.anyKeyDown)
     {
-      Debug.Log(currentBeat + "\n");
-      Debug.Log(songPositionInBeats + "\n");
-      //   Debug.Log(Mathf.Abs(songPositionInBeats - notes[currentBeat]));
-      //   Debug.Log(Mathf.Abs(songPositionInBeats - notes[currentBeat]) <= marginOfError);
-      float err = Mathf.Abs(songPositionInBeats - notes[currentBeat]);
+      float err = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
       // check if hit on beat
       if (err <= marginOfError)
       {
@@ -110,11 +102,18 @@ public class NoteSystem : MonoBehaviour
       else
       {
         GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-        //Debug.Log(notes.Length + " notes on screen\n");
-        Destroy(notes[0].gameObject);
-        Destroy(notes[1].gameObject);
-        currentBeat++;
+        if (notes.Length >= 2)
+        {
+          Destroy(notes[0].gameObject);
+          Destroy(notes[1].gameObject);
+          currentBeat++;
+        }
       }
+    }
+    // update current beat if passed
+    if (songPositionInBeats > beats[currentBeat] + marginOfError)
+    {
+      currentBeat++;
     }
   }
 
