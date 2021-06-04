@@ -799,6 +799,13 @@ MonoBehaviour:
   speed: 4
   note: {fileID: 5893137080893703562, guid: 1bc9026bb78bd754cbbccbeafd813e83, type: 3}
   capsule: {fileID: 501355758}
+  secPerBeat: 0
+  songPosition: 0
+  songPositionInBeats: 0
+  dspSongTime: 0
+  musicSource: {fileID: 0}
+  firstBeatOffset: 0
+  currentBeat: 0
 --- !u!1 &1530627089
 GameObject:
   m_ObjectHideFlags: 0
