@@ -163,14 +163,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54951520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9643069fda7f10543ae94ca57991e3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 89
-  note: {fileID: 1721403913564825607, guid: 1bc9026bb78bd754cbbccbeafd813e83, type: 3}
-  circle: {fileID: 1179049917}
+  speed: 4
+  note: {fileID: 5893137080893703562, guid: 1bc9026bb78bd754cbbccbeafd813e83, type: 3}
   capsule: {fileID: 501355758}
 --- !u!1 &501355758
 GameObject:
@@ -197,8 +197,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501355758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.81, y: -2.174, z: 12.118199}
-  m_LocalScale: {x: 0.6482002, y: 1.1955574, z: 1}
+  m_LocalPosition: {x: -0.71, y: -2.174, z: 12.118199}
+  m_LocalScale: {x: 0.11, y: 1.1955574, z: 1}
   m_Children: []
   m_Father: {fileID: 54951521}
   m_RootOrder: 1
@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 1179049919}
   - component: {fileID: 1179049918}
   - component: {fileID: 1179049920}
+  - component: {fileID: 1179049921}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Circle
@@ -760,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179049917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.82, y: -2.13, z: 12.118199}
+  m_LocalPosition: {x: -0.71, y: -2.16, z: 12.118199}
   m_LocalScale: {x: 1.0043255, y: 1.047816, z: 2.4066586}
   m_Children: []
   m_Father: {fileID: 54951521}
@@ -779,9 +780,25 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.02, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6667394
+--- !u!114 &1179049921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179049917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9643069fda7f10543ae94ca57991e3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bpm: 89
+  speed: 4
+  note: {fileID: 5893137080893703562, guid: 1bc9026bb78bd754cbbccbeafd813e83, type: 3}
+  capsule: {fileID: 501355758}
 --- !u!1 &1530627089
 GameObject:
   m_ObjectHideFlags: 0

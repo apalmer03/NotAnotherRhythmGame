@@ -4,62 +4,34 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
-    public float speed = 1f;
-    private Renderer renderer;
-    private GameObject circle;
-    private Renderer circleRenderer;
-    // Start is called before the first frame update
-    void Start()
+  public float speed;
+  private Renderer renderer;
+  private GameObject circle;
+  private Renderer circleRenderer;
+  public float livingTime = 0f;
+  public float lifeSpan;
+
+  // Start is called before the first frame update
+  void Start()
+  {
+    renderer = GetComponent<Renderer>();
+    circle = GameObject.FindGameObjectWithTag("Circle");
+    circleRenderer = circle.GetComponent<Renderer>();
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    livingTime += Time.deltaTime;
+    if (livingTime >= lifeSpan)
     {
-        renderer = GetComponent<Renderer>();
-        circle = GameObject.FindGameObjectWithTag("Circle");
-        circleRenderer = circle.GetComponent<Renderer>();
+      // Kills the game object
+      Destroy(gameObject);
+
+      // Removes this script instance from the game object
+      Destroy(this);
     }
+    transform.Translate(Vector2.right * speed * Time.deltaTime);
+  }
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        
-        if (Input.anyKey)
-        {
-            if (collision.gameObject.tag == "Circle")
-            {
-                circleRenderer.material.SetColor("_Color", Color.yellow);
-                //StartCoroutine(Waitforit());
-                Destroy(this.gameObject);
-            }
-            if (collision.gameObject.tag == "Capsule")
-            {
-                circleRenderer.material.SetColor("_Color", Color.green);
-                //StartCoroutine(Waitforit());
-                Destroy(this.gameObject);
-
-            }
-
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Circle")
-        {
-            renderer.material.SetColor("_Color", Color.red);
-        }
-        if (collision.gameObject.tag == "Ground")
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    IEnumerator Waitforit()
-    {
-        yield return new WaitForSeconds(0.5f);
-        circleRenderer.material.SetColor("_Color", Color.white);
-        Destroy(this.gameObject);
-    }
 }
