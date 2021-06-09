@@ -83,6 +83,11 @@ public class NoteSystem : MonoBehaviour
     // determine how many beats since the song started
     songPositionInBeats = songPosition / secPerBeat;
 
+    // check if music ends
+    if(!musicSource.isPlaying) {
+      Application.Quit();
+    }
+
     if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
     {
       SpawnNote();
