@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
 
     public int currHealth = 0;
     public int maxHealth = 100;
-
+    public bool isBlocking = false;
     public HealthBar healthBar;
     // Start is called before the first frame update
     void Start()
@@ -27,8 +27,12 @@ public class Health : MonoBehaviour
     public void DamagePlayer(int damage)
 
     {
-        currHealth -= damage;
-        healthBar.SetHealth(currHealth);
+        if (isBlocking == false)
+        {
+            currHealth -= damage;
+            healthBar.SetHealth(currHealth);
+        }
+        
     }
 
     public void HealPlayer(int heal)
