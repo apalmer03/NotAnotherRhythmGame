@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class NoteSystem : MonoBehaviour
 {
-    public int bpm;
-    public float speed;
-    private float beatRate;
-    public Note note;
-    private Renderer circleRenderer;
-    public GameObject capsule;
-    private Vector2 leftPos;
-    private Vector2 rightPos;
-    private bool collision = false;
+
+  public int bpm;
+  public float speed;
+  private float beatRate;
+  public Note note;
+  public Health health;
+  private Renderer circleRenderer;
+  public GameObject capsule;
+  private Vector2 leftPos;
+  private Vector2 rightPos;
+  private bool collision = false;
+
 
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -26,8 +29,10 @@ public class NoteSystem : MonoBehaviour
     // How many seconds have passed since the song started
     public float dspSongTime;
 
+
     // an AudioSource attached to this GameObject that will play the music.
     public AudioSource musicSource;
+
 
     // The offset to the first beat of the song in seconds
     public float firstBeatOffset;
@@ -46,7 +51,20 @@ public class NoteSystem : MonoBehaviour
 
     private IEnumerator coroutine;
 
+
+  // Start is called before the first frame update
+  void Start()
+  {
+    secPerBeat = 60f / bpm;
+    leftPos = new Vector2(-9f, -3f);
+    rightPos = new Vector2(9f, -3f);
+    GameObject circle = GameObject.FindGameObjectWithTag("Circle");
+    health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+    circleRenderer = circle.GetComponent<Renderer>();
+    // InvokeRepeating("SpawnNote", 0f, secPerBeat);
+
     private GameObject enemy;
+
 
 
     public object[] actions;
@@ -112,6 +130,26 @@ public class NoteSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+      float err = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
+      // check if hit on beat
+      if (err <= marginOfError)
+      {
+        coroutine = ChangeColor(0.3f);
+        health.HealPlayer(10);
+        StartCoroutine(coroutine);
+      }
+      // check if not on beat
+      else
+      {
+        GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
+        if (notes.Length >= 2)
+        {
+          Destroy(notes[0].gameObject);
+          Destroy(notes[1].gameObject);
+          currentBeat++;
+          health.DamagePlayer(15);
+
         // determine how many seconds since the song started
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         // determine how many beats since the song started
@@ -121,6 +159,7 @@ public class NoteSystem : MonoBehaviour
         if (!musicSource.isPlaying)
         {
             Application.Quit();
+
         }
 
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
