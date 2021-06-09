@@ -8,6 +8,7 @@ public class NoteSystem : MonoBehaviour
   public float speed;
   private float beatRate;
   public Note note;
+  public Health health;
   private Renderer circleRenderer;
   public GameObject capsule;
   private Vector2 leftPos;
@@ -26,7 +27,7 @@ public class NoteSystem : MonoBehaviour
   // How many seconds have passed since the song started
   public float dspSongTime;
 
-  // an AudioSource attached to this GameObject that will play the music.
+  // an AudioSource attached to this GameObject that will play the music.h
   public AudioSource musicSource;
 
   // The offset to the first beat of the song in seconds
@@ -53,6 +54,7 @@ public class NoteSystem : MonoBehaviour
     leftPos = new Vector2(-9f, -3f);
     rightPos = new Vector2(9f, -3f);
     GameObject circle = GameObject.FindGameObjectWithTag("Circle");
+    health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
     circleRenderer = circle.GetComponent<Renderer>();
     // InvokeRepeating("SpawnNote", 0f, secPerBeat);
 
@@ -101,6 +103,7 @@ public class NoteSystem : MonoBehaviour
       if (err <= marginOfError)
       {
         coroutine = ChangeColor(0.3f);
+        health.HealPlayer(10);
         StartCoroutine(coroutine);
       }
       // check if not on beat
@@ -112,6 +115,7 @@ public class NoteSystem : MonoBehaviour
           Destroy(notes[0].gameObject);
           Destroy(notes[1].gameObject);
           currentBeat++;
+          health.DamagePlayer(15);
         }
       }
     }
