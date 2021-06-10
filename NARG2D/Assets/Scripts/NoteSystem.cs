@@ -13,6 +13,7 @@ public class NoteSystem : MonoBehaviour
   private Renderer circleRenderer;
   private Vector2 leftPos;
   private Vector2 rightPos;
+    private Health playerHealth;
 
 
     // The number of seconds for each song beat
@@ -49,7 +50,6 @@ public class NoteSystem : MonoBehaviour
 
     private IEnumerator coroutine;
 
-    private GameObject enemy;
     public object[] actions;
     public GameObject gameOver;
 
@@ -63,7 +63,6 @@ public class NoteSystem : MonoBehaviour
     circleRenderer = circle.GetComponent<Renderer>();
     // InvokeRepeating("SpawnNote", 0f, secPerBeat);
 
-        enemy = GameObject.Find("enemy");
 
         // Load the AudioSource attached to the Conductor GameObject
         musicSource = GetComponent<AudioSource>();
@@ -117,6 +116,7 @@ public class NoteSystem : MonoBehaviour
 
         beatsShownInAdvance = Mathf.Abs(leftPos.x / speed) / secPerBeat;
 
+        playerHealth = GameObject.Find("player").GetComponent<Health>();
         // Start the music
         musicSource.Play();
     }
@@ -166,6 +166,8 @@ public class NoteSystem : MonoBehaviour
                     Destroy(notes[0].gameObject);
                     Destroy(notes[1].gameObject);
                     currentBeat++;
+                    playerHealth.DamagePlayer(10);
+                    Debug.Log("off-beat penalty\n");
                 }
             }
         }
