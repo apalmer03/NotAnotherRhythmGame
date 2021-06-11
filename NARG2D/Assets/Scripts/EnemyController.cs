@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     private float jumpVelocity = 25f;
     private Vector3 enemyStartPosition;
     private Color enemyColor = new Color32(4, 160, 248, 255);
+    private GameObject player;
     private Health playerHealth;
     private Health enemyHealth;
     public GameObject levelComplete;
@@ -25,16 +26,16 @@ public class EnemyController : MonoBehaviour
         enemyStartPosition = new Vector3((float)4, 0, (float)0);
         rb.transform.position = enemyStartPosition;
         enemyRenderer.transform.position = enemyStartPosition;
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyHealth.currHealth == 0)
+        if (enemyHealth.currHealth <= 0)
         {
-            Debug.Log("level complete\n");
             Time.timeScale = 0;
             levelComplete.SetActive(true);
         }
@@ -118,7 +119,8 @@ public class EnemyController : MonoBehaviour
     }
     IEnumerator Attack()
     {
-        playerHealth.DamagePlayer(5);
+        int level = player.GetComponent<MainCharacterController>().GetLevel();
+        playerHealth.DamagePlayer(10 - level*2);
         rb.transform.position = new Vector3((float)-3.5, 0, 0);
 
         enemyRenderer.material.SetColor("_Color", Color.red);

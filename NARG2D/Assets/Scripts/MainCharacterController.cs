@@ -12,11 +12,16 @@ public class MainCharacterController : MonoBehaviour
     
     private float jumpVelocity = 25f;
     private float moveVelocity = 3f;
-    private Color heroColor = new Color32(4, 160, 248, 255);
+    private Color heroColor;
+    private Color lv0Color = new Color32(105, 152, 255, 255);
+    private Color lv1Color = new Color32(24, 160, 238, 255);
+    private Color lv2Color = new Color32(0, 119, 188, 255);
+    private Color lv3Color = new Color32(0, 40, 126, 255);
     private Vector3 heroStartPosition;
     private Health enemyHealth;
     private Health playerHealth;
     public GameObject gameOver;
+    private int level = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +37,14 @@ public class MainCharacterController : MonoBehaviour
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        heroColor = lv0Color;
+        selfRenderer.material.SetColor("_Color", heroColor);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (playerHealth.currHealth == 0)
         {
             Time.timeScale = 0;
@@ -66,6 +74,33 @@ public class MainCharacterController : MonoBehaviour
         }
     }
 
+    public void SetLevel(int newLvNum)
+    {
+        level = newLvNum;
+        if (level == 0)
+        {
+            heroColor = lv0Color;
+        }
+        else if (level == 1)
+        {
+            heroColor = lv1Color;
+        }
+        else if (level == 2)
+        {
+            heroColor = lv2Color;
+        }
+        else if (level == 3)
+        {
+            heroColor = lv3Color;
+        }
+        selfRenderer.material.SetColor("_Color", heroColor);
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -87,7 +122,7 @@ public class MainCharacterController : MonoBehaviour
         rigidbody.transform.position = new Vector3(3, 0, 0);
         enemyRenderer.material.SetColor("_Color", Color.black);
         selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5);
+        enemyHealth.DamagePlayer(5 + level*2);
         yield return new WaitForSeconds(0.2f);
         enemyRenderer.material.SetColor("_Color", Color.red);
         selfRenderer.material.SetColor("_Color", heroColor);
@@ -99,7 +134,7 @@ public class MainCharacterController : MonoBehaviour
         rigidbody.transform.position = new Vector3(3, 3, 0);
         enemyRenderer.material.SetColor("_Color", Color.black);
         selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5);
+        enemyHealth.DamagePlayer(5 + level*2);
         yield return new WaitForSeconds(0.2f);
         enemyRenderer.material.SetColor("_Color", Color.red);
         selfRenderer.material.SetColor("_Color", heroColor);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NoteSystem : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class NoteSystem : MonoBehaviour
   public float speed;
   private float beatRate;
   public Note note;
-    public ActionNote actionNote;
+  public ActionNote actionNote;
   private Renderer circleRenderer;
   private Vector2 leftPos;
   private Vector2 rightPos;
+    private GameObject player;
     private Health playerHealth;
+    public Text comboText;
+    private int comboNum = 0;
 
 
     // The number of seconds for each song beat
@@ -116,7 +120,8 @@ public class NoteSystem : MonoBehaviour
 
         beatsShownInAdvance = Mathf.Abs(leftPos.x / speed) / secPerBeat;
 
-        playerHealth = GameObject.Find("player").GetComponent<Health>();
+        player = GameObject.Find("player");
+        playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
     }
@@ -154,12 +159,21 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
+                comboNum++;
+                comboText.text = "Combo x " + comboNum.ToString();
+                if (comboNum == 2)
+                {
+                    comboText.gameObject.SetActive(true);
+                }
                 coroutine = ChangeColor(0.3f);
                 StartCoroutine(coroutine);
             }
             // check if not on beat
             else
             {
+                comboNum = 0;
+                comboText.gameObject.SetActive(false);
+                player.GetComponent<MainCharacterController>().SetLevel(0);
                 GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
                 if (notes.Length >= 2)
                 {
@@ -171,11 +185,29 @@ public class NoteSystem : MonoBehaviour
                 }
             }
         }
+
+        if (comboNum == 30 && player.GetComponent<MainCharacterController>().GetLevel() != 3)
+        {
+            player.GetComponent<MainCharacterController>().SetLevel(3);
+            Debug.Log("level up: 3");
+        }
+        else if (comboNum == 15 && player.GetComponent<MainCharacterController>().GetLevel() != 2)
+        {
+            player.GetComponent<MainCharacterController>().SetLevel(2);
+            Debug.Log("level up: 2");
+        }
+        else if (comboNum == 5 && player.GetComponent<MainCharacterController>().GetLevel() != 1)
+        {
+            player.GetComponent<MainCharacterController>().SetLevel(1);
+            Debug.Log("level up: 1");
+        }
+
         // update current beat if passed
         if (songPositionInBeats > beats[currentBeat] + marginOfError)
         {
             currentBeat++;
         }
+
     }
 
     private void SpawnNote()
