@@ -71,3 +71,4 @@ NARG2D/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 NARG2D/[Aa]ssets/[Ss]treamingAssets/aa.meta
 NARG2D/[Aa]ssets/[Ss]treamingAssets/aa/*
 NARG2D/Logs/AssetImportWorker0.log
+*.log
