@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 547323012}
   - component: {fileID: 547323011}
   m_Layer: 5
-  m_Name: Options Text
+  m_Name: Controls Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: OPTIONS
+  m_Text: CONTROLS
 --- !u!222 &547323012
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 647325936}
   - component: {fileID: 647325935}
   m_Layer: 5
-  m_Name: Options Menu
+  m_Name: Controls Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,7 +331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 249.3, y: 0.1}
+  m_AnchoredPosition: {x: 0.000015259, y: 0.1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647325935
@@ -454,7 +454,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: OPTIONS
+  m_Text: CONTROLS
 --- !u!222 &672957648
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 1241404190}
   - component: {fileID: 1241404189}
   m_Layer: 5
-  m_Name: Options Button
+  m_Name: Controls Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -821,7 +821,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.214981, y: -31.09272}
+  m_AnchoredPosition: {x: 1.987, y: -49.9}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1372719513
@@ -1449,7 +1449,7 @@ GameObject:
   - component: {fileID: 1957068067}
   - component: {fileID: 1957068066}
   m_Layer: 5
-  m_Name: TBD Text
+  m_Name: Controls Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1496,7 +1496,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 35
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -1507,9 +1507,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Options to be
+  m_Text: 'Jump - W
 
-    added later ;)'
+    Block - S
+
+    Light Attack - J
+
+    Heavy Attack - K'
 --- !u!222 &1957068067
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1596,7 +1600,7 @@ GameObject:
   - component: {fileID: 2102142849}
   - component: {fileID: 2102142848}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Back Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
