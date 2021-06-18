@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class MainCharacterController : MonoBehaviour
 {
@@ -16,7 +20,11 @@ public class MainCharacterController : MonoBehaviour
     private Vector3 heroStartPosition;
     private Health enemyHealth;
     private Health playerHealth;
+    private List<String> specialAttack = new List<String>();
+    private SpecialAttack specialLookup;
     public GameObject gameOver;
+    private int specialMax = 3;
+    private string specialMove;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +39,14 @@ public class MainCharacterController : MonoBehaviour
         selfRenderer.transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
+        specialLookup = GetComponent<SpecialAttack>();
         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
     // Update is called once per frame
     void Update()
     {
+        StringBuilder attack = new StringBuilder();
         if (playerHealth.currHealth == 0)
         {
             Time.timeScale = 0;
@@ -46,23 +56,60 @@ public class MainCharacterController : MonoBehaviour
         if (Input.GetKeyDown("space") && isGrounded)
         {
             rigidbody.velocity = Vector2.up * jumpVelocity;
+            attack.Append(" ");
         }
 
         // Attack (Dash Right)
         if (Input.GetKeyDown(KeyCode.J))
         {
             StartCoroutine(Attack());
+            attack.Append("J");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
             StartCoroutine(Uppercut());
+            attack.Append("K");
         }
 
         // Block
         if (Input.GetKeyDown(KeyCode.S))
         {
             StartCoroutine(Block());
+            attack.Append("S");
+        }
+
+        if (attack.Length != 0)
+        {
+            
+            specialAttack.Add(attack.ToString());
+            Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
+            attack.Clear();
+        }
+       
+        specialMove = specialLookup.CheckSpecial(specialAttack);
+        if (specialMove != null)
+        {
+            print(specialMove);
+            switch(specialMove)
+            {
+                case "Special1":
+                    StartCoroutine(Special1());
+                    Debug.Log("Special1");
+                    break;
+                case "Special2":
+                    StartCoroutine(Special2());
+                    Debug.Log("Special2");
+                    break;
+                case "Special3":
+                    StartCoroutine(Special3());
+                    Debug.Log("Special3");
+                    break;
+            }
+        }
+        if (specialAttack.Count == specialMax)
+        {
+            specialAttack.RemoveAt(0);
         }
     }
 
@@ -103,6 +150,41 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         enemyRenderer.material.SetColor("_Color", Color.red);
         selfRenderer.material.SetColor("_Color", heroColor);
+        rigidbody.transform.position = heroStartPosition;
+    }
+    
+    IEnumerator Special1()
+    {
+        rigidbody.transform.position = new Vector3(3, 4, 0);
+        enemyRenderer.material.SetColor("_Color", Color.black);
+        selfRenderer.material.SetColor("_Color", Color.red);
+        enemyHealth.DamagePlayer(10);
+        yield return new WaitForSeconds(0.2f);
+        enemyRenderer.material.SetColor("_Color", Color.red);
+        selfRenderer.material.SetColor("_Color", heroColor);
+        rigidbody.transform.position = heroStartPosition;
+    }
+    
+    IEnumerator Special2()
+    {
+        rigidbody.transform.position = new Vector3(3, 0, 0);
+        enemyRenderer.material.SetColor("_Color", Color.black);
+        selfRenderer.material.SetColor("_Color", Color.blue);
+        enemyHealth.DamagePlayer(12);
+        yield return new WaitForSeconds(0.2f);
+        enemyRenderer.material.SetColor("_Color", Color.red);
+        selfRenderer.material.SetColor("_Color", heroColor);
+        rigidbody.transform.position = heroStartPosition;
+    }
+    IEnumerator Special3()
+    {
+        rigidbody.transform.position = new Vector3(3, 0, 0);
+        enemyRenderer.material.SetColor("_Color", Color.black);
+        selfRenderer.material.SetColor("_Color", Color.magenta);
+        enemyHealth.DamagePlayer(15);
+        yield return new WaitForSeconds(0.2f);
+        enemyRenderer.material.SetColor("_Color", Color.red);
+        selfRenderer.material.SetColor("_Color", Color.magenta);
         rigidbody.transform.position = heroStartPosition;
     }
 
