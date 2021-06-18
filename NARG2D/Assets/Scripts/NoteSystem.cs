@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class NoteSystem : MonoBehaviour
 {
 
-  public int bpm;
-  public float speed;
-  private float beatRate;
-  public Note note;
-  public ActionNote actionNote;
-  private Renderer circleRenderer;
-  private Vector2 leftPos;
-  private Vector2 rightPos;
+    public int bpm;
+    public float speed;
+    private float beatRate;
+    public Note note;
+    public ActionNote actionNote;
+    private Renderer circleRenderer;
+    // private Vector2 leftPos;
+    // private Vector2 rightPos;
+    private Vector2 noteRingPos;
     private GameObject player;
     private Health playerHealth;
     public Text comboText;
     private int comboNum = 0;
-
-
+    public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
 
@@ -59,14 +59,11 @@ public class NoteSystem : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-  {
-    secPerBeat = 60f / bpm;
-    leftPos = new Vector2(-9f, -3f);
-    rightPos = new Vector2(9f, -3f);
-    GameObject circle = GameObject.FindGameObjectWithTag("Circle");
-    circleRenderer = circle.GetComponent<Renderer>();
-    // InvokeRepeating("SpawnNote", 0f, secPerBeat);
-
+    {
+        secPerBeat = 60f / bpm;
+        noteRingPos = new Vector2(0f, 0f);
+        GameObject circle = GameObject.FindGameObjectWithTag("Circle");
+        circleRenderer = circle.GetComponent<Renderer>();
 
         // Load the AudioSource attached to the Conductor GameObject
         musicSource = GetComponent<AudioSource>();
@@ -107,8 +104,8 @@ public class NoteSystem : MonoBehaviour
             //{
             //    actions[i] = Note.BeatAction.Block;
             //}
-            beats[i] = i + 5;
-            if (i%4 == 0 && i != 0)
+            beats[i] = i + 3;
+            if (i % 4 == 0 && i != 0)
             {
                 actions[i] = ActionNote.Action.Attack;
             }
@@ -118,7 +115,7 @@ public class NoteSystem : MonoBehaviour
             }
         }
 
-        beatsShownInAdvance = Mathf.Abs(leftPos.x / speed) / secPerBeat;
+        beatsShownInAdvance = 1.0f / secPerBeat;
 
         player = GameObject.Find("player");
         playerHealth = player.GetComponent<Health>();
@@ -138,8 +135,8 @@ public class NoteSystem : MonoBehaviour
         // check if music ends
         if (!musicSource.isPlaying)
         {
-                Time.timeScale = 0;
-                gameOver.SetActive(true);
+            Time.timeScale = 0;
+            gameOver.SetActive(true);
         }
 
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
@@ -149,7 +146,7 @@ public class NoteSystem : MonoBehaviour
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
             }
-            //enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
+            // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
             nextIndex++;
         }
@@ -159,6 +156,7 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
+                missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
                 if (comboNum == 2)
@@ -171,6 +169,8 @@ public class NoteSystem : MonoBehaviour
             // check if not on beat
             else
             {
+                IEnumerator showMissText = showMiss(0.3f);
+                StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
                 player.GetComponent<MainCharacterController>().SetLevel(0);
@@ -212,24 +212,20 @@ public class NoteSystem : MonoBehaviour
 
     private void SpawnNote()
     {
-        Note leftNote = Instantiate(note, leftPos, Quaternion.identity);
-        leftNote.speed = speed;
-        leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
-        Note rightNote = Instantiate(note, rightPos, Quaternion.identity);
-        rightNote.speed = -speed;
-        rightNote.lifeSpan = Mathf.Abs(rightPos.x / speed);
+        Note noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
+        noteRing.duration = 1.0f;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
     {
-        ActionNote leftNote = Instantiate(actionNote, leftPos, Quaternion.identity);
-        leftNote.speed = speed;
-        leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
-        leftNote.action = action;
-        ActionNote rightNote = Instantiate(actionNote, rightPos, Quaternion.identity);
-        rightNote.speed = -speed;
-        rightNote.lifeSpan = Mathf.Abs(rightPos.x / speed);
-        rightNote.action = action;
+        // ActionNote leftNote = Instantiate(actionNote, leftPos, Quaternion.identity);
+        // leftNote.speed = speed;
+        // leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
+        // leftNote.action = action;
+        // ActionNote rightNote = Instantiate(actionNote, rightPos, Quaternion.identity);
+        // rightNote.speed = -speed;
+        // rightNote.lifeSpan = Mathf.Abs(rightPos.x / speed);
+        // rightNote.action = action;
     }
 
     private IEnumerator ChangeColor(float waitTime)
@@ -237,5 +233,12 @@ public class NoteSystem : MonoBehaviour
         circleRenderer.material.SetColor("_Color", Color.green);
         yield return new WaitForSeconds(waitTime);
         circleRenderer.material.SetColor("_Color", Color.white);
+    }
+
+    private IEnumerator showMiss(float waitTime)
+    {
+        missText.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        missText.SetActive(false);
     }
 }
