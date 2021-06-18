@@ -20,7 +20,6 @@ public class NoteSystem : MonoBehaviour
     public Text comboText;
     private int comboNum = 0;
     public GameObject missText;
-    private bool missShown;
     // The number of seconds for each song beat
     public float secPerBeat;
 
@@ -65,9 +64,6 @@ public class NoteSystem : MonoBehaviour
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
         circleRenderer = circle.GetComponent<Renderer>();
-        missShown = false;
-        // InvokeRepeating("SpawnNote", 0f, secPerBeat);
-
 
         // Load the AudioSource attached to the Conductor GameObject
         musicSource = GetComponent<AudioSource>();
@@ -108,7 +104,7 @@ public class NoteSystem : MonoBehaviour
             //{
             //    actions[i] = Note.BeatAction.Block;
             //}
-            beats[i] = i + 5;
+            beats[i] = i + 3;
             if (i % 4 == 0 && i != 0)
             {
                 actions[i] = ActionNote.Action.Attack;
@@ -160,8 +156,7 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
-                missText.active = false;
-                missShown = false;
+                missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
                 if (comboNum == 2)
@@ -242,10 +237,8 @@ public class NoteSystem : MonoBehaviour
 
     private IEnumerator showMiss(float waitTime)
     {
-        missText.active = true;
-        missShown = true;
+        missText.SetActive(true);
         yield return new WaitForSeconds(waitTime);
-        missText.active = false;
-        missShown = false;
+        missText.SetActive(false);
     }
 }
