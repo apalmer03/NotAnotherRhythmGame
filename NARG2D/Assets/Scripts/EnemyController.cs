@@ -5,30 +5,27 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    private Renderer enemyRenderer;
 
     private Rigidbody2D rb;
     private bool isGrounded = true;
     private float jumpVelocity = 25f;
     private Vector3 enemyStartPosition;
-    private Color enemyColor = new Color32(4, 160, 248, 255);
     private GameObject player;
     private Health playerHealth;
     private Health enemyHealth;
     public GameObject levelComplete;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        enemyRenderer = GetComponent<Renderer>();
-        enemyRenderer.material.SetColor("_Color", enemyColor);
-        enemyStartPosition = new Vector3((float)4, 0, (float)0);
-        rb.transform.position = enemyStartPosition;
-        enemyRenderer.transform.position = enemyStartPosition;
+        enemyStartPosition = new Vector3(4f, -2.55f, 0);
+        transform.position = enemyStartPosition;
+        //enemyRenderer.transform.position = enemyStartPosition;
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,112 +37,25 @@ public class EnemyController : MonoBehaviour
             levelComplete.SetActive(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad0) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            isGrounded = false;
-            rb.velocity = Vector2.up * jumpVelocity;
+            anim.SetTrigger("Charge");
         }
-
-        if (Input.GetKey(KeyCode.KeypadPeriod))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             StartCoroutine(Attack());
         }
-        if (Input.GetKey(KeyCode.KeypadEnter))
-        {
-            StartCoroutine(Uppercut());
-        }
-
-        // Block
-        if (Input.GetKey(KeyCode.Keypad3))
-        {
-            StartCoroutine(Block());
-        }
 
     }
 
-    public void doAction(ActionNote.Action action)
-    {
 
-        if (action == ActionNote.Action.Jump)
-        {
-            Debug.Log("Enemy Jump");
-            StartCoroutine(Jump());
-            //enemyRenderer.material.SetColor("_Color", Color.cyan);
-
-        }
-        if (action == ActionNote.Action.Attack)
-        {
-            Debug.Log("Enemy Attack");
-            StartCoroutine(Attack());
-            //enemyRenderer.material.SetColor("_Color", Color.red);
-        }
-        if (action == ActionNote.Action.UpperCut)
-        {
-            Debug.Log("Enemy UpperCut");
-            StartCoroutine(Uppercut());
-            //enemyRenderer.material.SetColor("_Color", Color.red);
-        }
-        if (action == ActionNote.Action.Block)
-        {
-            Debug.Log("Enemy Block");
-            StartCoroutine(Block());
-            //enemyRenderer.material.SetColor("_Color", Color.red);
-        }
-
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
-    IEnumerator Jump()
-    {
-        isGrounded = false;
-        enemyRenderer.material.SetColor("_Color", Color.magenta);
-
-        rb.velocity = Vector2.up * jumpVelocity;
-        yield return new WaitUntil(() => isGrounded == true);
-        enemyRenderer.material.SetColor("_Color", enemyColor);
-    }
     IEnumerator Attack()
     {
-        int level = player.GetComponent<MainCharacterController>().GetLevel();
-        playerHealth.DamagePlayer(10 - level*2);
-        rb.transform.position = new Vector3((float)-3.5, 0, 0);
-
-        enemyRenderer.material.SetColor("_Color", Color.red);
-        yield return new WaitForSeconds(0.25f);
-
-        enemyRenderer.material.SetColor("_Color", enemyColor);
-        rb.transform.position = enemyStartPosition;
-    }
-
-    IEnumerator Uppercut()
-    {
-        rb.transform.position = new Vector3((float)-3.5, 3, 0);
-        enemyRenderer.material.SetColor("_Color", Color.yellow);
-
-        yield return new WaitForSeconds(0.25f);
-        enemyRenderer.material.SetColor("_Color", enemyColor);
-
-        rb.transform.position = enemyStartPosition;
-    }
-
-    IEnumerator Block()
-    {
-        enemyRenderer.material.SetColor("_Color", Color.green);
-        yield return new WaitForSeconds(0.25f);
-        enemyRenderer.material.SetColor("_Color", enemyColor);
+        anim.SetTrigger("Attack");
+        transform.position = new Vector3(0, -2.55f, 0);
+        playerHealth.DamagePlayer(10);
+        yield return new WaitForSeconds(0.5f);
+        transform.position = enemyStartPosition;
     }
 
 }

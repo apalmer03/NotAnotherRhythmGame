@@ -12,33 +12,35 @@ public class MainCharacterController : MonoBehaviour
     
     private float jumpVelocity = 25f;
     private float moveVelocity = 3f;
-    private Color heroColor;
-    private Color lv0Color = new Color32(105, 152, 255, 255);
-    private Color lv1Color = new Color32(24, 160, 238, 255);
-    private Color lv2Color = new Color32(0, 119, 188, 255);
-    private Color lv3Color = new Color32(0, 40, 126, 255);
+
     private Vector3 heroStartPosition;
     private Health enemyHealth;
     private Health playerHealth;
     public GameObject gameOver;
     private int level = 0;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        /* prototype
         RenderSettings.ambientLight = Color.white;
-
-        rigidbody = GetComponent<Rigidbody2D>();
-        enemyRenderer = enemy.GetComponent<Renderer>();
         selfRenderer = GetComponent<Renderer>();
-        heroStartPosition = new Vector3((float)-4.0000, 0, 0);
+        enemyRenderer = enemy.GetComponent<Renderer>();
         rigidbody.transform.position = heroStartPosition;
-        selfRenderer.transform.position = heroStartPosition;
-        enemyHealth = enemy.GetComponent<Health>();
-        playerHealth = GetComponent<Health>();
-        Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         heroColor = lv0Color;
         selfRenderer.material.SetColor("_Color", heroColor);
+        */
+
+
+        heroStartPosition = new Vector3((float)-4.0000, -2.55f, 0);
+        transform.position = heroStartPosition;
+        enemyHealth = enemy.GetComponent<Health>();
+        playerHealth = GetComponent<Health>();
+        anim = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -54,6 +56,7 @@ public class MainCharacterController : MonoBehaviour
         if (Input.GetKeyDown("space") && isGrounded)
         {
             rigidbody.velocity = Vector2.up * jumpVelocity;
+            anim.SetTrigger("Jump");
         }
 
         // Attack (Dash Right)
@@ -64,7 +67,7 @@ public class MainCharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            StartCoroutine(Uppercut());
+            //StartCoroutine(Uppercut());
         }
 
         // Block
@@ -74,32 +77,6 @@ public class MainCharacterController : MonoBehaviour
         }
     }
 
-    public void SetLevel(int newLvNum)
-    {
-        level = newLvNum;
-        if (level == 0)
-        {
-            heroColor = lv0Color;
-        }
-        else if (level == 1)
-        {
-            heroColor = lv1Color;
-        }
-        else if (level == 2)
-        {
-            heroColor = lv2Color;
-        }
-        else if (level == 3)
-        {
-            heroColor = lv3Color;
-        }
-        selfRenderer.material.SetColor("_Color", heroColor);
-    }
-
-    public int GetLevel()
-    {
-        return level;
-    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -119,16 +96,15 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Attack()
     {
-        rigidbody.transform.position = new Vector3(3, 0, 0);
-        enemyRenderer.material.SetColor("_Color", Color.black);
-        selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5 + level*2);
-        yield return new WaitForSeconds(0.2f);
-        enemyRenderer.material.SetColor("_Color", Color.red);
-        selfRenderer.material.SetColor("_Color", heroColor);
-        rigidbody.transform.position = heroStartPosition;
+        anim.SetTrigger("Attack");
+        transform.position = new Vector3(0, -2.55f, 0);
+        enemyHealth.DamagePlayer(5);
+        yield return new WaitForSeconds(0.5f);
+        transform.position = heroStartPosition;
+
     }
 
+    /*
     IEnumerator Uppercut()
     {
         rigidbody.transform.position = new Vector3(3, 3, 0);
@@ -140,13 +116,12 @@ public class MainCharacterController : MonoBehaviour
         selfRenderer.material.SetColor("_Color", heroColor);
         rigidbody.transform.position = heroStartPosition;
     }
-
+    */
     IEnumerator Block()
     {
-        selfRenderer.material.SetColor("_Color", Color.green);
+        anim.SetTrigger("Sit");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
-        selfRenderer.material.SetColor("_Color", heroColor);
         playerHealth.isBlocking = false;
     }
 
