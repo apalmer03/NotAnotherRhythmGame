@@ -52,7 +52,7 @@ public class ActionNote : MonoBehaviour
         livingTime += Time.deltaTime;
         if (livingTime >= lifeSpan)
         {
-            enemy.GetComponent<EnemyController>().doAction(action);
+            //enemy.GetComponent<EnemyController>().doAction(action);
             // Kills the game object
             Destroy(gameObject);
 

@@ -117,7 +117,7 @@ public class NoteSystem : MonoBehaviour
 
         beatsShownInAdvance = 1.0f / secPerBeat;
 
-        player = GameObject.Find("player");
+        player = GameObject.Find("Player");
         playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
@@ -173,7 +173,6 @@ public class NoteSystem : MonoBehaviour
                 StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
-                player.GetComponent<MainCharacterController>().SetLevel(0);
                 GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
                 if (notes.Length >= 2)
                 {
@@ -186,21 +185,6 @@ public class NoteSystem : MonoBehaviour
             }
         }
 
-        if (comboNum == 30 && player.GetComponent<MainCharacterController>().GetLevel() != 3)
-        {
-            player.GetComponent<MainCharacterController>().SetLevel(3);
-            Debug.Log("level up: 3");
-        }
-        else if (comboNum == 15 && player.GetComponent<MainCharacterController>().GetLevel() != 2)
-        {
-            player.GetComponent<MainCharacterController>().SetLevel(2);
-            Debug.Log("level up: 2");
-        }
-        else if (comboNum == 5 && player.GetComponent<MainCharacterController>().GetLevel() != 1)
-        {
-            player.GetComponent<MainCharacterController>().SetLevel(1);
-            Debug.Log("level up: 1");
-        }
 
         // update current beat if passed
         if (songPositionInBeats > beats[currentBeat] + marginOfError)
