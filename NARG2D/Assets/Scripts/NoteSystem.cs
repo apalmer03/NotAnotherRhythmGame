@@ -104,7 +104,7 @@ public class NoteSystem : MonoBehaviour
             //{
             //    actions[i] = Note.BeatAction.Block;
             //}
-            beats[i] = i + 3;
+            beats[i] = i + 5;
             if (i % 4 == 0 && i != 0)
             {
                 actions[i] = ActionNote.Action.Attack;
@@ -163,21 +163,22 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
-                coroutine = ChangeColor(0.3f);
+                coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
             // check if not on beat
             else
             {
+                coroutine = ChangeColor(0.3f, Color.red);
+                StartCoroutine(coroutine);
                 IEnumerator showMissText = showMiss(0.3f);
                 StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
                 GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-                if (notes.Length >= 2)
+                if (notes.Length >= 1)
                 {
                     Destroy(notes[0].gameObject);
-                    Destroy(notes[1].gameObject);
                     currentBeat++;
                     playerHealth.DamagePlayer(10);
                     Debug.Log("off-beat penalty\n");
@@ -212,9 +213,9 @@ public class NoteSystem : MonoBehaviour
         // rightNote.action = action;
     }
 
-    private IEnumerator ChangeColor(float waitTime)
+    private IEnumerator ChangeColor(float waitTime, Color col)
     {
-        circleRenderer.material.SetColor("_Color", Color.green);
+        circleRenderer.material.SetColor("_Color", col);
         yield return new WaitForSeconds(waitTime);
         circleRenderer.material.SetColor("_Color", Color.white);
     }
