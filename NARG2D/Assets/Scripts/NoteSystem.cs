@@ -72,9 +72,9 @@ public class NoteSystem : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
 
         // Initialize notes array
-        beats = new float[200];
-        actions = new object[200];
-        for (var i = 0; i < 200; i++)
+        beats = new float[265];
+        actions = new object[265];
+        for (var i = 0; i < 265; i++)
         {
 
             //float[] beatpattern = { 0.0f, 1.0f, 2.5f, 3.0f, 3.5f };
