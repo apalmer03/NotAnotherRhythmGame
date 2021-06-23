@@ -17,14 +17,14 @@ public class CountdownController : MonoBehaviour
         while (countdownTime > 0)
         {
             countdownDisplay.text = displayArr[displayIndex].ToString();
-            yield return new WaitForSeconds(secPerBeat * 4.5f);
+            yield return new WaitForSeconds(secPerBeat * 5.0f);
             displayIndex++;
             countdownTime--;
         }
 
         countdownDisplay.text = "GO!";
 
-        yield return new WaitForSeconds(2.0f * secPerBeat);
+        yield return new WaitForSeconds(secPerBeat);
 
         circle.gameObject.SetActive(true);
 

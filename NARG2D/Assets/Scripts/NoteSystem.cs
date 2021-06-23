@@ -115,7 +115,8 @@ public class NoteSystem : MonoBehaviour
         }
 
         beatsShownInAdvance = 1.0f / secPerBeat;
-
+        currentBeat = 13;
+        nextIndex = 14;
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<Health>();
         // Start the music
