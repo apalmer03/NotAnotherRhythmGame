@@ -16,6 +16,7 @@ public class MainCharacterController : MonoBehaviour
     private Vector3 heroStartPosition;
     private Health enemyHealth;
     private Health playerHealth;
+    private Ultimatae playerUltimate;
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
@@ -38,6 +39,7 @@ public class MainCharacterController : MonoBehaviour
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
+        playarUltimate = GetComponent<Ultimate>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -99,6 +101,7 @@ public class MainCharacterController : MonoBehaviour
         anim.SetTrigger("Attack");
         transform.position = new Vector3(0, -2.55f, 0);
         enemyHealth.DamagePlayer(5);
+        playerUltimate.fillBar();
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
 
