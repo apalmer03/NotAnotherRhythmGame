@@ -16,6 +16,7 @@ public class NoteSystem : MonoBehaviour
     // private Vector2 rightPos;
     private Vector2 noteRingPos;
     private GameObject player;
+    private GameObject enemy;
     private Health playerHealth;
     public Text comboText;
     private int comboNum = 0;
@@ -47,7 +48,7 @@ public class NoteSystem : MonoBehaviour
     int nextIndex = 0;
 
     float beatsShownInAdvance = 0;
-
+    float songLength = float.MaxValue;
     public int currentBeat = 0;
 
     float marginOfError = 0.3f;
@@ -60,6 +61,7 @@ public class NoteSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("BPM is:" + bpm);
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
@@ -70,7 +72,7 @@ public class NoteSystem : MonoBehaviour
 
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
-
+        songLength = (float)musicSource.clip.length;
         // Initialize notes array
         beats = new float[265];
         actions = new object[265];
@@ -103,8 +105,8 @@ public class NoteSystem : MonoBehaviour
             //{
             //    actions[i] = Note.BeatAction.Block;
             //}
-            beats[i] = i + 5;
-            if (i % 4 == 0 && i != 0)
+            beats[i] = i;
+            if (i % 8 == 0 && i != 0)
             {
                 actions[i] = ActionNote.Action.Attack;
             }
@@ -112,12 +114,15 @@ public class NoteSystem : MonoBehaviour
             {
                 actions[i] = ActionNote.Action.Idle;
             }
+
+
         }
 
         beatsShownInAdvance = 1.0f / secPerBeat;
         currentBeat = 13;
         nextIndex = 14;
         player = GameObject.Find("Player");
+        enemy = GameObject.Find("Enemy");
         playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
@@ -131,7 +136,7 @@ public class NoteSystem : MonoBehaviour
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         // determine how many beats since the song started
         songPositionInBeats = songPosition / secPerBeat;
-
+        
         // check if music ends
         if (songPosition >= musicSource.clip.length)
         {
@@ -141,10 +146,12 @@ public class NoteSystem : MonoBehaviour
 
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
         {
+            GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
             SpawnNote();
             if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle)
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
+                Debug.Log(string.Format("Execute at song(beat) number {0}",songPositionInBeats));
             }
             // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
@@ -203,6 +210,7 @@ public class NoteSystem : MonoBehaviour
 
     private void SpawnActionNote(ActionNote.Action action)
     {
+        enemy.GetComponent<EnemyController>().doAction((ActionNote.Action)actions[nextIndex]);
         // ActionNote leftNote = Instantiate(actionNote, leftPos, Quaternion.identity);
         // leftNote.speed = speed;
         // leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
