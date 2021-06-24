@@ -74,11 +74,9 @@ public class NoteSystem : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
         songLength = (float)musicSource.clip.length;
         // Initialize notes array
-
-        beats = new float[200];
-        actions = new object[200];
-
-        for (var i = 0; i < 200; i++)
+        beats = new float[265];
+        actions = new object[265];
+        for (var i = 0; i < 265; i++)
         {
 
             //float[] beatpattern = { 0.0f, 1.0f, 2.5f, 3.0f, 3.5f };
@@ -121,25 +119,26 @@ public class NoteSystem : MonoBehaviour
         }
 
         beatsShownInAdvance = 1.0f / secPerBeat;
-
+        currentBeat = 13;
+        nextIndex = 14;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
         // determine how many seconds since the song started
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         // determine how many beats since the song started
         songPositionInBeats = songPosition / secPerBeat;
         
         // check if music ends
-        if (!musicSource.isPlaying)
+        if (songPosition >= musicSource.clip.length)
         {
             Time.timeScale = 0;
             gameOver.SetActive(true);
