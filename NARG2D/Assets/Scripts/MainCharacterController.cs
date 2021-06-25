@@ -9,7 +9,7 @@ public class MainCharacterController : MonoBehaviour
     private Renderer selfRenderer;
     private Rigidbody2D rigidbody;
     private bool isGrounded = true;
-    
+
     private float jumpVelocity = 25f;
     private float moveVelocity = 3f;
 
@@ -41,7 +41,7 @@ public class MainCharacterController : MonoBehaviour
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
-
+        gameObject.GetComponent<MainCharacterController>().enabled = false;
     }
 
     // Update is called once per frame
