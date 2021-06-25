@@ -16,10 +16,12 @@ public class MainCharacterController : MonoBehaviour
     private Vector3 heroStartPosition;
     private Health enemyHealth;
     private Health playerHealth;
-    private Ultimatae playerUltimate;
+    private Ultimate playerUltimate;
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
+    public GameObject multi;
+    private NoteSystem noteSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -39,16 +41,18 @@ public class MainCharacterController : MonoBehaviour
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
-        playarUltimate = GetComponent<Ultimate>();
+        playerUltimate = GetComponent<Ultimate>();
+        //noteSystem = GetComponent<NoteSystem>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
+        noteSystem = multi.GetComponent<NoteSystem>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //playerUltimate.fillBar(1, 1);
         if (playerHealth.currHealth == 0)
         {
             Time.timeScale = 0;
@@ -101,7 +105,7 @@ public class MainCharacterController : MonoBehaviour
         anim.SetTrigger("Attack");
         transform.position = new Vector3(0, -2.55f, 0);
         enemyHealth.DamagePlayer(5);
-        playerUltimate.fillBar();
+        playerUltimate.fillBar(5, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
 

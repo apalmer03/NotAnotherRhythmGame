@@ -16,7 +16,7 @@ public class Ultimate : MonoBehaviour
 
     public void fillBar(int value, int multiplier)
     {
-        currValue += damage;
+        currValue += value * multiplier;
         ultimateBar.SetValue(currValue);
     }
 

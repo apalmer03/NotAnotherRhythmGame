@@ -1222,6 +1222,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 876882100}
   gameOver: {fileID: 158197294}
+--- !u!114 &818624087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818624084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405804df19a0eb2408128a08a6d04f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currValue: 0
+  maxValue: 100
+  ultimateBar: {fileID: 1475622642}
 --- !u!1 &846034435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,11 +2364,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1475622640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 430107c039267854dada3ac04863d1fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3950f105397b91d47819c06a725b9e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1475622643}
-  playerHealth: {fileID: 818624085}
+  ultimateBar: {fileID: 1475622643}
+  playerUltimate: {fileID: 818624087}
 --- !u!114 &1475622643
 MonoBehaviour:
   m_ObjectHideFlags: 0

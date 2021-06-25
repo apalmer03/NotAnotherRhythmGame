@@ -19,6 +19,7 @@ public class NoteSystem : MonoBehaviour
     private Health playerHealth;
     public Text comboText;
     private int comboNum = 0;
+    private int multiplier = 0;
     public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -75,6 +76,7 @@ public class NoteSystem : MonoBehaviour
 
         beats = new float[200];
         actions = new object[200];
+        comboNum = 0;
         for (var i = 0; i < 200; i++)
         {
 
@@ -163,7 +165,24 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
-                coroutine = ChangeColor(0.3f, Color.green);
+
+                if (comboNum >= 30)
+                {
+                    multiplier = 4;
+                }
+                else if (comboNum >= 20)
+                {
+                    multiplier = 3;
+                }
+                else if (comboNum >= 10)
+                {
+                    multiplier = 2;
+                }
+                else
+                {
+                    multiplier = 1;
+                }
+                    coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
             // check if not on beat
@@ -225,5 +244,10 @@ public class NoteSystem : MonoBehaviour
         missText.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         missText.SetActive(false);
+    }
+
+    public int GetMultiplier()
+    {
+        return multiplier;
     }
 }
