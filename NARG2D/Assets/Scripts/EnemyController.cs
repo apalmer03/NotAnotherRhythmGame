@@ -82,7 +82,16 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Attack");
         transform.position = new Vector3(0, -2.55f, 0);
-        playerHealth.DamagePlayer(10);
+        if (playerHealth.isBlocking)
+        {
+            Debug.Log("Enemy Attack Blocked!");
+        }
+        else
+        {
+            Debug.Log("Enemy Attack Failed to Block!");
+            playerHealth.DamagePlayer(10);
+        }
+        
         yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
     }
