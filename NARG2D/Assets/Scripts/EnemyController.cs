@@ -48,7 +48,36 @@ public class EnemyController : MonoBehaviour
 
     }
 
-
+    public void doAction(ActionNote.Action action)
+    {
+        if (action == ActionNote.Action.Jump)
+        {
+            Debug.Log("Enemy Jump");
+            //GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+        }
+        else if (action == ActionNote.Action.Attack)
+        {
+            Debug.Log("Enemy Attack");
+            StartCoroutine(Attack());
+            //GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        }
+        else if (action == ActionNote.Action.UpperCut)
+        {
+            Debug.Log("Enemy UpperCut");
+            //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+        }
+        else if (action == ActionNote.Action.Block)
+        {
+            Debug.Log("Enemy Block");
+            //anim.SetTrigger("Charge");
+            //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+        else
+        {
+            Debug.Log("Enemy Idle");
+            //  GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        }
+    }
     IEnumerator Attack()
     {
         anim.SetTrigger("Attack");
