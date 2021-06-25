@@ -19,6 +19,7 @@ public class MainCharacterController : MonoBehaviour
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
+    public AudioSource[] soundFX;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class MainCharacterController : MonoBehaviour
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {
+            soundFX[0].Play();
             rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
         }
@@ -62,17 +64,20 @@ public class MainCharacterController : MonoBehaviour
         // Attack (Dash Right)
         if (Input.GetKeyDown(KeyCode.J))
         {
+            soundFX[1].Play();
             StartCoroutine(Attack());
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
+            soundFX[2].Play();
             //StartCoroutine(Uppercut());
         }
 
         // Block
         if (Input.GetKeyDown(KeyCode.S))
         {
+            soundFX[3].Play();
             StartCoroutine(Block());
         }
     }
