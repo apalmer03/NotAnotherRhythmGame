@@ -77,7 +77,7 @@ public class MainCharacterController : MonoBehaviour
         // Block
         if (Input.GetKeyDown(KeyCode.S))
         {
-            soundFX[3].Play();
+            soundFX[2].Play();
             StartCoroutine(Block());
         }
     }
