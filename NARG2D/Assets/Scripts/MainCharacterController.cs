@@ -48,11 +48,6 @@ public class MainCharacterController : MonoBehaviour
     void Update()
     {
 
-        if (playerHealth.currHealth == 0)
-        {
-            Time.timeScale = 0;
-            gameOver.SetActive(true);
-        }
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {

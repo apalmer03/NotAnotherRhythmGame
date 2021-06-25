@@ -68,7 +68,6 @@ public class NoteSystem : MonoBehaviour
         circleRenderer = circle.GetComponent<Renderer>();
 
         // Load the AudioSource attached to the Conductor GameObject
-        musicSource = GetComponent<AudioSource>();
 
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
@@ -205,6 +204,7 @@ public class NoteSystem : MonoBehaviour
     private void SpawnNote()
     {
         Note noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
+        noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
         noteRing.duration = 1.0f;
     }
 

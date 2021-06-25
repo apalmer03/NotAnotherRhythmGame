@@ -8,11 +8,10 @@ public class timer : MonoBehaviour
     public float timeVal;
     public Text timeText;
     public AudioSource musicTrack;
-    public AudioClip musicClip;
+    private AudioClip musicClip;
 
     void Start()
     {
-        musicTrack = GetComponent<AudioSource>();
         musicClip = musicTrack.clip;
         timeVal = musicClip.length;
     }
