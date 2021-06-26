@@ -9,6 +9,7 @@ TagManager:
   - Capsule
   - Note
   - Block
+  - Instruction
   layers:
   - Default
   - TransparentFX
