@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    public void tempStart()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("NewLevel");
     }
 
     public void quitGame()
