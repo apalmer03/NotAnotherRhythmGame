@@ -65,6 +65,7 @@ public class TutorialNoteSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
     	Debug.Log("BPM is:" + bpm);
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
@@ -103,6 +104,7 @@ public class TutorialNoteSystem : MonoBehaviour
         // Start the music
         musicSource.Play();
         gameObject.SetActive(false);
+        */
     }
 
     // Update is called once per frame
@@ -112,7 +114,7 @@ public class TutorialNoteSystem : MonoBehaviour
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
-        /*
+        
         if(!this.oneTime && this.tutorialCompleted) {
         	Debug.Log("BPM is:" + bpm);
 	        secPerBeat = 60f / bpm;
@@ -153,7 +155,7 @@ public class TutorialNoteSystem : MonoBehaviour
 	        gameObject.SetActive(false);
 	        this.oneTime = true;
         }
-        */
+        
 
         if(this.tutorialCompleted) {
         	// determine how many seconds since the song started

@@ -46,6 +46,7 @@ public class TutorialGameProcess : MonoBehaviour
     }
     private void LevelComplete()
     {
+        Debug.Log("LEVEL COMPLETE");
         Time.timeScale = 0;
         levelCompUI.SetActive(true);
         music.Stop();
@@ -56,12 +57,14 @@ public class TutorialGameProcess : MonoBehaviour
 
     public void Retry()
     {
+        Debug.Log("RETRY");
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Back()
     {
+        Debug.Log("BACK");
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
