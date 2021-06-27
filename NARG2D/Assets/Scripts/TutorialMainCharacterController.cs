@@ -54,8 +54,6 @@ public class TutorialMainCharacterController : MonoBehaviour
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
-        Debug.Log(this.tutorialCompleted);
-
         // if (playerHealth.currHealth == 0)
         // {
         //     Time.timeScale = 0;
