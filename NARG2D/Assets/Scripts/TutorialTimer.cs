@@ -15,11 +15,6 @@ public class TutorialTimer : MonoBehaviour
 
     void Start()
     {
-    	/*
-        musicTrack = GetComponent<AudioSource>();
-        musicClip = musicTrack.clip;
-        timeVal = musicClip.length;
-        */
     }
 
     // Update is called once per frame
@@ -30,7 +25,6 @@ public class TutorialTimer : MonoBehaviour
         this.tutorialCompleted = tic.tutorialCompleted;
 
         if (!oneTime && this.tutorialCompleted) {
-        	musicTrack = GetComponent<AudioSource>();
         	musicClip = musicTrack.clip;
         	timeVal = musicClip.length;
         	oneTime = true;

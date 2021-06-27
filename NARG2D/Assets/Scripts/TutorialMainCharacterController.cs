@@ -44,6 +44,7 @@ public class TutorialMainCharacterController : MonoBehaviour
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
+        gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
     }
 
     // Update is called once per frame

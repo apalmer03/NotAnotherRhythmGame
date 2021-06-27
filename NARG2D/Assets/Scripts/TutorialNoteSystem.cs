@@ -65,15 +65,13 @@ public class TutorialNoteSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    	/*
-        Debug.Log("BPM is:" + bpm);
+    	Debug.Log("BPM is:" + bpm);
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
         circleRenderer = circle.GetComponent<Renderer>();
 
         // Load the AudioSource attached to the Conductor GameObject
-        musicSource = GetComponent<AudioSource>();
 
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
@@ -97,15 +95,14 @@ public class TutorialNoteSystem : MonoBehaviour
         }
 
         beatsShownInAdvance = 1.0f / secPerBeat;
-        currentBeat = 13;
-        nextIndex = 14;
+        currentBeat = 18;
+        nextIndex = 19;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
         gameObject.SetActive(false);
-        */
     }
 
     // Update is called once per frame
@@ -115,7 +112,8 @@ public class TutorialNoteSystem : MonoBehaviour
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
-        if(!oneTime && this.tutorialCompleted) {
+        /*
+        if(!this.oneTime && this.tutorialCompleted) {
         	Debug.Log("BPM is:" + bpm);
 	        secPerBeat = 60f / bpm;
 	        noteRingPos = new Vector2(0f, 0f);
@@ -123,7 +121,7 @@ public class TutorialNoteSystem : MonoBehaviour
 	        circleRenderer = circle.GetComponent<Renderer>();
 
 	        // Load the AudioSource attached to the Conductor GameObject
-	        musicSource = GetComponent<AudioSource>();
+	        // musicSource = GetComponent<AudioSource>();
 
 	        // Record the time when the music starts
 	        dspSongTime = (float)AudioSettings.dspTime;
@@ -145,16 +143,17 @@ public class TutorialNoteSystem : MonoBehaviour
 	        }
 
 	        beatsShownInAdvance = 1.0f / secPerBeat;
-	        currentBeat = 13;
-	        nextIndex = 14;
+	        currentBeat = 18;
+	        nextIndex = 19;
 	        player = GameObject.Find("Player");
 	        enemy = GameObject.Find("Enemy");
 	        playerHealth = player.GetComponent<Health>();
 	        // Start the music
 	        musicSource.Play();
 	        gameObject.SetActive(false);
-	        oneTime = true;
+	        this.oneTime = true;
         }
+        */
 
         if(this.tutorialCompleted) {
         	// determine how many seconds since the song started
@@ -230,20 +229,14 @@ public class TutorialNoteSystem : MonoBehaviour
     private void SpawnNote()
     {
         Note noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
+        noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
         noteRing.duration = 1.0f;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
     {
-        enemy.GetComponent<EnemyController>().doAction((ActionNote.Action)actions[nextIndex]);
-        // ActionNote leftNote = Instantiate(actionNote, leftPos, Quaternion.identity);
-        // leftNote.speed = speed;
-        // leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
-        // leftNote.action = action;
-        // ActionNote rightNote = Instantiate(actionNote, rightPos, Quaternion.identity);
-        // rightNote.speed = -speed;
-        // rightNote.lifeSpan = Mathf.Abs(rightPos.x / speed);
-        // rightNote.action = action;
+        enemy.GetComponent<TutorialEnemyController>().doAction((ActionNote.Action)actions[nextIndex]);
+
     }
 
     private IEnumerator ChangeColor(float waitTime, Color col)
