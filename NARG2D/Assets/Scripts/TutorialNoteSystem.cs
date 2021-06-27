@@ -236,7 +236,6 @@ public class TutorialNoteSystem : MonoBehaviour
     private void SpawnActionNote(ActionNote.Action action)
     {
         enemy.GetComponent<TutorialEnemyController>().doAction((ActionNote.Action)actions[nextIndex]);
-
     }
 
     private IEnumerator ChangeColor(float waitTime, Color col)
