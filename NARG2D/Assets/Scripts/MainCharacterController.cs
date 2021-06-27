@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainCharacterController : MonoBehaviour
 {
     public GameObject enemy;
+    public GameObject ultimateAttack;
     private Renderer enemyRenderer;
     private Renderer selfRenderer;
     private Rigidbody2D rigidbody;
@@ -22,6 +23,9 @@ public class MainCharacterController : MonoBehaviour
     private Animator anim;
     public GameObject multi;
     private NoteSystem noteSystem;
+    //private bool ultimateFlag = false;
+    private UltimateScroller ultimate;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -42,11 +46,12 @@ public class MainCharacterController : MonoBehaviour
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         playerUltimate = GetComponent<Ultimate>();
+        ultimate = ultimateAttack.GetComponent<UltimateScroller>();
         //noteSystem = GetComponent<NoteSystem>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         noteSystem = multi.GetComponent<NoteSystem>();
-
+        
     }
 
     // Update is called once per frame
@@ -81,6 +86,12 @@ public class MainCharacterController : MonoBehaviour
         {
             StartCoroutine(Block());
         }
+
+        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull() )
+        {
+            playerUltimate.resetBar();
+            ultimate.Activate();
+        }
     }
 
 
@@ -105,7 +116,7 @@ public class MainCharacterController : MonoBehaviour
         anim.SetTrigger("Attack");
         transform.position = new Vector3(0, -2.55f, 0);
         enemyHealth.DamagePlayer(5);
-        playerUltimate.fillBar(5, noteSystem.GetMultiplier());
+        playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
 

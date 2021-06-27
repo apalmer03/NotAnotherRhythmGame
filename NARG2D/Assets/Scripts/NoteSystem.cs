@@ -53,14 +53,20 @@ public class NoteSystem : MonoBehaviour
 
     float marginOfError = 0.3f;
 
+    public UltimateScroller ultimateScroller;
+
     private IEnumerator coroutine;
 
     public object[] actions;
     public GameObject gameOver;
+    public int damageUltGoodNote = 10;
+    public int damageUltPerfectNote = 20;
+    public static NoteSystem instance;
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
@@ -249,5 +255,29 @@ public class NoteSystem : MonoBehaviour
     public int GetMultiplier()
     {
         return multiplier;
+    }
+
+    public void UltNoteHit()
+    {
+        Debug.Log("Hit On Time");
+    }
+    
+    public void UltNoteMissed()
+    {
+        Debug.Log("Missed Note");
+    }
+
+    public void UltNormalHit()
+    {
+        UltNoteHit();
+    }
+
+    public void UltGoodHit()
+    {
+        UltNoteHit();
+    }
+    public void UltPerfectHit()
+    {
+        UltNoteHit();
     }
 }

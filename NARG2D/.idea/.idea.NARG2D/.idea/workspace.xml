@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d311616-a0a1-4fca-8bd2-8bd8e78ef789" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/contentModel.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NARG2D/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/NewLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/NewLevel.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainCharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainCharacterController.cs" afterDir="false" />
@@ -14,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,15 +22,23 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ultimate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UltimateController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EffectObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UltimateScroller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UltimateBar.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/SpecialAttack.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Ultimate.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UltimateBar.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NoteSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UltimateController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UltimateNote.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Ultimate.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UltimateScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MainCharacterController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/NoteSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/EffectObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UltimateNoteObject.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1tmNBeI9lPzXC960UgO9MlTEHNP" />
@@ -83,7 +88,8 @@
       <option name="presentableId" value="Default" />
       <updated>1623370173259</updated>
       <workItem from="1623370207323" duration="35464000" />
-      <workItem from="1624582348523" duration="4192000" />
+      <workItem from="1624582348523" duration="9581000" />
+      <workItem from="1624766432969" duration="9502000" />
     </task>
     <servers />
   </component>

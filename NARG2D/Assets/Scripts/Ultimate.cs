@@ -17,7 +17,21 @@ public class Ultimate : MonoBehaviour
     public void fillBar(int value, int multiplier)
     {
         currValue += value * multiplier;
+        if (currValue >= maxValue)
+        {
+            currValue = maxValue;
+        }
         ultimateBar.SetValue(currValue);
+    }
+
+    public bool isFull()
+    {
+        if (currValue == maxValue)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void resetBar()
