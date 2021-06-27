@@ -44,7 +44,7 @@ public class TutorialMainCharacterController : MonoBehaviour
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
-        gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
+        // gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
     }
 
     // Update is called once per frame
@@ -54,11 +54,13 @@ public class TutorialMainCharacterController : MonoBehaviour
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
-        if (playerHealth.currHealth == 0)
-        {
-            Time.timeScale = 0;
-            gameOver.SetActive(true);
-        }
+        Debug.Log(this.tutorialCompleted);
+
+        // if (playerHealth.currHealth == 0)
+        // {
+        //     Time.timeScale = 0;
+        //     gameOver.SetActive(true);
+        // }
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {
