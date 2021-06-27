@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyController : MonoBehaviour
+public class TutorialEnemyController : MonoBehaviour
 {
 
     private Rigidbody2D rb;
@@ -81,13 +81,13 @@ public class EnemyController : MonoBehaviour
         if (playerHealth.isBlocking)
         {
 
-            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+            GameObject.FindWithTag("Player").GetComponent<TutorialMainCharacterController>().soundFX[3].Play();
             Debug.Log("Enemy Attack Blocked!");
         }
         else
         {
             Debug.Log("Enemy Attack Failed to Block!");
-            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
+            GameObject.FindWithTag("Player").GetComponent<TutorialMainCharacterController>().soundFX[1].Play();
             playerHealth.DamagePlayer(10);
         }
         
