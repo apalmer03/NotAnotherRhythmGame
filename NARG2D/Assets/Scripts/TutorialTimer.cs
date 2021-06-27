@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class timer : MonoBehaviour
+public class TutorialTimer : MonoBehaviour
 {
     public float timeVal;
     public Text timeText;
     public AudioSource musicTrack;
-    private AudioClip musicClip;
+    public AudioClip musicClip;
+
+    private bool tutorialCompleted = false;
+    private bool oneTime = false;
 
     void Start()
     {
-        musicClip = musicTrack.clip;
-        timeVal = musicClip.length;
     }
 
     // Update is called once per frame
     void Update()
     {
+    	GameObject go = GameObject.FindGameObjectWithTag("Instruction");
+        TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
+        this.tutorialCompleted = tic.tutorialCompleted;
+
+        if (!oneTime && this.tutorialCompleted) {
+        	musicClip = musicTrack.clip;
+        	timeVal = musicClip.length;
+        	oneTime = true;
+        }
+
+
         if (timeVal > 0)
         {
             timeVal = timeVal - Time.deltaTime;

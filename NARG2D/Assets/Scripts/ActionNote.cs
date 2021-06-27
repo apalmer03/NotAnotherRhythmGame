@@ -19,7 +19,9 @@ public class ActionNote : MonoBehaviour
         Block = 3,
         Idle = 4
     };
+
     public Action action;
+
     // Start is called before the first frame update
     void Start()
     {

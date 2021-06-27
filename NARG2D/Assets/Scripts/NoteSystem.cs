@@ -12,8 +12,6 @@ public class NoteSystem : MonoBehaviour
     public Note note;
     public ActionNote actionNote;
     private Renderer circleRenderer;
-    // private Vector2 leftPos;
-    // private Vector2 rightPos;
     private Vector2 noteRingPos;
     private GameObject player;
     private GameObject enemy;
@@ -33,11 +31,8 @@ public class NoteSystem : MonoBehaviour
     // How many seconds have passed since the song started
     public float dspSongTime;
 
-
     // an AudioSource attached to this GameObject that will play the music.
     public AudioSource musicSource;
-
-
     // The offset to the first beat of the song in seconds
     public float firstBeatOffset;
 
@@ -68,7 +63,6 @@ public class NoteSystem : MonoBehaviour
         circleRenderer = circle.GetComponent<Renderer>();
 
         // Load the AudioSource attached to the Conductor GameObject
-        musicSource = GetComponent<AudioSource>();
 
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
@@ -78,33 +72,6 @@ public class NoteSystem : MonoBehaviour
         actions = new object[265];
         for (var i = 0; i < 265; i++)
         {
-
-            //float[] beatpattern = { 0.0f, 1.0f, 2.5f, 3.0f, 3.5f };
-
-
-
-            ////actions[i] = (Note.BeatAction)(i % 4);
-            //beats[i] = 4 * (i / 5) + beatpattern[i % 5] + 3.5f;
-            //if (i % 5 == 0)
-            //{
-            //    actions[i] = Note.BeatAction.Block;
-            //}
-            //else if (i % 5 == 1)
-            //{
-            //    actions[i] = Note.BeatAction.Jump;
-            //}
-            //else if (i % 5 == 2)
-            //{
-            //    actions[i] = Note.BeatAction.Block;
-            //}
-            //else if (i % 5 == 3)
-            //{
-            //    actions[i] = Note.BeatAction.Block;
-            //}
-            //else if (i % 5 == 4)
-            //{
-            //    actions[i] = Note.BeatAction.Block;
-            //}
             beats[i] = i;
             if (i % 8 == 0 && i != 0)
             {
@@ -119,8 +86,8 @@ public class NoteSystem : MonoBehaviour
         }
 
         beatsShownInAdvance = 1.0f / secPerBeat;
-        currentBeat = 13;
-        nextIndex = 14;
+        currentBeat = 18;
+        nextIndex = 19;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         playerHealth = player.GetComponent<Health>();
@@ -136,7 +103,7 @@ public class NoteSystem : MonoBehaviour
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         // determine how many beats since the song started
         songPositionInBeats = songPosition / secPerBeat;
-        
+
         // check if music ends
         if (songPosition >= musicSource.clip.length)
         {
@@ -151,7 +118,7 @@ public class NoteSystem : MonoBehaviour
             if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle)
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
-                Debug.Log(string.Format("Execute at song(beat) number {0}",songPositionInBeats));
+                Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
             }
             // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
@@ -205,20 +172,13 @@ public class NoteSystem : MonoBehaviour
     private void SpawnNote()
     {
         Note noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
+        noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
         noteRing.duration = 1.0f;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
     {
         enemy.GetComponent<EnemyController>().doAction((ActionNote.Action)actions[nextIndex]);
-        // ActionNote leftNote = Instantiate(actionNote, leftPos, Quaternion.identity);
-        // leftNote.speed = speed;
-        // leftNote.lifeSpan = Mathf.Abs(leftPos.x / speed);
-        // leftNote.action = action;
-        // ActionNote rightNote = Instantiate(actionNote, rightPos, Quaternion.identity);
-        // rightNote.speed = -speed;
-        // rightNote.lifeSpan = Mathf.Abs(rightPos.x / speed);
-        // rightNote.action = action;
     }
 
     private IEnumerator ChangeColor(float waitTime, Color col)

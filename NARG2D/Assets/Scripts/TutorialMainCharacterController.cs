@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class MainCharacterController : MonoBehaviour
+public class TutorialMainCharacterController : MonoBehaviour
 {
     public GameObject enemy;
     private Renderer enemyRenderer;
     private Renderer selfRenderer;
     private Rigidbody2D rigidbody;
     private bool isGrounded = true;
-
+    
     private float jumpVelocity = 25f;
     private float moveVelocity = 3f;
 
@@ -20,6 +21,8 @@ public class MainCharacterController : MonoBehaviour
     private int level = 0;
     private Animator anim;
     public AudioSource[] soundFX;
+
+    private bool tutorialCompleted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,13 +44,21 @@ public class MainCharacterController : MonoBehaviour
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
-        gameObject.GetComponent<MainCharacterController>().enabled = false;
+        // gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+    	GameObject go = GameObject.FindGameObjectWithTag("Instruction");
+        TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
+        this.tutorialCompleted = tic.tutorialCompleted;
 
+        // if (playerHealth.currHealth == 0)
+        // {
+        //     Time.timeScale = 0;
+        //     gameOver.SetActive(true);
+        // }
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {
@@ -59,8 +70,8 @@ public class MainCharacterController : MonoBehaviour
         // Attack (Dash Right)
         if (Input.GetKeyDown(KeyCode.J))
         {
-            soundFX[1].Play();
-            StartCoroutine(Attack());
+    		soundFX[1].Play();
+        	StartCoroutine(Attack());
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -72,7 +83,7 @@ public class MainCharacterController : MonoBehaviour
         // Block
         if (Input.GetKeyDown(KeyCode.S))
         {
-            soundFX[2].Play();
+            soundFX[3].Play();
             StartCoroutine(Block());
         }
     }
@@ -96,12 +107,23 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Attack()
     {
-        anim.SetTrigger("Attack");
-        transform.position = new Vector3(0, -2.55f, 0);
-        enemyHealth.DamagePlayer(5);
-        yield return new WaitForSeconds(0.5f);
-        transform.position = heroStartPosition;
-
+    	// Regular
+    	if (this.tutorialCompleted) 
+    	{
+			anim.SetTrigger("Attack");
+		    transform.position = new Vector3(0, -2.55f, 0);
+		    enemyHealth.DamagePlayer(5);
+		    yield return new WaitForSeconds(0.5f);
+		    transform.position = heroStartPosition;
+		}
+		// Tutorial - No damage
+		else
+		{
+			anim.SetTrigger("Attack");
+			transform.position = new Vector3(0, -2.55f, 0);
+        	yield return new WaitForSeconds(0.5f);
+        	transform.position = heroStartPosition;
+		}
     }
 
     /*
