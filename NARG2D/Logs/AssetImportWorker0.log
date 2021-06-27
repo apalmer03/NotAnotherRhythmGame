@@ -1151,3 +1151,57 @@ Received Import Request.
 Start importing Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/Circle.png using Guid(ebe73ca9363db456bacf42c025bb4847) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d8c39de7271b5a455345680f1bcb82c') in 0.051733 seconds
   Import took 0.059921 seconds .
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.212161 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 3.22 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.938 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.82 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2085 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 96.4 MB.
+System memory in use after: 96.6 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 2720.
+Total: 4.464000 ms (FindLiveObjects: 0.536500 ms CreateObjectMapping: 0.175100 ms MarkObjects: 3.715400 ms  DeleteObjects: 0.027900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 44910.859400 seconds.
+  path: Assets/Prefabs/GoodEffect.prefab
+  artifactKey: Guid(f1f63a361230ab34c9597eebbe1e514c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/GoodEffect.prefab using Guid(f1f63a361230ab34c9597eebbe1e514c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f37e73578cf19bf6be0853347cf42b37') in 0.265180 seconds
+  Import took 0.275256 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000278 seconds.
+  path: Assets/Prefabs/PerfectEffect.prefab
+  artifactKey: Guid(becfb3f04f6c926468ea2b157ac4f96e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/PerfectEffect.prefab using Guid(becfb3f04f6c926468ea2b157ac4f96e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '274190479941be0515ead32a4abb90ee') in 0.086001 seconds
+  Import took 0.099376 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000386 seconds.
+  path: Assets/Prefabs/MissEffect.prefab
+  artifactKey: Guid(324d6fbba3881db4aba366177c81752d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/MissEffect.prefab using Guid(324d6fbba3881db4aba366177c81752d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '770e1c492a007b9d363c90e1639000e4') in 0.077939 seconds
+  Import took 0.096648 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000338 seconds.
+  path: Assets/Prefabs/HitEffect.prefab
+  artifactKey: Guid(a33ddd51e79b3b647b75e6bd3f748b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/HitEffect.prefab using Guid(a33ddd51e79b3b647b75e6bd3f748b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9274a78d0eb1615a7c0096d610cf4389') in 0.063334 seconds
+  Import took 0.074201 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
