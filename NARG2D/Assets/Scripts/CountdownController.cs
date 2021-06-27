@@ -9,15 +9,17 @@ public class CountdownController : MonoBehaviour
     public Text countdownDisplay;
     public int bpm;
     public GameObject circle;
+    public GameObject player;
     private float secPerBeat;
     private int[] displayArr;
     private int displayIndex;
     IEnumerator CountdownToStart()
     {
+        yield return new WaitForSeconds(5.0f);
         while (countdownTime > 0)
         {
             countdownDisplay.text = displayArr[displayIndex].ToString();
-            yield return new WaitForSeconds(secPerBeat * 5.0f);
+            yield return new WaitForSeconds(1.0f);
             displayIndex++;
             countdownTime--;
         }
@@ -27,7 +29,7 @@ public class CountdownController : MonoBehaviour
         yield return new WaitForSeconds(secPerBeat);
 
         circle.gameObject.SetActive(true);
-
+        player.gameObject.GetComponent<MainCharacterController>().enabled = true;
         countdownDisplay.gameObject.SetActive(false);
     }
     // Start is called before the first frame update

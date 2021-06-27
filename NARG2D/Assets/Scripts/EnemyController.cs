@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     private Health enemyHealth;
     public GameObject levelComplete;
     private Animator anim;
-
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -26,16 +26,12 @@ public class EnemyController : MonoBehaviour
         playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyHealth.currHealth <= 0)
-        {
-            Time.timeScale = 0;
-            levelComplete.SetActive(true);
-        }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -84,11 +80,14 @@ public class EnemyController : MonoBehaviour
         transform.position = new Vector3(0, -2.55f, 0);
         if (playerHealth.isBlocking)
         {
+
+            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
             Debug.Log("Enemy Attack Blocked!");
         }
         else
         {
             Debug.Log("Enemy Attack Failed to Block!");
+            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[4].Play();
             playerHealth.DamagePlayer(10);
         }
         
