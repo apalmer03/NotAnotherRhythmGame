@@ -301,7 +301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 60074694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18007d564247c924d8b1123de991dc1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3834e0fdc0a4745768651f3acbe1b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelComplete: {fileID: 396293503}
@@ -1202,7 +1202,7 @@ SpriteRenderer:
   m_SortingLayerID: -1514377873
   m_SortingLayer: -4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0c39cb3fba8414d69a3b94c481a233f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5087f95c96207410381a5d2ea1c0b196, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
