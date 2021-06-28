@@ -13,7 +13,7 @@ public class SpecialAttack : MonoBehaviour
     private int maxCombo = 3;
     void Start()
     {
-        List<string> move1 = new List<string>() {"J","J","J"};
+        List<string> move1 = new List<string>() {" ","J","J"};
         List<string> move2 = new List<string>() {"J","K","J"};
         attackDictionary.Add("Special1", move1);
         attackDictionary.Add("Special2", move2);
@@ -120,110 +120,4 @@ public class SpecialAttack : MonoBehaviour
         // if there are remaining elements in the lookUp, that means ListA contains elements that do not exist in ListB
         return lookUp.Count == 0;
     }
-    
-     /*private List<KeyCode> attack = new List<KeyCode>();
-    public List<List<List<KeyCode>>> attackList = new List<List<List<KeyCode>>>();
-    private Dictionary<string, List<List<KeyCode>>> attackDictionary = new Dictionary<string, List<List<KeyCode>>>();
-    private MainCharacterController main;
-    private int count = 0;
-    private int maxCombo = 3;
-    void Start()
-    {
-        List<List<KeyCode>> move1 = new List<List<KeyCode>>();
-        List<List<KeyCode>> move2 = new List<List<KeyCode>>();
-        List<List<KeyCode>> move3 = new List<List<KeyCode>>();
-        List<KeyCode> key = new List<KeyCode>() {KeyCode.J, KeyCode.K};
-        move1.Add(key);
-        key = new List<KeyCode>() {KeyCode.J};
-        move2.Add(key);
-        key = new List<KeyCode>() {KeyCode.K};
-        move2.Add(key);
-        key = new List<KeyCode>() {KeyCode.J};
-        move3.Add(key);
-        key = new List<KeyCode>() {KeyCode.J};
-        move3.Add(key);
-        key = new List<KeyCode>() {KeyCode.J};
-        move3.Add(key);
-        attackList.Add(move1);
-        attackList.Add(move2);
-        attackList.Add(move3);
-        attackDictionary.Add("Special1", move1);
-        Debug.Log(move1[0]);
-        attackDictionary.Add("Special2", move2);
-        Debug.Log(move2);
-        attackDictionary.Add("Special3", move3);
-        Debug.Log(move3);
-    }
-
-    // Update is called once per frame
-    public String CheckSpecial(List<List<KeyCode>> list)
-    {
-        
-        int index = 0;
-        bool flag = true;
-        if (list.Count > 0)
-        {
-            foreach (var move in attackDictionary)
-            {
-                foreach (var key in move.Value)
-                {
-                    if (!CompareLists(list[index], key))
-                    {
-                        flag = false;
-                        break;
-                    }
-                    index++;
-                }
-                if (flag == true)
-                {
-                    while (index > 0)
-                    {
-                        list.RemoveAt(index);
-                        index--;
-                    }
-                    
-                    return move.Key;
-                }
-                index = 0;
-            }
-        }
-
-        return null;
-    }
-    
-    private static bool CompareLists(List<KeyCode> aListA, List<KeyCode> aListB)
-    {
-        if (aListA == null || aListB == null || aListA.Count != aListB.Count)
-            return false;
-        if (aListA.Count == 0)
-            return true;
-        Dictionary<KeyCode, int> lookUp = new Dictionary<KeyCode, int>();
-        // create index for the first list
-        for(int i = 0; i < aListA.Count; i++)
-        {
-            int count = 0;
-            if (!lookUp.TryGetValue(aListA[i], out count))
-            {
-                lookUp.Add(aListA[i], 1);
-                continue;
-            }
-            lookUp[aListA[i]] = count + 1;
-        }
-        for (int i = 0; i < aListB.Count; i++)
-        {
-            int count = 0;
-            if (!lookUp.TryGetValue(aListB[i], out count))
-            {
-                // early exit as the current value in B doesn't exist in the lookUp (and not in ListA)
-                return false;
-            }
-            count--;
-            if (count <= 0)
-                lookUp.Remove(aListB[i]);
-            else
-                lookUp[aListB[i]] = count;
-        }
-        // if there are remaining elements in the lookUp, that means ListA contains elements that do not exist in ListB
-        return lookUp.Count == 0;
-    }*/
 }

@@ -34,6 +34,9 @@ public class MainCharacterController : MonoBehaviour
     private int specialMax = 3;
     private string specialMove;
 
+    public int specialAtkCnt = 0;
+    public int specialAtk1Cnt = 0;
+    public int specialAtk2Cnt = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +62,9 @@ public class MainCharacterController : MonoBehaviour
         ultimate = ultimateAttack.GetComponent<UltimateScroller>();
         specialLookup = GetComponent<SpecialAttack>();
         noteSystem = multi.GetComponent<NoteSystem>();
+        specialAtkCnt = 0;
+        specialAtk1Cnt = 0;
+        specialAtk2Cnt = 0;
     }
 
     // Update is called once per frame
@@ -184,14 +190,18 @@ public class MainCharacterController : MonoBehaviour
     
     IEnumerator Special1()
     {
-        enemyHealth.DamagePlayer(20);
+        enemyHealth.DamagePlayer(15);
         yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk1Cnt++;
     }
     
     IEnumerator Special2()
     {
-        enemyHealth.DamagePlayer(30);
+        enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk2Cnt++;
     }
    
 }
