@@ -13,12 +13,10 @@ public class SpecialAttack : MonoBehaviour
     private int maxCombo = 3;
     void Start()
     {
-        List<string> move1 = new List<string>() {"JK"};
+        List<string> move1 = new List<string>() {"J","J","J"};
         List<string> move2 = new List<string>() {"J","K","J"};
-        List<string> move3 = new List<string>() {"J","J","J"};
         attackDictionary.Add("Special1", move1);
         attackDictionary.Add("Special2", move2);
-        attackDictionary.Add("Special3", move3);
     }
 
     // Update is called once per frame

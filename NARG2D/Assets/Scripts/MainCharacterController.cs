@@ -184,13 +184,13 @@ public class MainCharacterController : MonoBehaviour
     
     IEnumerator Special1()
     {
-        enemyHealth.DamagePlayer(100);
+        enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
     }
     
     IEnumerator Special2()
     {
-        enemyHealth.DamagePlayer(50);
+        enemyHealth.DamagePlayer(30);
         yield return new WaitForSeconds(0.2f);
     }
    
