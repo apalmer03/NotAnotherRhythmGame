@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class MainCharacterController : MonoBehaviour
@@ -26,6 +28,11 @@ public class MainCharacterController : MonoBehaviour
     public GameObject multi;
     private NoteSystem noteSystem;
     private UltimateScroller ultimate;
+    
+    private List<String> specialAttack = new List<String>();
+    private SpecialAttack specialLookup;
+    private int specialMax = 3;
+    private string specialMove;
 
     // Start is called before the first frame update
     void Start()
@@ -50,19 +57,21 @@ public class MainCharacterController : MonoBehaviour
         gameObject.GetComponent<MainCharacterController>().enabled = false;
         playerUltimate = GetComponent<Ultimate>();
         ultimate = ultimateAttack.GetComponent<UltimateScroller>();
+        specialLookup = GetComponent<SpecialAttack>();
         noteSystem = multi.GetComponent<NoteSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {
             soundFX[0].Play();
             rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
+            attack.Append(" ");
         }
 
         // Attack (Dash Right)
@@ -70,12 +79,14 @@ public class MainCharacterController : MonoBehaviour
         {
             soundFX[1].Play();
             StartCoroutine(Attack());
+            attack.Append("J");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
             soundFX[2].Play();
             //StartCoroutine(Uppercut());
+            attack.Append("K");
         }
 
         // Block
@@ -83,6 +94,36 @@ public class MainCharacterController : MonoBehaviour
         {
             soundFX[2].Play();
             StartCoroutine(Block());
+            attack.Append("S");
+        }
+        
+        if (attack.Length != 0)
+        {
+            
+            specialAttack.Add(attack.ToString());
+            Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
+            attack.Clear();
+        }
+        
+        specialMove = specialLookup.CheckSpecial(specialAttack);
+        if (specialMove != null)
+        {
+            print(specialMove);
+            switch(specialMove)
+            {
+                case "Special1":
+                    StartCoroutine(Special1());
+                    Debug.Log("Special1");
+                    break;
+                case "Special2":
+                    StartCoroutine(Special2());
+                    Debug.Log("Special2");
+                    break;
+            }
+        }
+        if (specialAttack.Count == specialMax)
+        {
+            specialAttack.RemoveAt(0);
         }
         
         if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull() )
@@ -140,5 +181,17 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
     }
-
+    
+    IEnumerator Special1()
+    {
+        enemyHealth.DamagePlayer(100);
+        yield return new WaitForSeconds(0.2f);
+    }
+    
+    IEnumerator Special2()
+    {
+        enemyHealth.DamagePlayer(50);
+        yield return new WaitForSeconds(0.2f);
+    }
+   
 }
