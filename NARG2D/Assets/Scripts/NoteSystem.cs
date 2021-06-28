@@ -52,10 +52,16 @@ public class NoteSystem : MonoBehaviour
 
     public object[] actions;
     public GameObject gameOver;
+    private int multiplier = 0;
+    public UltimateScroller ultimateScroller;
+    public int damageUltGoodNote = 10;
+    public int damageUltPerfectNote = 20;
+    public static NoteSystem instance;
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         Debug.Log("BPM is:" + bpm);
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
@@ -137,6 +143,24 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
+                
+                if (comboNum >= 30)
+                {
+                    multiplier = 4;
+                }
+                else if (comboNum >= 20)
+                {
+                    multiplier = 3;
+                }
+                else if (comboNum >= 10)
+                {
+                    multiplier = 2;
+                }
+                else
+                {
+                    multiplier = 1;
+                }
+                
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
@@ -193,5 +217,34 @@ public class NoteSystem : MonoBehaviour
         missText.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         missText.SetActive(false);
+    }
+    
+    public int GetMultiplier()
+    {
+        return multiplier;
+    }
+
+    public void UltNoteHit()
+    {
+        Debug.Log("Hit On Time");
+    }
+    
+    public void UltNoteMissed()
+    {
+        Debug.Log("Missed Note");
+    }
+
+    public void UltNormalHit()
+    {
+        UltNoteHit();
+    }
+
+    public void UltGoodHit()
+    {
+        UltNoteHit();
+    }
+    public void UltPerfectHit()
+    {
+        UltNoteHit();
     }
 }
