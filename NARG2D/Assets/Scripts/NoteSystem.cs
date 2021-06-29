@@ -239,15 +239,15 @@ public class NoteSystem : MonoBehaviour
 
     public void UltNormalHit()
     {
-        UltNoteHit(5);
+        UltNoteHit(1);
     }
 
     public void UltGoodHit()
     {
-        UltNoteHit(8);
+        UltNoteHit(3);
     }
     public void UltPerfectHit()
     {
-        UltNoteHit(10);
+        UltNoteHit(5);
     }
 }

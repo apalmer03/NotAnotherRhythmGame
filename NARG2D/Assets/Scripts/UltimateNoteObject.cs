@@ -60,8 +60,11 @@ public class UltimateNoteObject : MonoBehaviour
         if (other.tag == "Activator")
         {
             canBePressed = false;
-            NoteSystem.instance.UltNoteMissed();
-            Instantiate(missEffect, transform.position, missEffect.transform.rotation);
+            if (gameObject.activeSelf)
+            {
+                NoteSystem.instance.UltNoteMissed();
+                Instantiate(missEffect, transform.position, missEffect.transform.rotation);
+            }
         }
     }
 }
