@@ -136,6 +136,7 @@ public class MainCharacterController : MonoBehaviour
         {
             playerUltimate.resetBar();
             ultimate.Activate();
+            enemyHealth.DamagePlayer(25);
         }
     }
 

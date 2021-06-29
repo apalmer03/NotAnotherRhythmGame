@@ -15,6 +15,7 @@ public class NoteSystem : MonoBehaviour
     private Vector2 noteRingPos;
     private GameObject player;
     private GameObject enemy;
+    private Health enemyHealth;
     private Health playerHealth;
     public Text comboText;
     private int comboNum = 0;
@@ -96,6 +97,7 @@ public class NoteSystem : MonoBehaviour
         nextIndex = 19;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
+        enemyHealth = enemy.GetComponent<Health>();
         playerHealth = player.GetComponent<Health>();
         // Start the music
         musicSource.Play();
@@ -224,8 +226,9 @@ public class NoteSystem : MonoBehaviour
         return multiplier;
     }
 
-    public void UltNoteHit()
+    public void UltNoteHit(int damage)
     {
+        enemyHealth.DamagePlayer(damage);
         Debug.Log("Hit On Time");
     }
     
@@ -236,15 +239,15 @@ public class NoteSystem : MonoBehaviour
 
     public void UltNormalHit()
     {
-        UltNoteHit();
+        UltNoteHit(5);
     }
 
     public void UltGoodHit()
     {
-        UltNoteHit();
+        UltNoteHit(8);
     }
     public void UltPerfectHit()
     {
-        UltNoteHit();
+        UltNoteHit(10);
     }
 }
