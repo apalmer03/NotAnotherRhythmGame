@@ -5,11 +5,15 @@ using UnityEngine;
 public class MainCharacterController : MonoBehaviour
 {
     public GameObject enemy;
+<<<<<<< Updated upstream
     private Renderer enemyRenderer;
     private Renderer selfRenderer;
     private Rigidbody2D rigidbody;
     private bool isGrounded = true;
     
+=======
+
+>>>>>>> Stashed changes
     private float jumpVelocity = 25f;
     private float moveVelocity = 3f;
     private Color heroColor;
@@ -33,12 +37,34 @@ public class MainCharacterController : MonoBehaviour
         selfRenderer = GetComponent<Renderer>();
         heroStartPosition = new Vector3((float)-4.0000, 0, 0);
         rigidbody.transform.position = heroStartPosition;
+<<<<<<< Updated upstream
         selfRenderer.transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         heroColor = lv0Color;
         selfRenderer.material.SetColor("_Color", heroColor);
+=======
+         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        heroColor = lv0Color;
+        selfRenderer.material.SetColor("_Color", heroColor);
+        */
+
+
+        heroStartPosition = new Vector3(-4f, -3.5f, -5f);
+        transform.position = heroStartPosition;
+        enemyHealth = enemy.GetComponent<Health>();
+        playerHealth = GetComponent<Health>();
+        anim = GetComponent<Animator>();
+        gameObject.GetComponent<MainCharacterController>().enabled = false;
+        playerUltimate = GetComponent<Ultimate>();
+        ultimate = ultimateAttack.GetComponent<UltimateScroller>();
+        specialLookup = GetComponent<SpecialAttack>();
+        noteSystem = multi.GetComponent<NoteSystem>();
+        specialAtkCnt = 0;
+        specialAtk1Cnt = 0;
+        specialAtk2Cnt = 0;
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
@@ -51,9 +77,16 @@ public class MainCharacterController : MonoBehaviour
             gameOver.SetActive(true);
         }
         // Jump (No double jumping)
-        if (Input.GetKeyDown("space") && isGrounded)
+        if (Input.GetKeyDown("space"))
         {
+<<<<<<< Updated upstream
             rigidbody.velocity = Vector2.up * jumpVelocity;
+=======
+            soundFX[0].Play();
+            anim.SetTrigger("Jump");
+            attack.Append(" ");
+            KeyPressAnalytics("Jump", "Space");
+>>>>>>> Stashed changes
         }
 
         // Attack (Dash Right)
@@ -64,7 +97,13 @@ public class MainCharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
+<<<<<<< Updated upstream
             StartCoroutine(Uppercut());
+=======
+            soundFX[2].Play();
+            StartCoroutine(Uppercut());
+            attack.Append("K");
+>>>>>>> Stashed changes
         }
 
         // Block
@@ -96,6 +135,7 @@ public class MainCharacterController : MonoBehaviour
         selfRenderer.material.SetColor("_Color", heroColor);
     }
 
+<<<<<<< Updated upstream
     public int GetLevel()
     {
         return level;
@@ -129,25 +169,67 @@ public class MainCharacterController : MonoBehaviour
         rigidbody.transform.position = heroStartPosition;
     }
 
+=======
+    IEnumerator Attack()
+    {
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Punch");
+        enemyHealth.DamagePlayer(5);
+        playerUltimate.fillBar(20, noteSystem.GetMultiplier());
+        yield return new WaitForSeconds(0.5f);
+        transform.position = heroStartPosition;
+        KeyPressAnalytics("Attack", "S");
+    }
+
+    
+>>>>>>> Stashed changes
     IEnumerator Uppercut()
     {
-        rigidbody.transform.position = new Vector3(3, 3, 0);
-        enemyRenderer.material.SetColor("_Color", Color.black);
-        selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5 + level*2);
-        yield return new WaitForSeconds(0.2f);
-        enemyRenderer.material.SetColor("_Color", Color.red);
-        selfRenderer.material.SetColor("_Color", heroColor);
-        rigidbody.transform.position = heroStartPosition;
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Kick");
+        enemyHealth.DamagePlayer(5);
+        playerUltimate.fillBar(20, noteSystem.GetMultiplier());
+        yield return new WaitForSeconds(0.5f);
+        transform.position = heroStartPosition;
+        KeyPressAnalytics("Attack", "S");
     }
+<<<<<<< Updated upstream
 
     IEnumerator Block()
     {
         selfRenderer.material.SetColor("_Color", Color.green);
+=======
+    
+    IEnumerator Block()
+    {
+        anim.SetTrigger("Block");
+>>>>>>> Stashed changes
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
         selfRenderer.material.SetColor("_Color", heroColor);
         playerHealth.isBlocking = false;
+<<<<<<< Updated upstream
+=======
+        KeyPressAnalytics("Block", "S");
+    }
+    
+    IEnumerator Special1()
+    {
+        anim.SetTrigger("Special1");
+        enemyHealth.DamagePlayer(15);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk1Cnt++;
+    }
+    
+    IEnumerator Special2()
+    {
+        anim.SetTrigger("Special2");
+        enemyHealth.DamagePlayer(20);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk2Cnt++;
+>>>>>>> Stashed changes
     }
 
 }

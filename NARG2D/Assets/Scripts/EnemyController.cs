@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private Health playerHealth;
     private Health enemyHealth;
     public GameObject levelComplete;
+<<<<<<< Updated upstream
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,17 @@ public class EnemyController : MonoBehaviour
         enemyStartPosition = new Vector3((float)4, 0, (float)0);
         rb.transform.position = enemyStartPosition;
         enemyRenderer.transform.position = enemyStartPosition;
+=======
+    private Animator anim;
+    public GameObject fireEffect;
+   
+    // Start is called before the first frame update
+    void Start()
+    {
+        enemyStartPosition = new Vector3(4.5f, -3.5f, -5f);
+        transform.position = enemyStartPosition;
+        //enemyRenderer.transform.position = enemyStartPosition;
+>>>>>>> Stashed changes
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
@@ -40,6 +52,7 @@ public class EnemyController : MonoBehaviour
             levelComplete.SetActive(true);
         }
 
+<<<<<<< Updated upstream
         if (Input.GetKeyDown(KeyCode.Keypad0) && isGrounded)
         {
             isGrounded = false;
@@ -60,6 +73,8 @@ public class EnemyController : MonoBehaviour
         {
             StartCoroutine(Block());
         }
+=======
+>>>>>>> Stashed changes
 
     }
 
@@ -69,32 +84,59 @@ public class EnemyController : MonoBehaviour
         if (action == ActionNote.Action.Jump)
         {
             Debug.Log("Enemy Jump");
+<<<<<<< Updated upstream
             StartCoroutine(Jump());
             //enemyRenderer.material.SetColor("_Color", Color.cyan);
 
+=======
+>>>>>>> Stashed changes
         }
         if (action == ActionNote.Action.Attack)
         {
             Debug.Log("Enemy Attack");
             StartCoroutine(Attack());
+<<<<<<< Updated upstream
             //enemyRenderer.material.SetColor("_Color", Color.red);
+=======
+>>>>>>> Stashed changes
         }
         if (action == ActionNote.Action.UpperCut)
         {
             Debug.Log("Enemy UpperCut");
+<<<<<<< Updated upstream
             StartCoroutine(Uppercut());
             //enemyRenderer.material.SetColor("_Color", Color.red);
+=======
+            Uppercut();
+
+        }
+        else if (action == ActionNote.Action.Block)
+        {
+            Debug.Log("Enemy Charge");
+            StartCoroutine(Charge());
+>>>>>>> Stashed changes
         }
         if (action == ActionNote.Action.Block)
         {
+<<<<<<< Updated upstream
             Debug.Log("Enemy Block");
             StartCoroutine(Block());
             //enemyRenderer.material.SetColor("_Color", Color.red);
+=======
+            Debug.Log("Enemy Idle");
+>>>>>>> Stashed changes
         }
 
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
+<<<<<<< Updated upstream
+=======
+        anim.SetTrigger("Punch");
+        transform.position = new Vector3(0, -3.5f, 0);
+        if (playerHealth.isBlocking)
+        {
+>>>>>>> Stashed changes
 
         if (collision.gameObject.tag == "Ground")
         {
@@ -108,6 +150,7 @@ public class EnemyController : MonoBehaviour
             isGrounded = false;
         }
     }
+<<<<<<< Updated upstream
     IEnumerator Jump()
     {
         isGrounded = false;
@@ -146,6 +189,18 @@ public class EnemyController : MonoBehaviour
         enemyRenderer.material.SetColor("_Color", Color.green);
         yield return new WaitForSeconds(0.25f);
         enemyRenderer.material.SetColor("_Color", enemyColor);
+=======
+
+    IEnumerator Charge()
+    {
+        fireEffect.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        fireEffect.SetActive(false);
+>>>>>>> Stashed changes
     }
 
+    void Uppercut()
+    {
+        anim.SetTrigger("Magic");
+    }
 }
