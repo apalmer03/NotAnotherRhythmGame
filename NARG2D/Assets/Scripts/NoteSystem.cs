@@ -117,10 +117,17 @@ public class NoteSystem : MonoBehaviour
         // check if music ends
         if (songPosition >= musicSource.clip.length)
         {
+            Time.timeScale = 0;
             scoreText.text = "Total Score: " + totalscore.ToString();
             scoreText.gameObject.SetActive(true);
-            Time.timeScale = 0;
             gameOver.SetActive(true);
+        }
+
+        if (playerHealth.currHealth <= 0 || enemyHealth.currHealth <= 0)
+        {
+            Time.timeScale = 0;
+            scoreText.text = "Total Score: " + totalscore.ToString();
+            scoreText.gameObject.SetActive(true);
         }
 
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
