@@ -26,7 +26,7 @@ public class CountdownController : MonoBehaviour
 
         countdownDisplay.text = "GO!";
 
-        yield return new WaitForSeconds(secPerBeat);
+        yield return new WaitForSeconds(0.8f * secPerBeat);
 
         circle.gameObject.SetActive(true);
         player.gameObject.GetComponent<MainCharacterController>().enabled = true;
