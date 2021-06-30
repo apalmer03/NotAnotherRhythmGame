@@ -6554,6 +6554,7 @@ MonoBehaviour:
   levelCompUI: {fileID: 675272998}
   scoreUI: {fileID: 1723143225}
   NoteSystem: {fileID: 54951520}
+  scoreBackground: {fileID: 865565903}
 --- !u!4 &1427432760
 Transform:
   m_ObjectHideFlags: 0

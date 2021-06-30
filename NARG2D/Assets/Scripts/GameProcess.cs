@@ -15,10 +15,8 @@ public class GameProcess : MonoBehaviour
     public GameObject levelCompUI;
     public Text scoreUI;
     public GameObject NoteSystem;
+    public GameObject scoreBackground;
     private bool isGameOver = false;
-    //public GameObject tScore; //TESTING SCORE AT THE END
-    //private int tempScore;    //TESTING SCORE AT THE END
-    //private NoteSystem nSys;  //TESTING SCORE AT THE END
 
     // Start is called before the first frame update
     void Start()
@@ -40,17 +38,13 @@ public class GameProcess : MonoBehaviour
             isGameOver = true;
             LevelComplete();
         }
-
-        //nSys = tScore.GetComponent<NoteSystem>(); //TESTING SCORE AT THE END
-        //tempScore = nSys.totalscore; //TESTING SCORE AT THE END
     }
 
     private void GameOver()
     {
         Time.timeScale = 0;
         gameOverUI.SetActive(true);
-        //scoreUI.text = "Total Score: " + tempScore.ToString();//TESTING SCORE AT THE END
-        //scoreUI.gameObject.SetActive(true);//TESTING SCORE AT THE END
+        scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
@@ -59,8 +53,7 @@ public class GameProcess : MonoBehaviour
     {
         Time.timeScale = 0;
         levelCompUI.SetActive(true);
-        //scoreUI.text = "Total Score: " + tempScore.ToString();//TESTING SCORE AT THE END
-        //scoreUI.gameObject.SetActive(true);//TESTING SCORE AT THE END
+        scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
