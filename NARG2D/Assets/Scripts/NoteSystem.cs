@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class NoteSystem : MonoBehaviour
 {
@@ -165,6 +166,8 @@ public class NoteSystem : MonoBehaviour
                 
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
+                AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
+                Debug.Log("Analytics result " + analytics_comboCounter);
             }
             // check if not on beat
             else
