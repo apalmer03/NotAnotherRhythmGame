@@ -18,7 +18,9 @@ public class NoteSystem : MonoBehaviour
     private Health enemyHealth;
     private Health playerHealth;
     public Text comboText;
+    public Text scoreText;
     private int comboNum = 0;
+    private int totalscore = 0;
     public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -53,7 +55,7 @@ public class NoteSystem : MonoBehaviour
 
     public object[] actions;
     public GameObject gameOver;
-    private int multiplier = 0;
+    private int multiplier = 1;
     public UltimateScroller ultimateScroller;
     public int damageUltGoodNote = 10;
     public int damageUltPerfectNote = 20;
@@ -115,6 +117,8 @@ public class NoteSystem : MonoBehaviour
         // check if music ends
         if (songPosition >= musicSource.clip.length)
         {
+            scoreText.text = "Total Score: " + totalscore.ToString();
+            scoreText.gameObject.SetActive(true);
             Time.timeScale = 0;
             gameOver.SetActive(true);
         }
@@ -163,6 +167,7 @@ public class NoteSystem : MonoBehaviour
                 {
                     multiplier = 1;
                 }
+                totalscore = totalscore + (10 * multiplier);
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
