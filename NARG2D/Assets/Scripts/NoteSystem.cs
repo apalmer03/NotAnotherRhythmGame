@@ -138,7 +138,6 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
-                player.gameObject.GetComponent<MainCharacterController>().enabled = true;
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
@@ -146,7 +145,7 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
-
+                
                 if (comboNum >= 30)
                 {
                     multiplier = 4;
@@ -163,14 +162,13 @@ public class NoteSystem : MonoBehaviour
                 {
                     multiplier = 1;
                 }
-
+                
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
             // check if not on beat
             else
             {
-                player.gameObject.GetComponent<MainCharacterController>().enabled = false;
                 coroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(coroutine);
                 IEnumerator showMissText = showMiss(0.3f);
@@ -182,6 +180,8 @@ public class NoteSystem : MonoBehaviour
                 {
                     Destroy(notes[0].gameObject);
                     currentBeat++;
+                    playerHealth.DamagePlayer(10);
+                    Debug.Log("off-beat penalty\n");
                 }
             }
         }
@@ -220,7 +220,7 @@ public class NoteSystem : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         missText.SetActive(false);
     }
-
+    
     public int GetMultiplier()
     {
         return multiplier;
@@ -231,7 +231,7 @@ public class NoteSystem : MonoBehaviour
         enemyHealth.DamagePlayer(damage);
         Debug.Log("Hit On Time");
     }
-
+    
     public void UltNoteMissed()
     {
         Debug.Log("Missed Note");
