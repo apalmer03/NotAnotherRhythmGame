@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameProcess : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class GameProcess : MonoBehaviour
     public AudioSource music;
     public GameObject gameOverUI;
     public GameObject levelCompUI;
+    public Text scoreUI;
     public GameObject NoteSystem;
+    public GameObject scoreBackground;
     private bool isGameOver = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +44,7 @@ public class GameProcess : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOverUI.SetActive(true);
+        scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
@@ -48,6 +53,7 @@ public class GameProcess : MonoBehaviour
     {
         Time.timeScale = 0;
         levelCompUI.SetActive(true);
+        scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());

@@ -19,9 +19,11 @@ public class NoteSystem : MonoBehaviour
     private Health enemyHealth;
     private Health playerHealth;
     public Text comboText;
+    public Text scoreText;
     private int comboNum = 0;
     private int missNum = 0;
     private int hitNum = 0;
+    public int totalscore = 0;
     public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -56,11 +58,12 @@ public class NoteSystem : MonoBehaviour
 
     public object[] actions;
     public GameObject gameOver;
-    private int multiplier = 0;
+    public int multiplier = 1;
     public UltimateScroller ultimateScroller;
     public int damageUltGoodNote = 10;
     public int damageUltPerfectNote = 20;
     public static NoteSystem instance;
+    private Ultimate playerUltimate;
 
     // Start is called before the first frame update
     void Start()
@@ -102,6 +105,7 @@ public class NoteSystem : MonoBehaviour
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = player.GetComponent<Health>();
+        playerUltimate = player.GetComponent<Ultimate>();
         // Start the music
         musicSource.Play();
         gameObject.SetActive(false);
@@ -119,6 +123,8 @@ public class NoteSystem : MonoBehaviour
         if (songPosition >= musicSource.clip.length)
         {
             Time.timeScale = 0;
+            scoreText.text = "Total Score: " + totalscore.ToString();
+            scoreText.gameObject.SetActive(true);
             gameOver.SetActive(true);
         }
 
@@ -141,6 +147,7 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
+                player.gameObject.GetComponent<MainCharacterController>().enabled = true;
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
@@ -148,16 +155,24 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
-                
-                if (comboNum >= 30)
+
+                if (comboNum >= 35)
+                {
+                    multiplier = 6;
+                }
+                else if (comboNum >= 26)
+                {
+                    multiplier = 5;
+                }
+                else if (comboNum >= 18)
                 {
                     multiplier = 4;
                 }
-                else if (comboNum >= 20)
+                else if (comboNum >= 11)
                 {
                     multiplier = 3;
                 }
-                else if (comboNum >= 10)
+                else if (comboNum >= 5)
                 {
                     multiplier = 2;
                 }
@@ -165,7 +180,8 @@ public class NoteSystem : MonoBehaviour
                 {
                     multiplier = 1;
                 }
-                
+                totalscore = totalscore + (10 * multiplier);
+                scoreText.text = "Total Score: " + totalscore.ToString();
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
                 AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
@@ -176,6 +192,8 @@ public class NoteSystem : MonoBehaviour
             // check if not on beat
             else
             {
+                player.gameObject.GetComponent<MainCharacterController>().enabled = false;
+                playerUltimate.resetBar();
                 coroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(coroutine);
                 IEnumerator showMissText = showMiss(0.3f);
@@ -183,12 +201,10 @@ public class NoteSystem : MonoBehaviour
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
                 GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-                if (notes.Length >= 1)
+                if (notes.Length >= 1 && err <= 0.6)
                 {
                     Destroy(notes[0].gameObject);
                     currentBeat++;
-                    playerHealth.DamagePlayer(10);
-                    Debug.Log("off-beat penalty\n");
                 }
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
@@ -229,7 +245,7 @@ public class NoteSystem : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         missText.SetActive(false);
     }
-    
+
     public int GetMultiplier()
     {
         return multiplier;
@@ -240,7 +256,7 @@ public class NoteSystem : MonoBehaviour
         enemyHealth.DamagePlayer(damage);
         Debug.Log("Hit On Time");
     }
-    
+
     public void UltNoteMissed()
     {
         Debug.Log("Missed Note");

@@ -19,7 +19,6 @@ public class TutorialCountdownController : MonoBehaviour
 
     IEnumerator CountdownToStart()
     {
-    	yield return new WaitForSeconds(1.0f);
         while (countdownTime > 0)
         {
             countdownDisplay.text = displayArr[displayIndex].ToString();
