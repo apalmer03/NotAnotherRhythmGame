@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currHealth: 0
-  maxHealth: 150
+  maxHealth: 100
   isBlocking: 0
   healthBar: {fileID: 902739896}
 --- !u!114 &60074696
@@ -673,7 +673,7 @@ AudioSource:
   m_GameObject: {fileID: 383991506}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 3b6068a390f8fd24ebe617ac96c6365c, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cbe3ee5002a75334da3be4bc15f102a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
