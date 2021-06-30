@@ -60,6 +60,7 @@ public class NoteSystem : MonoBehaviour
     public int damageUltGoodNote = 10;
     public int damageUltPerfectNote = 20;
     public static NoteSystem instance;
+    private Ultimate playerUltimate;
 
     // Start is called before the first frame update
     void Start()
@@ -101,6 +102,7 @@ public class NoteSystem : MonoBehaviour
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = player.GetComponent<Health>();
+        playerUltimate = player.GetComponent<Ultimate>();
         // Start the music
         musicSource.Play();
         gameObject.SetActive(false);
@@ -182,6 +184,7 @@ public class NoteSystem : MonoBehaviour
             else
             {
                 player.gameObject.GetComponent<MainCharacterController>().enabled = false;
+                playerUltimate.resetBar();
                 coroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(coroutine);
                 IEnumerator showMissText = showMiss(0.3f);
