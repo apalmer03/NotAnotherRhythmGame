@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class MainMenu : MonoBehaviour
 {
-    public void tempStart()
+    public void tempStart(string sceneName)
     {
-        SceneManager.LoadScene("NewLevel");
+        SceneManager.LoadScene(sceneName);
+        AnalyticsResult analytics_sceneLoaded = Analytics.CustomEvent("Scene Loaded " + sceneName);
     }
 
     public void quitGame()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class MainCharacterController : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class MainCharacterController : MonoBehaviour
             rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
             attack.Append(" ");
+            KeyPressAnalytics("Jump", "Space");
         }
 
         // Attack (Dash Right)
@@ -165,7 +167,7 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-
+        KeyPressAnalytics("Attack", "S");
     }
 
     /*
@@ -187,6 +189,7 @@ public class MainCharacterController : MonoBehaviour
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
+        KeyPressAnalytics("Block", "S");
     }
     
     IEnumerator Special1()
@@ -203,6 +206,18 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
+    }
+
+    public void KeyPressAnalytics(string actionType, string keyPressed)
+    {
+        Dictionary<string, string> analytics_inputAction = new Dictionary<string, string>
+        {
+            {"Attack", "J"},
+            {"Block", "S"},
+            {"Jump", "Space"},
+        };
+        AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
+        Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
    
 }
