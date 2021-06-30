@@ -20,7 +20,7 @@ public class NoteSystem : MonoBehaviour
     public Text comboText;
     public Text scoreText;
     private int comboNum = 0;
-    private int totalscore = 0;
+    public int totalscore = 0;
     public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -55,7 +55,7 @@ public class NoteSystem : MonoBehaviour
 
     public object[] actions;
     public GameObject gameOver;
-    private int multiplier = 1;
+    public int multiplier = 1;
     public UltimateScroller ultimateScroller;
     public int damageUltGoodNote = 10;
     public int damageUltPerfectNote = 20;
@@ -177,6 +177,7 @@ public class NoteSystem : MonoBehaviour
                     multiplier = 1;
                 }
                 totalscore = totalscore + (10 * multiplier);
+                scoreText.text = "Total Score: " + totalscore.ToString();
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
             }
