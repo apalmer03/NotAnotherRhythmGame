@@ -242,6 +242,11 @@ public class NoteSystem : MonoBehaviour
         return multiplier;
     }
 
+    public int GetTotal()
+    {
+        return totalscore;
+    }
+
     public void UltNoteHit(int damage)
     {
         enemyHealth.DamagePlayer(damage);

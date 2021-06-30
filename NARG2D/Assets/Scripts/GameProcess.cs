@@ -16,7 +16,15 @@ public class GameProcess : MonoBehaviour
     public Text scoreUI;
     public GameObject NoteSystem;
     public GameObject scoreBackground;
+    public GameObject scoreS;
+    public GameObject scoreA;
+    public GameObject scoreB;
+    public GameObject scoreC;
+    public GameObject scoreD;
+    public GameObject scoreF;
     private bool isGameOver = false;
+    public NoteSystem nSys; //TEST
+    private int totScore = 0; //TEST
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +35,7 @@ public class GameProcess : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         if (playerHealth.currHealth <= 0 && !isGameOver)
         {
             isGameOver = true;
@@ -48,6 +56,16 @@ public class GameProcess : MonoBehaviour
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
+        totScore = nSys.GetTotal();
+
+        totScore = totScore - 200; //200 point penalty for losing
+        if (totScore < 0)
+        {
+            totScore = 0;
+        }
+
+        scoreUI.text = "Total Score: " + totScore.ToString(); //Update if score was deducted
+        calculateLetter();
     }
     private void LevelComplete()
     {
@@ -57,7 +75,36 @@ public class GameProcess : MonoBehaviour
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
+        totScore = nSys.GetTotal();
+        calculateLetter();
+    }
 
+    public void calculateLetter()
+    {
+        if (totScore >= 5000)
+        {
+            scoreS.SetActive(true);
+        }
+        else if (totScore >= 3500)
+        {
+            scoreA.SetActive(true);
+        }
+        else if (totScore >= 2000)
+        {
+            scoreB.SetActive(true);
+        }
+        else if (totScore >= 1000)
+        {
+            scoreC.SetActive(true);
+        }
+        else if (totScore >= 200)
+        {
+            scoreD.SetActive(true);
+        }
+        else
+        {
+            scoreF.SetActive(true);
+        }
     }
 
     public void Retry()

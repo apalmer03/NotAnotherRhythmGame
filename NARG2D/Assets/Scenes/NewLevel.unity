@@ -6555,6 +6555,13 @@ MonoBehaviour:
   scoreUI: {fileID: 1723143225}
   NoteSystem: {fileID: 54951520}
   scoreBackground: {fileID: 865565903}
+  scoreS: {fileID: 1768644937}
+  scoreA: {fileID: 257801634}
+  scoreB: {fileID: 215351933}
+  scoreC: {fileID: 420050186}
+  scoreD: {fileID: 1127056759}
+  scoreF: {fileID: 1760247695}
+  nSys: {fileID: 1179049921}
 --- !u!4 &1427432760
 Transform:
   m_ObjectHideFlags: 0
