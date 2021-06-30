@@ -7,7 +7,6 @@ using UnityEngine;
 public class MainCharacterController : MonoBehaviour
 {
     public GameObject enemy;
-    public GameObject ultButtons;
     private Renderer enemyRenderer;
     private Renderer selfRenderer;
     private Rigidbody2D rigidbody;
@@ -66,7 +65,6 @@ public class MainCharacterController : MonoBehaviour
         specialAtkCnt = 0;
         specialAtk1Cnt = 0;
         specialAtk2Cnt = 0;
-        ultButtons.SetActive(false);
     }
 
     // Update is called once per frame
@@ -138,7 +136,6 @@ public class MainCharacterController : MonoBehaviour
         {
             playerUltimate.resetBar();
             ultimate.Activate();
-            ultButtons.SetActive(true);
             enemyHealth.DamagePlayer(10);
         }
     }
