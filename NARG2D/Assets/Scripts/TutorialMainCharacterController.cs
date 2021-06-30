@@ -57,8 +57,6 @@ public class TutorialMainCharacterController : MonoBehaviour
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
-        Debug.Log("Time: " + seconds);
-
         time += Time.deltaTime;
         seconds = (int)Math.Ceiling(time);
         seconds = seconds % 60;
