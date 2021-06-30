@@ -176,7 +176,7 @@ public class NoteSystem : MonoBehaviour
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
                 GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-                if (notes.Length >= 1)
+                if (notes.Length >= 1 && err <= 0.6)
                 {
                     Destroy(notes[0].gameObject);
                     currentBeat++;
