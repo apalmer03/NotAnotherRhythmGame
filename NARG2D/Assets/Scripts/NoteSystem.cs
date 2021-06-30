@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class NoteSystem : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class NoteSystem : MonoBehaviour
     public Text comboText;
     public Text scoreText;
     private int comboNum = 0;
+    private int missNum = 0;
+    private int hitNum = 0;
     public int totalscore = 0;
     public GameObject missText;
     // The number of seconds for each song beat
@@ -181,6 +184,10 @@ public class NoteSystem : MonoBehaviour
                 scoreText.text = "Total Score: " + totalscore.ToString();
                 coroutine = ChangeColor(0.3f, Color.green);
                 StartCoroutine(coroutine);
+                AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
+                Debug.Log("Analytics result " + analytics_comboCounter);
+                AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);
+                Debug.Log("Analytics result " + analytics_hitCounter);
             }
             // check if not on beat
             else
@@ -199,6 +206,8 @@ public class NoteSystem : MonoBehaviour
                     Destroy(notes[0].gameObject);
                     currentBeat++;
                 }
+                AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
+                Debug.Log("Analytics result" + analytics_missCounter);
             }
         }
 
