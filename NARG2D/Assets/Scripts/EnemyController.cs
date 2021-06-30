@@ -60,11 +60,13 @@ public class EnemyController : MonoBehaviour
         else if (action == ActionNote.Action.UpperCut)
         {
             Debug.Log("Enemy UpperCut");
+
             //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
         else if (action == ActionNote.Action.Block)
         {
-            Debug.Log("Enemy Block");
+            Debug.Log("Enemy Charge");
+            StartCoroutine(Charge());
             //anim.SetTrigger("Charge");
             //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
@@ -93,6 +95,26 @@ public class EnemyController : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
+    }
+    IEnumerator Charge()
+    {
+        anim.SetTrigger("Charge");
+        //transform.position = new Vector3(0, -2.55f, 0);
+        //if (playerHealth.isBlocking)
+        //{
+
+        //    GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+        //    Debug.Log("Enemy Attack Blocked!");
+        //}
+        //else
+        //{
+        //    Debug.Log("Enemy Attack Failed to Block!");
+        //    GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
+        //    playerHealth.DamagePlayer(10);
+        //}
+
+        yield return new WaitForSeconds(0.5f);
+        //transform.position = enemyStartPosition;
     }
 
 }

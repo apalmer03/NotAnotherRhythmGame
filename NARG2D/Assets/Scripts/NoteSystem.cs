@@ -53,7 +53,8 @@ public class NoteSystem : MonoBehaviour
     public int currentBeat = 0;
 
     float marginOfError = 0.3f;
-
+    public List<int> actions_list;
+    public int[][] attack_pattern;
     private IEnumerator coroutine;
 
     public object[] actions;
@@ -83,21 +84,54 @@ public class NoteSystem : MonoBehaviour
         // Initialize notes array
         beats = new float[265];
         actions = new object[265];
+        attack_pattern = new int[8][];
+        attack_pattern[0] = new int[] { 4, 4, 4, 4 };
+        attack_pattern[1] = new int[] { 4, 4, 4, 3 };
+        attack_pattern[2] = new int[] { 4, 3, 4, 1 };
+        attack_pattern[3] = new int[] { 4, 1, 4, 1 };
+        attack_pattern[4] = new int[] { 3, 4, 3, 4 };
+        attack_pattern[5] = new int[] { 4, 4, 4, 3 };
+        attack_pattern[6] = new int[] { 3, 3, 3, 1 };
+        attack_pattern[7] = new int[] { 3, 1, 3, 1 };
+
+
         for (var i = 0; i < 265; i++)
         {
             beats[i] = i;
-            if (i % 8 == 0 && i != 0)
-            {
-                actions[i] = ActionNote.Action.Attack;
-            }
-            else
-            {
-                actions[i] = ActionNote.Action.Idle;
-            }
-
 
         }
-
+        for (var p = 0; p < 265 / 4; p++)
+        {
+            //actions_list.AddRange(attack_pattern[patt]);
+            if (p < 4)
+            {
+                actions_list.AddRange(attack_pattern[0]);
+            }
+            //else if (p < 15)
+            //{
+            //    var patt = Random.Range(0, 2);
+            //    actions_list.AddRange(attack_pattern[patt]);
+            //}
+            //else if (p < 30)
+            //{
+            //    var patt = Random.Range(1, 4);
+            //    actions_list.AddRange(attack_pattern[patt]);
+            //}
+            //else if (p < 40)
+            //{
+            //    var patt = Random.Range(1, 5);
+            //    actions_list.AddRange(attack_pattern[patt]);
+            //}
+            else
+            {
+                var patt = Random.Range(5, 7);
+                actions_list.AddRange(attack_pattern[patt]);
+            }
+        }
+        for (var i = 0; i < actions_list.ToArray().Length && i < actions.Length; i++)
+        {
+            actions[i] = (ActionNote.Action)actions_list.ToArray()[i];
+        }
         beatsShownInAdvance = 1.0f / secPerBeat;
         currentBeat = 18;
         nextIndex = 19;
