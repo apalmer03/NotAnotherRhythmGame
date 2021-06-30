@@ -37,6 +37,10 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtkCnt = 0;
     public int specialAtk1Cnt = 0;
     public int specialAtk2Cnt = 0;
+
+    public float time = 0.0f;
+    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +74,11 @@ public class MainCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        time += Time.deltaTime;
+        seconds = (int)Math.Ceiling(time);
+        seconds = seconds % 60;
+
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
