@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class MainCharacterController : MonoBehaviour
@@ -20,7 +22,21 @@ public class MainCharacterController : MonoBehaviour
     private int level = 0;
     private Animator anim;
     public AudioSource[] soundFX;
+    
+    public GameObject ultimateAttack;
+    private Ultimate playerUltimate;
+    public GameObject multi;
+    private NoteSystem noteSystem;
+    private UltimateScroller ultimate;
+    
+    private List<String> specialAttack = new List<String>();
+    private SpecialAttack specialLookup;
+    private int specialMax = 3;
+    private string specialMove;
 
+    public int specialAtkCnt = 0;
+    public int specialAtk1Cnt = 0;
+    public int specialAtk2Cnt = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,18 +58,26 @@ public class MainCharacterController : MonoBehaviour
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         gameObject.GetComponent<MainCharacterController>().enabled = false;
+        playerUltimate = GetComponent<Ultimate>();
+        ultimate = ultimateAttack.GetComponent<UltimateScroller>();
+        specialLookup = GetComponent<SpecialAttack>();
+        noteSystem = multi.GetComponent<NoteSystem>();
+        specialAtkCnt = 0;
+        specialAtk1Cnt = 0;
+        specialAtk2Cnt = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space") && isGrounded)
         {
             soundFX[0].Play();
             rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
+            attack.Append(" ");
         }
 
         // Attack (Dash Right)
@@ -61,12 +85,14 @@ public class MainCharacterController : MonoBehaviour
         {
             soundFX[1].Play();
             StartCoroutine(Attack());
+            attack.Append("J");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
             soundFX[2].Play();
             //StartCoroutine(Uppercut());
+            attack.Append("K");
         }
 
         // Block
@@ -74,6 +100,43 @@ public class MainCharacterController : MonoBehaviour
         {
             soundFX[2].Play();
             StartCoroutine(Block());
+            attack.Append("S");
+        }
+        
+        if (attack.Length != 0)
+        {
+            
+            specialAttack.Add(attack.ToString());
+            Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
+            attack.Clear();
+        }
+        
+        specialMove = specialLookup.CheckSpecial(specialAttack);
+        if (specialMove != null)
+        {
+            print(specialMove);
+            switch(specialMove)
+            {
+                case "Special1":
+                    StartCoroutine(Special1());
+                    Debug.Log("Special1");
+                    break;
+                case "Special2":
+                    StartCoroutine(Special2());
+                    Debug.Log("Special2");
+                    break;
+            }
+        }
+        if (specialAttack.Count == specialMax)
+        {
+            specialAttack.RemoveAt(0);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull() )
+        {
+            playerUltimate.resetBar();
+            ultimate.Activate();
+            enemyHealth.DamagePlayer(10);
         }
     }
 
@@ -99,6 +162,7 @@ public class MainCharacterController : MonoBehaviour
         anim.SetTrigger("Attack");
         transform.position = new Vector3(0, -2.55f, 0);
         enemyHealth.DamagePlayer(5);
+        playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
 
@@ -124,5 +188,21 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
     }
-
+    
+    IEnumerator Special1()
+    {
+        enemyHealth.DamagePlayer(15);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk1Cnt++;
+    }
+    
+    IEnumerator Special2()
+    {
+        enemyHealth.DamagePlayer(20);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk2Cnt++;
+    }
+   
 }

@@ -24,6 +24,9 @@ public class TutorialMainCharacterController : MonoBehaviour
 
     private bool tutorialCompleted = false;
 
+    public float time = 0.0f;
+    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,12 @@ public class TutorialMainCharacterController : MonoBehaviour
     	GameObject go = GameObject.FindGameObjectWithTag("Instruction");
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
+
+        Debug.Log("Time: " + seconds);
+
+        time += Time.deltaTime;
+        seconds = (int)Math.Ceiling(time);
+        seconds = seconds % 60;
 
         // if (playerHealth.currHealth == 0)
         // {
