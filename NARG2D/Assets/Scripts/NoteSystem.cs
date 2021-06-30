@@ -20,6 +20,8 @@ public class NoteSystem : MonoBehaviour
     private Health playerHealth;
     public Text comboText;
     private int comboNum = 0;
+    private int missNum = 0;
+    private int hitNum = 0;
     public GameObject missText;
     // The number of seconds for each song beat
     public float secPerBeat;
@@ -168,6 +170,8 @@ public class NoteSystem : MonoBehaviour
                 StartCoroutine(coroutine);
                 AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
                 Debug.Log("Analytics result " + analytics_comboCounter);
+                AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);
+                Debug.Log("Analytics result " + analytics_hitCounter);
             }
             // check if not on beat
             else
@@ -186,6 +190,8 @@ public class NoteSystem : MonoBehaviour
                     playerHealth.DamagePlayer(10);
                     Debug.Log("off-beat penalty\n");
                 }
+                AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
+                Debug.Log("Analytics result" + analytics_missCounter);
             }
         }
 
