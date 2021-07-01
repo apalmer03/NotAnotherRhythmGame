@@ -52,7 +52,7 @@ public class GameProcess : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOverUI.SetActive(true);
-        scoreBackground.SetActive(true);
+        //scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
