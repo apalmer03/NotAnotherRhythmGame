@@ -81,23 +81,23 @@ public class GameProcess : MonoBehaviour
 
     public void calculateLetter()
     { //Temp score values for the demo, will adjust / add complexity later
-        if (totScore >= 1000)
+        if (totScore >= 2000)
         {
             scoreS.SetActive(true);
         }
-        else if (totScore >= 500)
+        else if (totScore >= 1200)
         {
             scoreA.SetActive(true);
         }
-        else if (totScore >= 300)
+        else if (totScore >= 800)
         {
             scoreB.SetActive(true);
         }
-        else if (totScore >= 200)
+        else if (totScore >= 500)
         {
             scoreC.SetActive(true);
         }
-        else if (totScore >= 100)
+        else if (totScore >= 200)
         {
             scoreD.SetActive(true);
         }
