@@ -175,7 +175,6 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Block()
     {
-        transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Block");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
