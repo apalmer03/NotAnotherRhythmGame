@@ -151,8 +151,8 @@ public class MainCharacterController : MonoBehaviour
             playerUltimate.resetBar();
             //ultimate.Activate();
             noteSystem.ActivateUlt();
-            anim.SetTrigger("Ultimate");
             enemyHealth.DamagePlayer(1);
+            StartCoroutine(Ultimate());
         }
     }
     
@@ -288,7 +288,7 @@ public class MainCharacterController : MonoBehaviour
     {
         IEnumerator showSpecial1 = ShowSpecial1(1.0f);
         StartCoroutine(showSpecial1);
-        transform.position = new Vector3(0, -3.5f, -5f);
+        //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special1");
         enemyHealth.DamagePlayer(15);
         yield return new WaitForSeconds(0.2f);
@@ -300,14 +300,22 @@ public class MainCharacterController : MonoBehaviour
     {
         IEnumerator showSpecial2 = ShowSpecial2(1.0f);
         StartCoroutine(showSpecial2);
-        transform.position = new Vector3(0, -3.5f, -5f);
+        //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special2");
         enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
     }
+    
+    IEnumerator Ultimate()
+    {
+        anim.SetTrigger("Ultimate");
+        transform.position = new Vector3(0, -3.5f, -5f);
+        yield return new WaitForSeconds(15f);
+        transform.position = heroStartPosition;
 
+    }
     public void KeyPressAnalytics(string actionType, string keyPressed)
     {
         Dictionary<string, string> analytics_inputAction = new Dictionary<string, string>
