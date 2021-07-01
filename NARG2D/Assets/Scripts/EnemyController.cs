@@ -106,7 +106,7 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("Enemy Attack Failed to Block!");
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
-            playerHealth.DamagePlayer(10);
+            playerHealth.DamagePlayer(40);
         }
 
         transform.position = enemyStartPosition;
@@ -126,7 +126,7 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("Enemy Attack Failed to Block!");
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
-            playerHealth.DamagePlayer(10);
+            playerHealth.DamagePlayer(60);
         }
         shootFireBall = false;
         blueFire.transform.position = fireStartPos;
