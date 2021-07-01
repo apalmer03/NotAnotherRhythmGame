@@ -308,10 +308,10 @@ public class NoteSystem : MonoBehaviour
 
     public void UltGoodHit()
     {
-        UltNoteHit(3);
+        UltNoteHit(1);
     }
     public void UltPerfectHit()
     {
-        UltNoteHit(5);
+        UltNoteHit(1);
     }
 }

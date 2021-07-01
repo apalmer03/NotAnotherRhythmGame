@@ -29,7 +29,7 @@ public class MainCharacterController : MonoBehaviour
     public GameObject multi;
     private NoteSystem noteSystem;
     private UltimateScroller ultimate;
-    
+
     private List<String> specialAttack = new List<String>();
     private SpecialAttack specialLookup;
     private int specialMax = 3;
@@ -38,6 +38,7 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtkCnt = 0;
     public int specialAtk1Cnt = 0;
     public int specialAtk2Cnt = 0;
+    
 
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
@@ -145,7 +146,7 @@ public class MainCharacterController : MonoBehaviour
         {
             playerUltimate.resetBar();
             ultimate.Activate();
-            enemyHealth.DamagePlayer(10);
+            enemyHealth.DamagePlayer(1);
         }
     }
 
