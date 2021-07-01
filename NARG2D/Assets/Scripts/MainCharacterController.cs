@@ -150,13 +150,15 @@ public class MainCharacterController : MonoBehaviour
         {
             playerUltimate.resetBar();
             //ultimate.Activate();
-            noteSystem.ActivateUlt(); 
+            noteSystem.ActivateUlt();
+            anim.SetTrigger("Ultimate");
             enemyHealth.DamagePlayer(1);
         }
     }
     
     public void doUltAction(int ultAction)
     {
+
         switch (ultAction)
         {
             case 0:
@@ -287,7 +289,7 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial1 = ShowSpecial1(1.0f);
         StartCoroutine(showSpecial1);
         transform.position = new Vector3(0, -3.5f, -5f);
-        anim.SetTrigger("Special1");
+        //anim.SetTrigger("Special1");
         enemyHealth.DamagePlayer(15);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
@@ -299,7 +301,7 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial2 = ShowSpecial2(1.0f);
         StartCoroutine(showSpecial2);
         transform.position = new Vector3(0, -3.5f, -5f);
-        anim.SetTrigger("Special2");
+        //anim.SetTrigger("Special2");
         enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
