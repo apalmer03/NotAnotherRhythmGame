@@ -1866,7 +1866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &375911408
 Transform:
   m_ObjectHideFlags: 0
@@ -3499,7 +3499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &805471601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5611,6 +5611,16 @@ MonoBehaviour:
   bpm: 120
   speed: 4
   note: {fileID: -135923387736583854, guid: 2711dbbb25be1441db3d8ce87db04ff8, type: 3}
+  ultUp: {fileID: 8523949167692798480, guid: 0d07012dd96f65f4eae4a751d47d47df, type: 3}
+  ultDown: {fileID: -6752154967702130798, guid: f8987c0f7e4bfdb47a1a30c22428abee, type: 3}
+  ultLeft: {fileID: 622488277397940397, guid: 73cd118e03f92de41b8294b15738f3c5, type: 3}
+  ultRight: {fileID: 2454298213501236996, guid: 0049913099d45904abc57a7de38a1748, type: 3}
+  ultUpDown: {fileID: 4234603288493094288, guid: ef0367131ed277b4797b88fda72145fb, type: 3}
+  ultUpLeft: {fileID: -6536993672897977441, guid: f9561e0ba2cecb74196a34c95de11399, type: 3}
+  ultUpRight: {fileID: -6202574448356260458, guid: 35a01ba116224e44badc7b7cb7a40662, type: 3}
+  ultLeftRight: {fileID: 8251250702888357133, guid: 7e9c73e69a973104f9b4029140c57618, type: 3}
+  ultDownLeft: {fileID: -8871316386799382868, guid: a808abd23c1a29f4aa4dc2ff5bbb68f8, type: 3}
+  ultDownRight: {fileID: 1286000707033735907, guid: 68e127a42dac5fd4d943d3ad76d58849, type: 3}
   actionNote: {fileID: -7391872941002718040, guid: 84eb4796773c7df4e9e375b214df4427, type: 3}
   comboText: {fileID: 846034437}
   scoreText: {fileID: 1723143225}

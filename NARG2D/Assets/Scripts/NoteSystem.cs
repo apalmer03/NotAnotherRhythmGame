@@ -11,6 +11,17 @@ public class NoteSystem : MonoBehaviour
     public float speed;
     private float beatRate;
     public Note note;
+
+    public UltimateNote ultUp,
+        ultDown,
+        ultLeft,
+        ultRight,
+        ultUpDown,
+        ultUpLeft,
+        ultUpRight,
+        ultLeftRight,
+        ultDownLeft,
+        ultDownRight;
     public ActionNote actionNote;
     private Renderer circleRenderer;
     private Vector2 noteRingPos;
@@ -65,7 +76,33 @@ public class NoteSystem : MonoBehaviour
     public int damageUltPerfectNote = 20;
     public static NoteSystem instance;
     private Ultimate playerUltimate;
-
+    private bool ultFlag;
+    
+    public static readonly int RATIO_CHANCE_UP = 75;
+    public static readonly int RATIO_CHANCE_DOWN = 75;
+    public static readonly int RATIO_CHANCE_LEFT = 75;
+    public static readonly int RATIO_CHANCE_RIGHT = 75;
+    public static readonly int RATIO_CHANCE_UPDOWN = 10;
+    public static readonly int RATIO_CHANCE_UPLEFT = 10;
+    public static readonly int RATIO_CHANCE_UPRIGHT = 10;
+    public static readonly int RATIO_CHANCE_LEFTRIGHT= 10;
+    public static readonly int RATIO_CHANCE_DOWNLEFT= 10;
+    public static readonly int RATIO_CHANCE_DOWNRIGHT= 10;
+    
+    public static readonly int RATIO_TOTAL = RATIO_CHANCE_UP
+                                             + RATIO_CHANCE_DOWN
+                                             + RATIO_CHANCE_LEFT
+                                             + RATIO_CHANCE_RIGHT
+                                             + RATIO_CHANCE_UPDOWN
+                                             + RATIO_CHANCE_UPLEFT
+                                             + RATIO_CHANCE_UPRIGHT
+                                             + RATIO_CHANCE_LEFTRIGHT
+                                             + RATIO_CHANCE_DOWNLEFT
+                                             + RATIO_CHANCE_DOWNRIGHT;
+    
+    private Note noteRing;
+    private UltimateNote ultNote;
+    private Queue<int> ultAction = new Queue<int>();
     // Start is called before the first frame update
     void Start()
     {
@@ -139,6 +176,7 @@ public class NoteSystem : MonoBehaviour
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = player.GetComponent<Health>();
         playerUltimate = player.GetComponent<Ultimate>();
+        ultFlag = false;
         // Start the music
         musicSource.Play();
         gameObject.SetActive(false);
@@ -164,7 +202,14 @@ public class NoteSystem : MonoBehaviour
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
         {
             GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
-            SpawnNote();
+            if (!ultFlag)
+            {
+                SpawnNote();
+            }
+            else
+            {
+                SpawnUltNote();
+            }
             if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle)
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
@@ -180,7 +225,14 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
-                player.gameObject.GetComponent<MainCharacterController>().doAction();
+                if (!ultFlag)
+                {
+                    player.gameObject.GetComponent<MainCharacterController>().doAction();
+                }
+                else
+                {
+                    player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                }
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
@@ -254,9 +306,70 @@ public class NoteSystem : MonoBehaviour
 
     private void SpawnNote()
     {
-        Note noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
+        noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
         noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
         noteRing.duration = 1.0f;
+    }
+    
+    private void SpawnUltNote()
+    {
+        System.Random random = new System.Random();
+        int x = random.Next(0, RATIO_TOTAL);
+        if ((x -= RATIO_CHANCE_UP) < 0) // Test for A
+        { 
+            ultNote = Instantiate(ultUp, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(0);
+        } 
+        else if ((x -= RATIO_CHANCE_DOWN) < 0) // Test for B
+        { 
+            ultNote = Instantiate(ultDown, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(1);
+        }
+        else if ((x -= RATIO_CHANCE_LEFT) < 0) // Test for A
+        { 
+            ultNote = Instantiate(ultLeft, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(2);
+        } 
+        else if ((x -= RATIO_CHANCE_RIGHT) < 0) // Test for B
+        { 
+            ultNote = Instantiate(ultRight, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(3);
+        }
+        else if ((x -= RATIO_CHANCE_UPDOWN) < 0) // Test for A
+        { 
+            ultNote = Instantiate(ultUpDown, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(4);
+        } 
+        else if ((x -= RATIO_CHANCE_UPLEFT) < 0) // Test for B
+        { 
+            ultNote = Instantiate(ultUpLeft, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(5);
+        }
+        else if ((x -= RATIO_CHANCE_UPRIGHT) < 0) // Test for A
+        { 
+            ultNote = Instantiate(ultUpRight, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(6);
+        } 
+        else if ((x -= RATIO_CHANCE_LEFTRIGHT) < 0) // Test for B
+        { 
+            ultNote = Instantiate(ultLeftRight, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(7);
+        }
+        else if ((x -= RATIO_CHANCE_DOWNLEFT) < 0) // Test for A
+        { 
+            ultNote = Instantiate(ultDownLeft, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(8);
+        }
+        else // No need for final if statement
+        { 
+            ultNote = Instantiate(ultDownRight, noteRingPos, Quaternion.identity);
+            ultAction.Enqueue(9);
+        }
+
+        ultNote.GetComponent<UltimateNote>().note = instance;
+       // ultNote.GetComponent<UltimateNote>().SetNote(instance);
+        ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
+        ultNote.duration = 1.0f;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
@@ -311,5 +424,25 @@ public class NoteSystem : MonoBehaviour
     public void UltPerfectHit()
     {
         UltNoteHit(1);
+    }
+
+    public void ActivateUlt()
+    {
+        ultFlag = true;
+    }
+
+    public bool IsUltActive()
+    {
+        return ultFlag;
+    }
+
+    public int GetUltAction()
+    {
+        return ultAction.Peek();
+    }
+    
+    public void DestroyUltAction()
+    {
+        ultAction.Dequeue();
     }
 }
