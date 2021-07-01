@@ -15,11 +15,13 @@ public class EnemyController : MonoBehaviour
     private Health enemyHealth;
     public GameObject levelComplete;
     private Animator anim;
+    public GameObject blueFire;
+    public GameObject OrangeFire;
    
     // Start is called before the first frame update
     void Start()
     {
-        enemyStartPosition = new Vector3(4f, -2.55f, 0);
+        enemyStartPosition = new Vector3(4.5f, -3.55f, -5f);
         transform.position = enemyStartPosition;
         //enemyRenderer.transform.position = enemyStartPosition;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -60,7 +62,7 @@ public class EnemyController : MonoBehaviour
         else if (action == ActionNote.Action.UpperCut)
         {
             Debug.Log("Enemy UpperCut");
-
+            StartCoroutine(Uppercut());
             //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
         else if (action == ActionNote.Action.Block)
@@ -78,8 +80,8 @@ public class EnemyController : MonoBehaviour
     }
     IEnumerator Attack()
     {
-        anim.SetTrigger("Attack");
-        transform.position = new Vector3(0, -2.55f, 0);
+        anim.SetTrigger("Punch");
+        transform.position = new Vector3(0, -3.5f, -5f);
         if (playerHealth.isBlocking)
         {
 
@@ -96,25 +98,33 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
     }
+
+    IEnumerator Uppercut()
+    {
+        anim.SetTrigger("Magic");
+        transform.position = new Vector3(0, -3.5f, -5f);
+        /*
+        if (playerHealth.isBlocking)
+        {
+
+            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+            Debug.Log("Enemy Attack Blocked!");
+        }
+        else
+        {
+            Debug.Log("Enemy Attack Failed to Block!");
+            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
+            playerHealth.DamagePlayer(10);
+        }
+        */
+        yield return new WaitForSeconds(0.5f);
+        transform.position = enemyStartPosition;
+    }
     IEnumerator Charge()
     {
-        anim.SetTrigger("Charge");
-        //transform.position = new Vector3(0, -2.55f, 0);
-        //if (playerHealth.isBlocking)
-        //{
-
-        //    GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
-        //    Debug.Log("Enemy Attack Blocked!");
-        //}
-        //else
-        //{
-        //    Debug.Log("Enemy Attack Failed to Block!");
-        //    GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
-        //    playerHealth.DamagePlayer(10);
-        //}
-
-        yield return new WaitForSeconds(0.5f);
-        //transform.position = enemyStartPosition;
+        blueFire.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        blueFire.SetActive(false);
     }
 
 }

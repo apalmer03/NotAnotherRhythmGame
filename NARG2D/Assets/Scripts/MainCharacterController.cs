@@ -56,12 +56,11 @@ public class MainCharacterController : MonoBehaviour
         */
 
 
-        heroStartPosition = new Vector3((float)-4.0000, -2.55f, 0);
+        heroStartPosition = new Vector3(-4f, -3.55f, -5f);
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
         gameObject.GetComponent<MainCharacterController>().enabled = false;
         playerUltimate = GetComponent<Ultimate>();
         ultimate = ultimateAttack.GetComponent<UltimateScroller>();
@@ -82,10 +81,9 @@ public class MainCharacterController : MonoBehaviour
 
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
-        if (Input.GetKeyDown("space") && isGrounded)
+        if (Input.GetKeyDown("space"))
         {
             soundFX[0].Play();
-            rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
             attack.Append(" ");
             KeyPressAnalytics("Jump", "Space");
@@ -102,7 +100,7 @@ public class MainCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             soundFX[2].Play();
-            //StartCoroutine(Uppercut());
+            StartCoroutine(Uppercut());
             attack.Append("K");
         }
 
@@ -152,26 +150,10 @@ public class MainCharacterController : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
-
     IEnumerator Attack()
     {
-        anim.SetTrigger("Attack");
-        transform.position = new Vector3(0, -2.55f, 0);
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Punch");
         enemyHealth.DamagePlayer(5);
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
@@ -179,22 +161,21 @@ public class MainCharacterController : MonoBehaviour
         KeyPressAnalytics("Attack", "S");
     }
 
-    /*
     IEnumerator Uppercut()
     {
-        rigidbody.transform.position = new Vector3(3, 3, 0);
-        enemyRenderer.material.SetColor("_Color", Color.black);
-        selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5 + level*2);
-        yield return new WaitForSeconds(0.2f);
-        enemyRenderer.material.SetColor("_Color", Color.red);
-        selfRenderer.material.SetColor("_Color", heroColor);
-        rigidbody.transform.position = heroStartPosition;
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Kick");
+        enemyHealth.DamagePlayer(5);
+        playerUltimate.fillBar(20, noteSystem.GetMultiplier());
+        yield return new WaitForSeconds(0.5f);
+        transform.position = heroStartPosition;
+        KeyPressAnalytics("Attack", "S");
     }
-    */
+
     IEnumerator Block()
     {
-        anim.SetTrigger("Sit");
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Block");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
@@ -203,6 +184,8 @@ public class MainCharacterController : MonoBehaviour
     
     IEnumerator Special1()
     {
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Special1");
         enemyHealth.DamagePlayer(15);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
@@ -211,6 +194,8 @@ public class MainCharacterController : MonoBehaviour
     
     IEnumerator Special2()
     {
+        transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Special2");
         enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
