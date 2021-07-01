@@ -253,23 +253,23 @@ public class NoteSystem : MonoBehaviour
                     comboText.gameObject.SetActive(true);
                 }
 
-                if (comboNum >= 35)
+                if (comboNum >= 70)
                 {
                     multiplier = 6;
                 }
-                else if (comboNum >= 26)
+                else if (comboNum >= 52)
                 {
                     multiplier = 5;
                 }
-                else if (comboNum >= 18)
+                else if (comboNum >= 36)
                 {
                     multiplier = 4;
                 }
-                else if (comboNum >= 11)
+                else if (comboNum >= 22)
                 {
                     multiplier = 3;
                 }
-                else if (comboNum >= 5)
+                else if (comboNum >= 10)
                 {
                     multiplier = 2;
                 }
