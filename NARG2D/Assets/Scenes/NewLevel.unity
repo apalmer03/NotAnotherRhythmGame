@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currHealth: 0
-  maxHealth: 300
+  maxHealth: 400
   isBlocking: 0
   isJumping: 0
   healthBar: {fileID: 925022861}
@@ -18562,7 +18562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currHealth: 0
-  maxHealth: 300
+  maxHealth: 400
   isBlocking: 0
   isJumping: 0
   healthBar: {fileID: 1953459942}
