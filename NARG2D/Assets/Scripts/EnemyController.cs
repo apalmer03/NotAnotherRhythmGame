@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Animator anim;
     public GameObject blueFire;
     public GameObject OrangeFire;
-   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
-        
+
     }
 
     // Update is called once per frame
@@ -62,13 +62,27 @@ public class EnemyController : MonoBehaviour
         else if (action == ActionNote.Action.UpperCut)
         {
             Debug.Log("Enemy UpperCut");
-            StartCoroutine(Uppercut());
+            //StartCoroutine(Uppercut());
             //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
         else if (action == ActionNote.Action.Block)
         {
-            Debug.Log("Enemy Charge");
+            Debug.Log("Enemy Block");
+            //StartCoroutine(Charge());
+            //anim.SetTrigger("Charge");
+            //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+        else if (action == ActionNote.Action.Charge_1)
+        {
+            Debug.Log("Enemy Charge_1");
             StartCoroutine(Charge());
+            //anim.SetTrigger("Charge");
+            //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+        else if (action == ActionNote.Action.Charge_2)
+        {
+            Debug.Log("Enemy Magic");
+            StartCoroutine(Magic());
             //anim.SetTrigger("Charge");
             //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
@@ -94,12 +108,12 @@ public class EnemyController : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
             playerHealth.DamagePlayer(10);
         }
-        
+
         yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
     }
 
-    IEnumerator Uppercut()
+    IEnumerator Magic()
     {
         anim.SetTrigger("Magic");
         transform.position = new Vector3(0, -3.5f, -5f);

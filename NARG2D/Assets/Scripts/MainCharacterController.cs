@@ -23,13 +23,13 @@ public class MainCharacterController : MonoBehaviour
     private int level = 0;
     private Animator anim;
     public AudioSource[] soundFX;
-    
+
     public GameObject ultimateAttack;
     private Ultimate playerUltimate;
     public GameObject multi;
     private NoteSystem noteSystem;
     private UltimateScroller ultimate;
-    
+
     private List<String> specialAttack = new List<String>();
     private SpecialAttack specialLookup;
     private int specialMax = 3;
@@ -111,20 +111,20 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Block());
             attack.Append("S");
         }
-        
+
         if (attack.Length != 0)
         {
-            
+
             specialAttack.Add(attack.ToString());
             Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
             attack.Clear();
         }
-        
+
         specialMove = specialLookup.CheckSpecial(specialAttack);
         if (specialMove != null)
         {
             print(specialMove);
-            switch(specialMove)
+            switch (specialMove)
             {
                 case "Special1":
                     StartCoroutine(Special1());
@@ -140,8 +140,8 @@ public class MainCharacterController : MonoBehaviour
         {
             specialAttack.RemoveAt(0);
         }
-        
-        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull() )
+
+        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull())
         {
             playerUltimate.resetBar();
             ultimate.Activate();
@@ -158,7 +158,7 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "S");
+        KeyPressAnalytics("Attack", "J");
     }
 
     IEnumerator Uppercut()
@@ -169,19 +169,20 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "S");
+        KeyPressAnalytics("Attack", "K");
     }
 
     IEnumerator Block()
     {
-        transform.position = new Vector3(0, -3.5f, -5f);
+        //transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Block");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
         KeyPressAnalytics("Block", "S");
+        transform.position = heroStartPosition;
     }
-    
+
     IEnumerator Special1()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
@@ -191,7 +192,7 @@ public class MainCharacterController : MonoBehaviour
         specialAtkCnt++;
         specialAtk1Cnt++;
     }
-    
+
     IEnumerator Special2()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
@@ -213,5 +214,5 @@ public class MainCharacterController : MonoBehaviour
         AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
         Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
-   
+
 }
