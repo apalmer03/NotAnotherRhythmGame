@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currHealth = maxHealth;   
+        currHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -33,12 +33,12 @@ public class Health : MonoBehaviour
             currHealth -= damage;
             healthBar.SetHealth(currHealth);
         }
-        
+
     }
 
     public void HealPlayer(int heal)
     {
-        if(currHealth + heal > maxHealth)
+        if (currHealth + heal > maxHealth)
         {
             currHealth = maxHealth;
             healthBar.SetHealth(currHealth);

@@ -38,9 +38,8 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtkCnt = 0;
     public int specialAtk1Cnt = 0;
     public int specialAtk2Cnt = 0;
-
     public float time = 0.0f;
-    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
+    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
 
     // Start is called before the first frame update
     void Start()
@@ -74,11 +73,13 @@ public class MainCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         time += Time.deltaTime;
         seconds = (int)Math.Ceiling(time);
         seconds = seconds % 60;
+    }
 
+    public void doAction()
+    {
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space"))
@@ -145,8 +146,9 @@ public class MainCharacterController : MonoBehaviour
         {
             playerUltimate.resetBar();
             ultimate.Activate();
-            enemyHealth.DamagePlayer(10);
+            enemyHealth.DamagePlayer(1);
         }
+
     }
 
     IEnumerator Jump()
@@ -181,7 +183,7 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Block()
     {
-        //transform.position = new Vector3(0, -3.5f, -5f);
+
         anim.SetTrigger("Block");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(1f);

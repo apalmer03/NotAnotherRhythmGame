@@ -1067,20 +1067,6 @@ MonoBehaviour:
   currValue: 0
   maxValue: 100
   ultimateBar: {fileID: 923462545}
---- !u!114 &140889064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 140889060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e009011feb9c4554786764fd872ecc2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beatTempo: 0
-  hasStarted: 0
 --- !u!114 &140889065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,7 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currHealth: 0
-  maxHealth: 100
+  maxHealth: 300
   isBlocking: 0
   isJumping: 0
   healthBar: {fileID: 925022861}
@@ -1874,6 +1860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375911408}
+  - component: {fileID: 375911409}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -1899,6 +1886,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &375911409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375911407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48441284085c8e46bb5ff429167ea71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &395658067
 GameObject:
   m_ObjectHideFlags: 0
@@ -3516,6 +3515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatTempo: 120
   hasStarted: 0
+  ultimateButtons: {fileID: 375911407}
 --- !u!4 &805471602
 Transform:
   m_ObjectHideFlags: 0
@@ -5592,7 +5592,7 @@ Transform:
   m_GameObject: {fileID: 1179049917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 12.118199}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 2.4066586}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 2.4066586}
   m_Children: []
   m_Father: {fileID: 54951521}
   m_RootOrder: 1
@@ -8945,7 +8945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currHealth: 0
-  maxHealth: 100
+  maxHealth: 300
   isBlocking: 0
   isJumping: 0
   healthBar: {fileID: 1953459942}
