@@ -8075,7 +8075,7 @@ MonoBehaviour:
   countdownDisplay: {fileID: 1821499126}
   bpm: 120
   circle: {fileID: 1179049917}
-  player: {fileID: 0}
+  player: {fileID: 140889060}
 --- !u!114 &1821499125
 MonoBehaviour:
   m_ObjectHideFlags: 0
