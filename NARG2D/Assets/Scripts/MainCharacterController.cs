@@ -23,7 +23,7 @@ public class MainCharacterController : MonoBehaviour
     private int level = 0;
     private Animator anim;
     public AudioSource[] soundFX;
-    
+
     public GameObject ultimateAttack;
     private Ultimate playerUltimate;
     public GameObject multi;
@@ -38,10 +38,8 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtkCnt = 0;
     public int specialAtk1Cnt = 0;
     public int specialAtk2Cnt = 0;
-    
-
     public float time = 0.0f;
-    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
+    public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
 
     // Start is called before the first frame update
     void Start()
@@ -75,11 +73,13 @@ public class MainCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         time += Time.deltaTime;
         seconds = (int)Math.Ceiling(time);
         seconds = seconds % 60;
+    }
 
+    public void doAction()
+    {
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space"))
@@ -112,20 +112,20 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Block());
             attack.Append("S");
         }
-        
+
         if (attack.Length != 0)
         {
-            
+
             specialAttack.Add(attack.ToString());
             Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
             attack.Clear();
         }
-        
+
         specialMove = specialLookup.CheckSpecial(specialAttack);
         if (specialMove != null)
         {
             print(specialMove);
-            switch(specialMove)
+            switch (specialMove)
             {
                 case "Special1":
                     StartCoroutine(Special1());
@@ -141,13 +141,14 @@ public class MainCharacterController : MonoBehaviour
         {
             specialAttack.RemoveAt(0);
         }
-        
-        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull() )
+
+        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull())
         {
             playerUltimate.resetBar();
             ultimate.Activate();
             enemyHealth.DamagePlayer(1);
         }
+
     }
 
 
@@ -159,7 +160,7 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "S");
+        KeyPressAnalytics("Attack", "J");
     }
 
     IEnumerator Uppercut()
@@ -182,7 +183,7 @@ public class MainCharacterController : MonoBehaviour
         playerHealth.isBlocking = false;
         KeyPressAnalytics("Block", "S");
     }
-    
+
     IEnumerator Special1()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
@@ -192,7 +193,7 @@ public class MainCharacterController : MonoBehaviour
         specialAtkCnt++;
         specialAtk1Cnt++;
     }
-    
+
     IEnumerator Special2()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
@@ -214,5 +215,5 @@ public class MainCharacterController : MonoBehaviour
         AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
         Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
-   
+
 }
