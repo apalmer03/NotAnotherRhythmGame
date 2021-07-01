@@ -208,6 +208,7 @@ public class NoteSystem : MonoBehaviour
         {
             ultDuration = ultTimer;
             ultFlag = false;
+            totalscore = totalscore + 500;
         }
         
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)

@@ -56,16 +56,16 @@ public class GameProcess : MonoBehaviour
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
-        totScore = nSys.GetTotal();
+        //totScore = nSys.GetTotal();
 
-        totScore = totScore - 200; //200 point penalty for losing
-        if (totScore < 0)
-        {
-            totScore = 0;
-        }
+        //totScore = totScore - 200; //200 point penalty for losing
+        //if (totScore < 0)
+        //{
+        //    totScore = 0;
+        //}
 
-        scoreUI.text = "Total Score: " + totScore.ToString(); //Update if score was deducted
-        calculateLetter();
+        //scoreUI.text = "Total Score: " + totScore.ToString(); //Update if score was deducted
+        //calculateLetter();
     }
     private void LevelComplete()
     {
@@ -81,23 +81,23 @@ public class GameProcess : MonoBehaviour
 
     public void calculateLetter()
     { //Temp score values for the demo, will adjust / add complexity later
-        if (totScore >= 2000)
+        if (totScore >= 3400)
         {
             scoreS.SetActive(true);
         }
-        else if (totScore >= 1200)
+        else if (totScore >= 2600)
         {
             scoreA.SetActive(true);
         }
-        else if (totScore >= 800)
+        else if (totScore >= 1900)
         {
             scoreB.SetActive(true);
         }
-        else if (totScore >= 500)
+        else if (totScore >= 1200)
         {
             scoreC.SetActive(true);
         }
-        else if (totScore >= 200)
+        else if (totScore >= 600)
         {
             scoreD.SetActive(true);
         }
