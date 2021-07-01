@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ultimate : MonoBehaviour
 {
     public int currValue = 0;
-    public int maxValue = 100;
+    public int maxValue = 300;
     public UltimateBar ultimateBar;
     // Start is called before the first frame update
     
@@ -38,6 +39,7 @@ public class Ultimate : MonoBehaviour
     {
         currValue = 0;
         ultimateBar.SetValue(0);
+        ultimateBar.GetComponentInChildren<Image>().color = Color.yellow;
     }
     
 }

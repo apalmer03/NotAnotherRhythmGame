@@ -38,6 +38,8 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtkCnt = 0;
     public int specialAtk1Cnt = 0;
     public int specialAtk2Cnt = 0;
+    public GameObject special1;
+    public GameObject special2;
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
 
@@ -68,6 +70,8 @@ public class MainCharacterController : MonoBehaviour
         specialAtkCnt = 0;
         specialAtk1Cnt = 0;
         specialAtk2Cnt = 0;
+        special1.SetActive(false);
+        special2.SetActive(false);
     }
 
     // Update is called once per frame
@@ -280,6 +284,8 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Special1()
     {
+        IEnumerator showSpecial1 = ShowSpecial1(1.0f);
+        StartCoroutine(showSpecial1);
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Special1");
         enemyHealth.DamagePlayer(15);
@@ -290,6 +296,8 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Special2()
     {
+        IEnumerator showSpecial2 = ShowSpecial2(1.0f);
+        StartCoroutine(showSpecial2);
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Special2");
         enemyHealth.DamagePlayer(20);
@@ -309,5 +317,17 @@ public class MainCharacterController : MonoBehaviour
         AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
         Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
-
+    
+    private IEnumerator ShowSpecial1(float waitTime)
+    {
+        special1.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        special1.SetActive(false);
+    }
+    private IEnumerator ShowSpecial2(float waitTime)
+    {
+        special2.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        special2.SetActive(false);
+    }
 }
