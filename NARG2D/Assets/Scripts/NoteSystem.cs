@@ -86,9 +86,9 @@ public class NoteSystem : MonoBehaviour
         actions = new object[265];
         attack_pattern = new int[8][];
         attack_pattern[0] = new int[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        attack_pattern[1] = new int[] { 4, 4, 5, 5, 1, 4, 4, 1 };
-        attack_pattern[2] = new int[] { 4, 5, 4, 5, 4, 1, 1, 4 };
-        attack_pattern[3] = new int[] { 4, 4, 5, 5, 1, 1, 4, 4 };
+        attack_pattern[1] = new int[] { 4, 4, 5, 4, 1, 4, 4, 4 };
+        attack_pattern[2] = new int[] { 4, 4, 4, 4, 6, 4, 2, 4 };
+        attack_pattern[3] = new int[] { 5, 4, 1, 4, 4, 6, 4, 2 };
 
 
 
