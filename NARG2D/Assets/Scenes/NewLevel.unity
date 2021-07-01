@@ -2891,7 +2891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &675272999
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6081,20 +6081,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Controls:
-
-    Light Attack - J
-
-    Heavy Attack - K
-
-    Special Attack
-    Combos: J+J, J+K+J
-
-    Ultimate: H
-
-    Block: S
-
-    Jump: Space'
+  m_Text: "Controls:\nLight Attack - J\nHeavy Attack - K\nSpecial Attack Combos:
+    \nSpecial1: (Jump)( J)(J)\nSpecial2:  (J)(K)(J)\nUltimate: H\nBlock: S\nJump:
+    Space"
 --- !u!222 &1267138468
 CanvasRenderer:
   m_ObjectHideFlags: 0

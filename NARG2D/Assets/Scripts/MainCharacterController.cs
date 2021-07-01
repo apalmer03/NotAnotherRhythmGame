@@ -286,7 +286,7 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Special1()
     {
-        IEnumerator showSpecial1 = ShowSpecial1(1.0f);
+        IEnumerator showSpecial1 = ShowSpecial1(1.2f);
         StartCoroutine(showSpecial1);
         //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special1");
@@ -298,7 +298,7 @@ public class MainCharacterController : MonoBehaviour
 
     IEnumerator Special2()
     {
-        IEnumerator showSpecial2 = ShowSpecial2(1.0f);
+        IEnumerator showSpecial2 = ShowSpecial2(1.2f);
         StartCoroutine(showSpecial2);
         //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special2");
