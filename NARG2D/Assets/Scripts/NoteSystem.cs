@@ -103,6 +103,8 @@ public class NoteSystem : MonoBehaviour
     private Note noteRing;
     private UltimateNote ultNote;
     private Queue<int> ultAction = new Queue<int>();
+
+    public float ultTimer = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -199,6 +201,16 @@ public class NoteSystem : MonoBehaviour
             gameOver.SetActive(true);
         }
 
+        if (ultFlag)
+        {
+            ultTimer = ultTimer - Time.deltaTime;
+        }
+        if (ultTimer <= 0)
+        {
+            ultTimer = 5;
+            ultFlag = false;
+        }
+        
         if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
         {
             GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
@@ -365,9 +377,7 @@ public class NoteSystem : MonoBehaviour
             ultNote = Instantiate(ultDownRight, noteRingPos, Quaternion.identity);
             ultAction.Enqueue(9);
         }
-
-        ultNote.GetComponent<UltimateNote>().note = instance;
-       // ultNote.GetComponent<UltimateNote>().SetNote(instance);
+        ultNote.GetComponent<UltimateNote>().SetNote(instance);
         ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
         ultNote.duration = 1.0f;
     }

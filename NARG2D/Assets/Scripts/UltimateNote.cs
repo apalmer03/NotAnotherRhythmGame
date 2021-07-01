@@ -12,7 +12,7 @@ public class UltimateNote : MonoBehaviour
     public float duration;
     private float i;
     //private GameObject noteSystem;
-    public NoteSystem note;
+    private NoteSystem note;
     void Start()
     {
         //note = noteSystem.GetComponent<NoteSystem>();
@@ -28,9 +28,9 @@ public class UltimateNote : MonoBehaviour
     {
         if (i >= 1.0f)
         {
+            note.DestroyUltAction();
             // Kills the game object
             Destroy(gameObject);
-            note.DestroyUltAction();
             // Removes this script instance from the game object
             Destroy(this);
         }
