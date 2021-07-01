@@ -16,8 +16,11 @@ public class EnemyController : MonoBehaviour
     public GameObject levelComplete;
     private Animator anim;
     public GameObject blueFire;
-    public GameObject OrangeFire;
-   
+    public GameObject orangeFire;
+    private bool shootFireBall = false;
+    private Vector3 fireStartPos;
+    private float startTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,20 +31,16 @@ public class EnemyController : MonoBehaviour
         playerHealth = player.GetComponent<Health>();
         enemyHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
-        
+        fireStartPos = blueFire.transform.position;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.N))
+        if (shootFireBall)
         {
-            anim.SetTrigger("Charge");
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            StartCoroutine(Attack());
+            blueFire.transform.Translate(Vector3.forward * (Time.time-startTime));
         }
 
     }
@@ -62,13 +61,27 @@ public class EnemyController : MonoBehaviour
         else if (action == ActionNote.Action.UpperCut)
         {
             Debug.Log("Enemy UpperCut");
-            StartCoroutine(Uppercut());
+            StartCoroutine(Magic());
             //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
         else if (action == ActionNote.Action.Block)
         {
-            Debug.Log("Enemy Charge");
-            StartCoroutine(Charge());
+            Debug.Log("Enemy Block");
+            //StartCoroutine(Charge());
+            //anim.SetTrigger("Charge");
+            //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+        else if (action == ActionNote.Action.Charge_1)
+        {
+            Debug.Log("Enemy Charge_1");
+            StartCoroutine(MeleeCharge());
+            //anim.SetTrigger("Charge");
+            //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        }
+        else if (action == ActionNote.Action.Charge_2)
+        {
+            Debug.Log("Enemy Magic");
+            StartCoroutine(MagicCharge());
             //anim.SetTrigger("Charge");
             //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
@@ -94,20 +107,18 @@ public class EnemyController : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
             playerHealth.DamagePlayer(10);
         }
-        
+
         yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
     }
 
-    IEnumerator Uppercut()
+    IEnumerator Magic()
     {
         anim.SetTrigger("Magic");
-        transform.position = new Vector3(0, -3.5f, -5f);
-        /*
-        if (playerHealth.isBlocking)
+        startTime = Time.time;
+        shootFireBall = true;
+        if (playerHealth.isJumping)
         {
-
-            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
             Debug.Log("Enemy Attack Blocked!");
         }
         else
@@ -116,15 +127,26 @@ public class EnemyController : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
             playerHealth.DamagePlayer(10);
         }
-        */
         yield return new WaitForSeconds(0.5f);
-        transform.position = enemyStartPosition;
+        shootFireBall = false;
+        blueFire.transform.position = fireStartPos;
     }
-    IEnumerator Charge()
+
+    IEnumerator MeleeCharge()
     {
+        anim.SetTrigger("Charge");
+        orangeFire.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        orangeFire.SetActive(false);
+    }
+
+    IEnumerator MagicCharge()
+    {
+        anim.SetTrigger("Charge");
         blueFire.SetActive(true);
         yield return new WaitForSeconds(3f);
         blueFire.SetActive(false);
+
     }
 
 }

@@ -85,7 +85,7 @@ public class MainCharacterController : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             soundFX[0].Play();
-            anim.SetTrigger("Jump");
+            StartCoroutine(Jump());
             attack.Append(" ");
             KeyPressAnalytics("Jump", "Space");
         }
@@ -151,6 +151,13 @@ public class MainCharacterController : MonoBehaviour
 
     }
 
+    IEnumerator Jump()
+    {
+        anim.SetTrigger("Jump");
+        playerHealth.isJumping = true;
+        yield return new WaitForSeconds(1f);
+        playerHealth.isJumping = false;
+    }
 
     IEnumerator Attack()
     {
@@ -171,14 +178,15 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "S");
+        KeyPressAnalytics("Attack", "K");
     }
 
     IEnumerator Block()
     {
+
         anim.SetTrigger("Block");
         playerHealth.isBlocking = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         playerHealth.isBlocking = false;
         KeyPressAnalytics("Block", "S");
     }

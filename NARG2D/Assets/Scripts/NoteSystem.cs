@@ -84,14 +84,11 @@ public class NoteSystem : MonoBehaviour
         beats = new float[265];
         actions = new object[265];
         attack_pattern = new int[8][];
-        attack_pattern[0] = new int[] { 4, 4, 4, 4 };
-        attack_pattern[1] = new int[] { 4, 4, 4, 3 };
-        attack_pattern[2] = new int[] { 4, 3, 4, 1 };
-        attack_pattern[3] = new int[] { 4, 1, 4, 1 };
-        attack_pattern[4] = new int[] { 3, 4, 3, 4 };
-        attack_pattern[5] = new int[] { 4, 4, 4, 3 };
-        attack_pattern[6] = new int[] { 3, 3, 3, 1 };
-        attack_pattern[7] = new int[] { 3, 1, 3, 1 };
+        attack_pattern[0] = new int[] { 4, 4, 4, 4, 4, 4, 4, 4 };
+        attack_pattern[1] = new int[] { 4, 4, 5, 4, 1, 4, 4, 4 };
+        attack_pattern[2] = new int[] { 4, 4, 4, 4, 6, 4, 2, 4 };
+        attack_pattern[3] = new int[] { 5, 4, 1, 4, 4, 6, 4, 2 };
+
 
 
         for (var i = 0; i < 265; i++)
@@ -99,7 +96,7 @@ public class NoteSystem : MonoBehaviour
             beats[i] = i;
 
         }
-        for (var p = 0; p < 265 / 4; p++)
+        for (var p = 0; p < 265 / 8; p++)
         {
             //actions_list.AddRange(attack_pattern[patt]);
             if (p < 4)
@@ -123,7 +120,7 @@ public class NoteSystem : MonoBehaviour
             //}
             else
             {
-                var patt = Random.Range(5, 7);
+                var patt = Random.Range(1, 3);
                 actions_list.AddRange(attack_pattern[patt]);
             }
         }

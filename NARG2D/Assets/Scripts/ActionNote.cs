@@ -17,7 +17,9 @@ public class ActionNote : MonoBehaviour
         Attack = 1,
         UpperCut = 2,
         Block = 3,
-        Idle = 4
+        Idle = 4,
+        Charge_1 = 5,
+        Charge_2 = 6
     };
 
     public Action action;

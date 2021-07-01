@@ -1109,6 +1109,7 @@ MonoBehaviour:
   currHealth: 0
   maxHealth: 300
   isBlocking: 0
+  isJumping: 0
   healthBar: {fileID: 925022861}
 --- !u!210 &140889067
 SortingGroup:
@@ -4234,15 +4235,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.33333325
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.33333334
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.33333325
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8153,6 +8154,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.09
       objectReference: {fileID: 0}
@@ -8918,7 +8931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelComplete: {fileID: 675272998}
   blueFire: {fileID: 1872904739}
-  OrangeFire: {fileID: 2123304729}
+  orangeFire: {fileID: 2123304729}
 --- !u!114 &2084500828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8934,6 +8947,7 @@ MonoBehaviour:
   currHealth: 0
   maxHealth: 300
   isBlocking: 0
+  isJumping: 0
   healthBar: {fileID: 1953459942}
 --- !u!210 &2084500829
 SortingGroup:
