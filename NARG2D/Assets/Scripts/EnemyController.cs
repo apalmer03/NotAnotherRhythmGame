@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class EnemyController : MonoBehaviour
 {
@@ -100,6 +101,7 @@ public class EnemyController : MonoBehaviour
         {
 
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+            AnalyticsResult analytics_blocking = Analytics.CustomEvent("Successful block");
             Debug.Log("Enemy Attack Blocked!");
         }
         else
@@ -121,6 +123,7 @@ public class EnemyController : MonoBehaviour
         if (playerHealth.isJumping)
         {
             Debug.Log("Enemy Attack Blocked!");
+            AnalyticsResult analytics_blocking = Analytics.CustomEvent("Successful jump");
         }
         else
         {

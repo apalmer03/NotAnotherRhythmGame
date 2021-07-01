@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class GameProcess : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class GameProcess : MonoBehaviour
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
+        AnalyticsResult analytics_gameover = Analytics.CustomEvent("Game Over");
         //totScore = nSys.GetTotal();
 
         //totScore = totScore - 200; //200 point penalty for losing
@@ -77,6 +79,7 @@ public class GameProcess : MonoBehaviour
         Destroy(player.GetComponent<MainCharacterController>());
         totScore = nSys.GetTotal();
         calculateLetter();
+        AnalyticsResult analytics_gameover = Analytics.CustomEvent("Level Complete");
     }
 
     public void calculateLetter()

@@ -91,7 +91,6 @@ public class MainCharacterController : MonoBehaviour
             soundFX[0].Play();
             StartCoroutine(Jump());
             attack.Append(" ");
-            KeyPressAnalytics("Jump", "Space");
         }
 
         // Attack (Dash Right)
@@ -250,6 +249,7 @@ public class MainCharacterController : MonoBehaviour
         playerHealth.isJumping = true;
         yield return new WaitForSeconds(1f);
         playerHealth.isJumping = false;
+        KeyPressAnalytics("Jump", "Space");
     }
 
     IEnumerator Attack()
@@ -294,6 +294,7 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk1Cnt++;
+        KeyPressAnalytics("Special1", "SpaceJJ");
     }
 
     IEnumerator Special2()
@@ -306,6 +307,7 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
+        KeyPressAnalytics("Special2", "JKJ");
     }
     
     IEnumerator Ultimate()
@@ -314,6 +316,7 @@ public class MainCharacterController : MonoBehaviour
         transform.position = new Vector3(0, -3.5f, -5f);
         yield return new WaitForSeconds(15f);
         transform.position = heroStartPosition;
+        KeyPressAnalytics("Ultimate", "H");
 
     }
     public void KeyPressAnalytics(string actionType, string keyPressed)
