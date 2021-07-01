@@ -151,7 +151,7 @@ public class MainCharacterController : MonoBehaviour
             playerUltimate.resetBar();
             //ultimate.Activate();
             noteSystem.ActivateUlt();
-            enemyHealth.DamagePlayer(1);
+            enemyHealth.DamagePlayer(20);
             StartCoroutine(Ultimate());
         }
     }
@@ -290,7 +290,7 @@ public class MainCharacterController : MonoBehaviour
         StartCoroutine(showSpecial1);
         //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special1");
-        enemyHealth.DamagePlayer(15);
+        enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk1Cnt++;
@@ -302,7 +302,7 @@ public class MainCharacterController : MonoBehaviour
         StartCoroutine(showSpecial2);
         //transform.position = new Vector3(0, -3.5f, -5f);
         //anim.SetTrigger("Special2");
-        enemyHealth.DamagePlayer(20);
+        enemyHealth.DamagePlayer(10);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
