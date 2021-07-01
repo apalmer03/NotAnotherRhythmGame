@@ -104,7 +104,9 @@ public class NoteSystem : MonoBehaviour
     private UltimateNote ultNote;
     private Queue<int> ultAction = new Queue<int>();
 
-    public float ultTimer = 10;
+    public float ultTimer = 10f;
+
+    public float ultDuration;
     // Start is called before the first frame update
     void Start()
     {
@@ -127,7 +129,7 @@ public class NoteSystem : MonoBehaviour
         attack_pattern[1] = new int[] { 4, 4, 5, 4, 1, 4, 4, 4 };
         attack_pattern[2] = new int[] { 4, 4, 4, 4, 6, 4, 2, 4 };
         attack_pattern[3] = new int[] { 5, 4, 1, 4, 4, 6, 4, 2 };
-
+        ultDuration = ultTimer;
 
 
         for (var i = 0; i < 265; i++)
@@ -200,11 +202,11 @@ public class NoteSystem : MonoBehaviour
 
         if (ultFlag)
         {
-            ultTimer = ultTimer - Time.deltaTime;
+            ultDuration = ultDuration - Time.deltaTime;
         }
-        if (ultTimer <= 0)
+        if (ultDuration <= 0)
         {
-            ultTimer = 5;
+            ultDuration = ultTimer;
             ultFlag = false;
         }
         
@@ -219,7 +221,7 @@ public class NoteSystem : MonoBehaviour
             {
                 SpawnUltNote();
             }
-            if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle)
+            if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle && !ultFlag)
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
                 // Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
