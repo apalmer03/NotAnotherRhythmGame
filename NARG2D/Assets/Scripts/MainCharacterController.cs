@@ -145,10 +145,97 @@ public class MainCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull())
         {
             playerUltimate.resetBar();
-            ultimate.Activate();
+            //ultimate.Activate();
+            noteSystem.ActivateUlt(); 
             enemyHealth.DamagePlayer(1);
         }
-
+    }
+    
+    public void doUltAction(int ultAction)
+    {
+        switch (ultAction)
+        {
+            case 0:
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 1:
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 2:
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 3:
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 4:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 5:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 6:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 7:
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 8:
+                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 9:
+                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+        }
     }
 
     IEnumerator Jump()
