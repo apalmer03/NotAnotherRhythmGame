@@ -70,7 +70,6 @@ public class NoteSystem : MonoBehaviour
     void Start()
     {
         instance = this;
-        Debug.Log("BPM is:" + bpm);
         secPerBeat = 60f / bpm;
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
@@ -166,7 +165,7 @@ public class NoteSystem : MonoBehaviour
             if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle)
             {
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
-                Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
+                // Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
             }
             // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
@@ -178,7 +177,7 @@ public class NoteSystem : MonoBehaviour
             // check if hit on beat
             if (err <= marginOfError)
             {
-                player.gameObject.GetComponent<MainCharacterController>().enabled = true;
+                player.gameObject.GetComponent<MainCharacterController>().doAction();
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo x " + comboNum.ToString();
@@ -223,7 +222,6 @@ public class NoteSystem : MonoBehaviour
             // check if not on beat
             else
             {
-                player.gameObject.GetComponent<MainCharacterController>().enabled = false;
                 playerUltimate.resetBar();
                 coroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(coroutine);
@@ -231,12 +229,12 @@ public class NoteSystem : MonoBehaviour
                 StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
-                GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-                if (notes.Length >= 1 && err <= 0.6)
-                {
-                    Destroy(notes[0].gameObject);
-                    currentBeat++;
-                }
+                // GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
+                // if (notes.Length >= 1 && err <= 0.6)
+                // {
+                // Destroy(notes[0].gameObject);
+                // currentBeat++;
+                // }
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
             }
@@ -305,10 +303,10 @@ public class NoteSystem : MonoBehaviour
 
     public void UltGoodHit()
     {
-        UltNoteHit(3);
+        UltNoteHit(1);
     }
     public void UltPerfectHit()
     {
-        UltNoteHit(5);
+        UltNoteHit(1);
     }
 }
