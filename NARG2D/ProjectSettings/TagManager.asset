@@ -10,6 +10,7 @@ TagManager:
   - Note
   - Block
   - Instruction
+  - Activator
   layers:
   - Default
   - TransparentFX
@@ -58,4 +59,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 657120017
     locked: 0
