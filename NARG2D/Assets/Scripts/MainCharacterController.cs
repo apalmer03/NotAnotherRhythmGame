@@ -321,8 +321,12 @@ public class MainCharacterController : MonoBehaviour
         Dictionary<string, string> analytics_inputAction = new Dictionary<string, string>
         {
             {"Attack", "J"},
+            {"Attack", "K"},
             {"Block", "S"},
             {"Jump", "Space"},
+            {"Special1", "SpaceJJ"},
+            {"Special2", "JKJ"},
+            { "Ultimate", "H"}
         };
         AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
         Debug.Log("Analytics Result(action used): " + analytics_actionType);
