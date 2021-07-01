@@ -95,6 +95,7 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Punch");
         transform.position = new Vector3(0, -3.5f, -5f);
+        yield return new WaitForSeconds(0.5f);
         if (playerHealth.isBlocking)
         {
 
@@ -108,7 +109,6 @@ public class EnemyController : MonoBehaviour
             playerHealth.DamagePlayer(10);
         }
 
-        yield return new WaitForSeconds(0.5f);
         transform.position = enemyStartPosition;
     }
 
@@ -117,6 +117,7 @@ public class EnemyController : MonoBehaviour
         anim.SetTrigger("Magic");
         startTime = Time.time;
         shootFireBall = true;
+        yield return new WaitForSeconds(0.5f);
         if (playerHealth.isJumping)
         {
             Debug.Log("Enemy Attack Blocked!");
@@ -127,7 +128,6 @@ public class EnemyController : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
             playerHealth.DamagePlayer(10);
         }
-        yield return new WaitForSeconds(0.5f);
         shootFireBall = false;
         blueFire.transform.position = fireStartPos;
     }
@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Charge");
         blueFire.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         blueFire.SetActive(false);
 
     }
