@@ -154,7 +154,7 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Ultimate());
         }
     }
-    
+
     public void doUltAction(int ultAction)
     {
 
@@ -271,7 +271,7 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "K");
+        KeyPressAnalytics("Kick", "K");
     }
 
     IEnumerator Block()
@@ -309,7 +309,7 @@ public class MainCharacterController : MonoBehaviour
         specialAtk2Cnt++;
         KeyPressAnalytics("Special2", "JKJ");
     }
-    
+
     IEnumerator Ultimate()
     {
         anim.SetTrigger("Ultimate");
@@ -324,7 +324,7 @@ public class MainCharacterController : MonoBehaviour
         Dictionary<string, string> analytics_inputAction = new Dictionary<string, string>
         {
             {"Attack", "J"},
-            {"Attack", "K"},
+            {"Kick", "K"},
             {"Block", "S"},
             {"Jump", "Space"},
             {"Special1", "SpaceJJ"},
@@ -334,7 +334,7 @@ public class MainCharacterController : MonoBehaviour
         AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
         Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
-    
+
     private IEnumerator ShowSpecial1(float waitTime)
     {
         special1.SetActive(true);
