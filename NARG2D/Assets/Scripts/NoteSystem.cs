@@ -100,12 +100,13 @@ public class NoteSystem : MonoBehaviour
                                              + RATIO_CHANCE_LEFTRIGHT
                                              + RATIO_CHANCE_DOWNLEFT
                                              + RATIO_CHANCE_DOWNRIGHT;
-    private Note noteRing;
     private UltimateNote ultNote;
     private Queue<int> ultAction = new Queue<int>();
     public float ultTimer = 10f;
     public float ultDuration;
     private Renderer outerRingRenderer;
+    private Queue<Note> noteRing = new Queue<Note>();
+    private float scaleMargin = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -143,21 +144,6 @@ public class NoteSystem : MonoBehaviour
             {
                 actions_list.AddRange(attack_pattern[0]);
             }
-            //else if (p < 15)
-            //{
-            //    var patt = Random.Range(0, 2);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
-            //else if (p < 30)
-            //{
-            //    var patt = Random.Range(1, 4);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
-            //else if (p < 40)
-            //{
-            //    var patt = Random.Range(1, 5);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
             else
             {
                 var patt = Random.Range(1, 3);
@@ -226,24 +212,11 @@ public class NoteSystem : MonoBehaviour
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
                 // Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
             }
-            // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
             nextIndex++;
         }
-        // float checkerr = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
-        // if (checkerr <= marginOfError)
-        // {
-        //     GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-        //     // for (int i = 0; i < notes.Length; i++)
-        //     // {
-        //     if (notes.Length >= 1)
-        //     {
 
-        //         Debug.Log(checkerr + " " + notes[0].gameObject.transform.localScale);
-        //         // Debug.Log(notes[0].gameObject.transform.localScale);
-        //     }
-        //     // }
-        // }
+        updateNote();
 
         float err = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
 
@@ -333,9 +306,24 @@ public class NoteSystem : MonoBehaviour
 
     private void SpawnNote()
     {
-        noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
-        noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
-        noteRing.duration = 1.0f;
+        Note ring = Instantiate(note, noteRingPos, Quaternion.identity);
+        ring.transform.parent = GameObject.Find("NoteSystem").transform;
+        ring.duration = 1.0f;
+        noteRing.Enqueue(ring);
+    }
+
+    private void updateNote()
+    {
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Peek();
+            // dequeue and destroy if note scale is down 
+            if (top.i >= 1.0f)
+            {
+                noteRing.Dequeue();
+                Destroy(top.gameObject);
+            }
+        }
     }
 
     private void showOnBeatIndicator()

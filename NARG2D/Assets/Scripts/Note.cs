@@ -10,7 +10,7 @@ public class Note : MonoBehaviour
     private Vector3 scaleChange;
     private Vector3 minScale;
     public float duration;
-    private float i;
+    public float i;
     void Start()
     {
         minScale = new Vector3(0.25f, 0.25f, 0f);
@@ -23,14 +23,6 @@ public class Note : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (i >= 1.0f)
-        {
-            // Kills the game object
-            Destroy(gameObject);
-
-            // Removes this script instance from the game object
-            Destroy(this);
-        }
         i += Time.deltaTime * speed;
         transform.localScale = Vector3.Lerp(CurrentScale, minScale, i);
     }
