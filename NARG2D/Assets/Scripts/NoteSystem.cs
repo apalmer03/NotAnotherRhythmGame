@@ -63,7 +63,8 @@ public class NoteSystem : MonoBehaviour
     float songLength = float.MaxValue;
     public int currentBeat = 0;
 
-    float marginOfError = 0.3f;
+    float marginOfError = 0.35f;
+    float colorMargin = 0.6f;
     public List<int> actions_list;
     public int[][] attack_pattern;
     private IEnumerator pressedCoroutine;
@@ -106,7 +107,7 @@ public class NoteSystem : MonoBehaviour
     public float ultDuration;
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
-    private float scaleMargin = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -218,18 +219,18 @@ public class NoteSystem : MonoBehaviour
 
         updateNote();
 
-        float err = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
-
+        float err = songPositionInBeats - beats[currentBeat];
         // show on beat indicator
-        if (err <= marginOfError)
+        Note topRing = noteRing.Peek();
+        if (Mathf.Abs(err) <= colorMargin && err <= 0 && topRing.firstOnBeat)
         {
-            showOnBeatIndicator();
+            topRing.onBeatState = true;
         }
 
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
         {
             // check if hit on beat
-            if (err <= marginOfError)
+            if (Mathf.Abs(err) <= marginOfError)
             {
                 if (!ultFlag)
                 {
@@ -326,21 +327,6 @@ public class NoteSystem : MonoBehaviour
         }
     }
 
-    private void showOnBeatIndicator()
-    {
-        onBeatCoroutine = changeCircleColor(0.5f, new Color(0.99f, 0.98f, 0.95f, 0.5f));
-        StartCoroutine(onBeatCoroutine);
-    }
-
-    private IEnumerator changeCircleColor(float waitTime, Color col)
-    {
-        outerRingRenderer.material.SetColor("_Color", col);
-        circleRenderer.material.SetColor("_Color", col);
-        yield return new WaitForSeconds(waitTime);
-        outerRingRenderer.material.SetColor("_Color", Color.white);
-        circleRenderer.material.SetColor("_Color", Color.white);
-    }
-
     private void SpawnUltNote()
     {
         System.Random random = new System.Random();
@@ -407,7 +393,6 @@ public class NoteSystem : MonoBehaviour
 
     private IEnumerator ChangeColor(float waitTime, Color col)
     {
-        StopCoroutine(onBeatCoroutine);
         outerRingRenderer.material.SetColor("_Color", col);
         circleRenderer.material.SetColor("_Color", col);
         yield return new WaitForSeconds(waitTime);
