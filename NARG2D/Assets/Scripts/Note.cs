@@ -13,7 +13,7 @@ public class Note : MonoBehaviour
     private float i;
     void Start()
     {
-        minScale = new Vector3(0.2f, 0.2f, 0f);
+        minScale = new Vector3(0.25f, 0.25f, 0f);
         CurrentScale = new Vector3(2.0f, 2.0f, 0f);
         // duration = 1.0f;
         i = 0f;
