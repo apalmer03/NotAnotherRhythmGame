@@ -19,7 +19,7 @@ public class Note : MonoBehaviour
     private Renderer mRenderer;
     void Start()
     {
-        minScale = new Vector3(0.25f, 0.25f, 0f);
+        minScale = new Vector3(0.0f, 0.0f, 0f);
         currentScale = new Vector3(2.0f, 2.0f, 0f);
         i = 0f;
         speed = 1.0f / duration;
@@ -38,15 +38,23 @@ public class Note : MonoBehaviour
         {
             firstOnBeat = false;
             colorDuration = (1 - i) * duration;
-            colorSpeed = 1.0f / colorDuration * 1.5f;
+            colorSpeed = 1.0f / colorDuration;
         }
         else if (onBeatState && !firstOnBeat)
         {
-            if (colorIndex <= 1.0f)
+            // transform to green
+            if (colorIndex <= 1.0f && transform.localScale.x > 0.24f)
             {
                 colorIndex += Time.deltaTime * colorSpeed;
-                mRenderer.material.color = Color.Lerp(Color.white, Color.green, colorIndex);
+                mRenderer.material.color = Color.Lerp(Color.white, new Color(204.0f / 255.0f, 128.0f / 255.0f, 0f, 1.0f), colorIndex);
             }
+            // transform to yellow
+            else if (colorIndex <= 1.0f && transform.localScale.x <= 0.24f)
+            {
+                mRenderer.material.color = Color.Lerp(new Color(204.0f / 255.0f, 128.0f / 255.0f, 0f, 1.0f), Color.green, colorIndex);
+                colorIndex += Time.deltaTime * colorSpeed;
+            }
+
         }
     }
 
