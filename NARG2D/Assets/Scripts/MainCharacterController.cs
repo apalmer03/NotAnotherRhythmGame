@@ -94,26 +94,26 @@ public class MainCharacterController : MonoBehaviour
         }
 
         // Attack (Dash Right)
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             soundFX[1].Play();
             StartCoroutine(Attack());
-            attack.Append("J");
+            attack.Append("A");
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            soundFX[2].Play();
-            StartCoroutine(Uppercut());
-            attack.Append("K");
-        }
-
-        // Block
         if (Input.GetKeyDown(KeyCode.S))
         {
             soundFX[2].Play();
-            StartCoroutine(Block());
+            StartCoroutine(Uppercut());
             attack.Append("S");
+        }
+
+        // Block
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            soundFX[2].Play();
+            StartCoroutine(Block());
+            attack.Append("D");
         }
 
         if (attack.Length != 0)
@@ -145,7 +145,7 @@ public class MainCharacterController : MonoBehaviour
             specialAttack.RemoveAt(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.H) && playerUltimate.isFull())
+        if (Input.GetKeyDown(KeyCode.F) && playerUltimate.isFull())
         {
             playerUltimate.resetBar();
             //ultimate.Activate();
