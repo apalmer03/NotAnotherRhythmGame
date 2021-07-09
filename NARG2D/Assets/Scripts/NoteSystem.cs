@@ -66,7 +66,7 @@ public class NoteSystem : MonoBehaviour
     public int currentBeat = 0;
 
     float marginOfError = 0.35f;
-    float colorMargin = 0.7f;
+    float colorMargin = 0.4f;
     public List<int> actions_list;
     public int[][] attack_pattern;
     private IEnumerator pressedCoroutine;
@@ -157,7 +157,7 @@ public class NoteSystem : MonoBehaviour
         {
             actions[i] = (ActionNote.Action)actions_list.ToArray()[i];
         }
-        beatsShownInAdvance = 1.0f / secPerBeat;
+        // beatsShownInAdvance = 1.0f;
         // currentBeat = 9;
         // nextIndex = 10;
         player = GameObject.Find("Player");
@@ -317,7 +317,7 @@ public class NoteSystem : MonoBehaviour
     {
         Note ring = Instantiate(note, noteRingPos, Quaternion.identity);
         ring.transform.parent = GameObject.Find("NoteSystem").transform;
-        ring.duration = 1.0f;
+        ring.duration = 2 * secPerBeat;
         noteRing.Enqueue(ring);
     }
 
@@ -336,7 +336,7 @@ public class NoteSystem : MonoBehaviour
 
     private void destroyNote()
     {
-        if (noteRing.Count != 0)
+        if (noteRing.Count != 0 && noteRing.Peek().transform.localScale.x <= 0.55f)
         {
             Note top = noteRing.Dequeue();
             Destroy(top.gameObject);
@@ -352,13 +352,13 @@ public class NoteSystem : MonoBehaviour
             IEnumerator displayScoreText;
             if (scale <= 0.44f && scale >= 0.24f)
             {
-                displayScoreText = showText(0.3f, perfectText);
-                pressedCoroutine = ChangeColor(0.3f, Color.green);
+                displayScoreText = showText(0.3f, goodText);
+                pressedCoroutine = ChangeColor(0.3f, Color.yellow);
             }
             else
             {
-                displayScoreText = showText(0.3f, goodText);
-                pressedCoroutine = ChangeColor(0.3f, Color.yellow);
+                displayScoreText = showText(0.3f, perfectText);
+                pressedCoroutine = ChangeColor(0.3f, Color.green);
             }
             StartCoroutine(displayScoreText);
             StartCoroutine(pressedCoroutine);
