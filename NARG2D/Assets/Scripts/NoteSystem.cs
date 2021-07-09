@@ -36,6 +36,8 @@ public class NoteSystem : MonoBehaviour
     private int hitNum = 0;
     public int totalscore = 0;
     public GameObject missText;
+    public GameObject perfectText;
+    public GameObject goodText;
     // The number of seconds for each song beat
     public float secPerBeat;
 
@@ -63,13 +65,15 @@ public class NoteSystem : MonoBehaviour
     float songLength = float.MaxValue;
     public int currentBeat = 0;
 
-    float marginOfError = 0.3f;
+    float marginOfError = 0.35f;
+    float colorMargin = 0.7f;
     public List<int> actions_list;
     public int[][] attack_pattern;
-    private IEnumerator coroutine;
-
+    private IEnumerator pressedCoroutine;
+    private IEnumerator onBeatCoroutine;
     public object[] actions;
     public GameObject gameOver;
+    public GameObject outerRing;
     public int multiplier = 1;
     public UltimateScroller ultimateScroller;
     public int damageUltGoodNote = 10;
@@ -99,14 +103,13 @@ public class NoteSystem : MonoBehaviour
                                              + RATIO_CHANCE_LEFTRIGHT
                                              + RATIO_CHANCE_DOWNLEFT
                                              + RATIO_CHANCE_DOWNRIGHT;
-
-    private Note noteRing;
     private UltimateNote ultNote;
     private Queue<int> ultAction = new Queue<int>();
-
     public float ultTimer = 10f;
-
     public float ultDuration;
+    private Renderer outerRingRenderer;
+    private Queue<Note> noteRing = new Queue<Note>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,7 +118,7 @@ public class NoteSystem : MonoBehaviour
         noteRingPos = new Vector2(0f, 0f);
         GameObject circle = GameObject.FindGameObjectWithTag("Circle");
         circleRenderer = circle.GetComponent<Renderer>();
-
+        outerRingRenderer = outerRing.GetComponent<Renderer>();
         // Load the AudioSource attached to the Conductor GameObject
 
         // Record the time when the music starts
@@ -144,21 +147,6 @@ public class NoteSystem : MonoBehaviour
             {
                 actions_list.AddRange(attack_pattern[0]);
             }
-            //else if (p < 15)
-            //{
-            //    var patt = Random.Range(0, 2);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
-            //else if (p < 30)
-            //{
-            //    var patt = Random.Range(1, 4);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
-            //else if (p < 40)
-            //{
-            //    var patt = Random.Range(1, 5);
-            //    actions_list.AddRange(attack_pattern[patt]);
-            //}
             else
             {
                 var patt = Random.Range(1, 3);
@@ -170,8 +158,8 @@ public class NoteSystem : MonoBehaviour
             actions[i] = (ActionNote.Action)actions_list.ToArray()[i];
         }
         beatsShownInAdvance = 1.0f / secPerBeat;
-        currentBeat = 9;
-        nextIndex = 10;
+        // currentBeat = 9;
+        // nextIndex = 10;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
@@ -180,7 +168,7 @@ public class NoteSystem : MonoBehaviour
         ultFlag = false;
         // Start the music
         musicSource.Play();
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -227,16 +215,29 @@ public class NoteSystem : MonoBehaviour
                 SpawnActionNote((ActionNote.Action)actions[nextIndex]);
                 // Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
             }
-            // enemy.GetComponent<EnemyController>().doAction((Note.BeatAction)actions[nextIndex]);
             //initialize the fields of the music note
             nextIndex++;
         }
+
+        updateNote();
+
+        float err = songPositionInBeats - beats[currentBeat];
+        // show on beat indicator
+        if (noteRing.Count != 0)
+        {
+            Note topRing = noteRing.Peek();
+            if (Mathf.Abs(err) <= colorMargin && err <= 0 && topRing.firstOnBeat)
+            {
+                topRing.onBeatState = true;
+            }
+        }
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
         {
-            float err = Mathf.Abs(songPositionInBeats - beats[currentBeat]);
             // check if hit on beat
-            if (err <= marginOfError)
+            if (Mathf.Abs(err) <= marginOfError)
             {
+                // check note hit score
+                checkNoteHit();
                 if (!ultFlag)
                 {
                     player.gameObject.GetComponent<MainCharacterController>().doAction();
@@ -279,8 +280,6 @@ public class NoteSystem : MonoBehaviour
                 }
                 totalscore = totalscore + (10 * multiplier);
                 scoreText.text = "Total Score: " + totalscore.ToString();
-                coroutine = ChangeColor(0.3f, Color.green);
-                StartCoroutine(coroutine);
                 AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
                 Debug.Log("Analytics result " + analytics_comboCounter);
                 AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);
@@ -289,22 +288,20 @@ public class NoteSystem : MonoBehaviour
             // check if not on beat
             else
             {
+                perfectText.SetActive(false);
+                goodText.SetActive(false);
                 playerUltimate.resetBar();
-                coroutine = ChangeColor(0.3f, Color.red);
-                StartCoroutine(coroutine);
-                IEnumerator showMissText = showMiss(0.3f);
+                pressedCoroutine = ChangeColor(0.3f, Color.red);
+                StartCoroutine(pressedCoroutine);
+                IEnumerator showMissText = showText(0.3f, missText);
                 StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
-                // GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-                // if (notes.Length >= 1 && err <= 0.6)
-                // {
-                // Destroy(notes[0].gameObject);
-                // currentBeat++;
-                // }
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
             }
+            // destroy ring whether hit or miss
+            destroyNote();
         }
 
 
@@ -318,9 +315,54 @@ public class NoteSystem : MonoBehaviour
 
     private void SpawnNote()
     {
-        noteRing = Instantiate(note, noteRingPos, Quaternion.identity);
-        noteRing.transform.parent = GameObject.Find("NoteSystem").transform;
-        noteRing.duration = 1.0f;
+        Note ring = Instantiate(note, noteRingPos, Quaternion.identity);
+        ring.transform.parent = GameObject.Find("NoteSystem").transform;
+        ring.duration = 1.0f;
+        noteRing.Enqueue(ring);
+    }
+
+    private void updateNote()
+    {
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Peek();
+            // dequeue and destroy if note scale is down 
+            if (top.i >= 1.0f)
+            {
+                destroyNote();
+            }
+        }
+    }
+
+    private void destroyNote()
+    {
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Dequeue();
+            Destroy(top.gameObject);
+        }
+    }
+
+    private void checkNoteHit()
+    {
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Peek();
+            float scale = top.transform.localScale.x;
+            IEnumerator displayScoreText;
+            if (scale <= 0.44f && scale >= 0.24f)
+            {
+                displayScoreText = showText(0.3f, perfectText);
+                pressedCoroutine = ChangeColor(0.3f, Color.green);
+            }
+            else
+            {
+                displayScoreText = showText(0.3f, goodText);
+                pressedCoroutine = ChangeColor(0.3f, Color.yellow);
+            }
+            StartCoroutine(displayScoreText);
+            StartCoroutine(pressedCoroutine);
+        }
     }
 
     private void SpawnUltNote()
@@ -389,16 +431,18 @@ public class NoteSystem : MonoBehaviour
 
     private IEnumerator ChangeColor(float waitTime, Color col)
     {
+        outerRingRenderer.material.SetColor("_Color", col);
         circleRenderer.material.SetColor("_Color", col);
         yield return new WaitForSeconds(waitTime);
         circleRenderer.material.SetColor("_Color", Color.white);
+        outerRingRenderer.material.SetColor("_Color", Color.white);
     }
 
-    private IEnumerator showMiss(float waitTime)
+    private IEnumerator showText(float waitTime, GameObject text)
     {
-        missText.SetActive(true);
+        text.SetActive(true);
         yield return new WaitForSeconds(waitTime);
-        missText.SetActive(false);
+        text.SetActive(false);
     }
 
     public int GetMultiplier()
