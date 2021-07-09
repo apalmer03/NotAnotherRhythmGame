@@ -288,6 +288,8 @@ public class NoteSystem : MonoBehaviour
             // check if not on beat
             else
             {
+                perfectText.SetActive(false);
+                goodText.SetActive(false);
                 playerUltimate.resetBar();
                 pressedCoroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(pressedCoroutine);
