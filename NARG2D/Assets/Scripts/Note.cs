@@ -45,7 +45,7 @@ public class Note : MonoBehaviour
             if (colorIndex <= 1.0f)
             {
                 colorIndex += Time.deltaTime * colorSpeed;
-                mRenderer.material.color = Color.Lerp(Color.white, Color.red, colorIndex);
+                mRenderer.material.color = Color.Lerp(Color.white, Color.green, colorIndex);
             }
         }
     }
