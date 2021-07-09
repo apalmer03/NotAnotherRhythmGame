@@ -75,20 +75,20 @@ public class TutorialMainCharacterController : MonoBehaviour
         }
 
         // Attack (Dash Right)
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.A))
         {
     		soundFX[1].Play();
         	StartCoroutine(Attack());
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             soundFX[2].Play();
             //StartCoroutine(Uppercut());
         }
 
         // Block
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             soundFX[3].Play();
             StartCoroutine(Block());
