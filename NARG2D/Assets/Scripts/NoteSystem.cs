@@ -65,8 +65,8 @@ public class NoteSystem : MonoBehaviour
     float songLength = float.MaxValue;
     public int currentBeat = 0;
 
-    float marginOfError = 0.35f;
-    float colorMargin = 0.4f;
+    float marginOfError = 0.4f;
+    float colorMargin = 0.5f;
     public List<int> actions_list;
     public int[][] attack_pattern;
     private IEnumerator pressedCoroutine;
