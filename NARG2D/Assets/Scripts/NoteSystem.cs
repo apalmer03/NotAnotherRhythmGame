@@ -221,10 +221,13 @@ public class NoteSystem : MonoBehaviour
 
         float err = songPositionInBeats - beats[currentBeat];
         // show on beat indicator
-        Note topRing = noteRing.Peek();
-        if (Mathf.Abs(err) <= colorMargin && err <= 0 && topRing.firstOnBeat)
+        if (noteRing.Count != 0)
         {
-            topRing.onBeatState = true;
+            Note topRing = noteRing.Peek();
+            if (Mathf.Abs(err) <= colorMargin && err <= 0 && topRing.firstOnBeat)
+            {
+                topRing.onBeatState = true;
+            }
         }
 
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
@@ -287,13 +290,15 @@ public class NoteSystem : MonoBehaviour
                 playerUltimate.resetBar();
                 pressedCoroutine = ChangeColor(0.3f, Color.red);
                 StartCoroutine(pressedCoroutine);
-                IEnumerator showMissText = showMiss(0.3f);
+                IEnumerator showMissText = showText(0.3f, missText);
                 StartCoroutine(showMissText);
                 comboNum = 0;
                 comboText.gameObject.SetActive(false);
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
             }
+            // destroy ring whether hit or miss
+            destroyNote();
         }
 
 
@@ -321,10 +326,20 @@ public class NoteSystem : MonoBehaviour
             // dequeue and destroy if note scale is down 
             if (top.i >= 1.0f)
             {
-                noteRing.Dequeue();
-                Destroy(top.gameObject);
+                destroyNote();
             }
         }
+    }
+
+    private void destroyNote()
+    {
+        Note top = noteRing.Dequeue();
+        Destroy(top.gameObject);
+    }
+
+    private void checkNoteHit()
+    {
+
     }
 
     private void SpawnUltNote()
@@ -400,11 +415,11 @@ public class NoteSystem : MonoBehaviour
         outerRingRenderer.material.SetColor("_Color", Color.white);
     }
 
-    private IEnumerator showMiss(float waitTime)
+    private IEnumerator showText(float waitTime, GameObject text)
     {
-        missText.SetActive(true);
+        text.SetActive(true);
         yield return new WaitForSeconds(waitTime);
-        missText.SetActive(false);
+        text.SetActive(false);
     }
 
     public int GetMultiplier()
