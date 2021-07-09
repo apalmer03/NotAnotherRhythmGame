@@ -36,6 +36,8 @@ public class NoteSystem : MonoBehaviour
     private int hitNum = 0;
     public int totalscore = 0;
     public GameObject missText;
+    public GameObject perfectText;
+    public GameObject goodText;
     // The number of seconds for each song beat
     public float secPerBeat;
 
@@ -64,7 +66,7 @@ public class NoteSystem : MonoBehaviour
     public int currentBeat = 0;
 
     float marginOfError = 0.35f;
-    float colorMargin = 0.6f;
+    float colorMargin = 0.7f;
     public List<int> actions_list;
     public int[][] attack_pattern;
     private IEnumerator pressedCoroutine;
@@ -229,12 +231,13 @@ public class NoteSystem : MonoBehaviour
                 topRing.onBeatState = true;
             }
         }
-
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
         {
             // check if hit on beat
             if (Mathf.Abs(err) <= marginOfError)
             {
+                // check note hit score
+                checkNoteHit();
                 if (!ultFlag)
                 {
                     player.gameObject.GetComponent<MainCharacterController>().doAction();
@@ -277,8 +280,6 @@ public class NoteSystem : MonoBehaviour
                 }
                 totalscore = totalscore + (10 * multiplier);
                 scoreText.text = "Total Score: " + totalscore.ToString();
-                pressedCoroutine = ChangeColor(0.3f, Color.green);
-                StartCoroutine(pressedCoroutine);
                 AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
                 Debug.Log("Analytics result " + analytics_comboCounter);
                 AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);
@@ -333,13 +334,33 @@ public class NoteSystem : MonoBehaviour
 
     private void destroyNote()
     {
-        Note top = noteRing.Dequeue();
-        Destroy(top.gameObject);
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Dequeue();
+            Destroy(top.gameObject);
+        }
     }
 
     private void checkNoteHit()
     {
-
+        if (noteRing.Count != 0)
+        {
+            Note top = noteRing.Peek();
+            float scale = top.transform.localScale.x;
+            IEnumerator displayScoreText;
+            if (scale <= 0.44f && scale >= 0.24f)
+            {
+                displayScoreText = showText(0.3f, perfectText);
+                pressedCoroutine = ChangeColor(0.3f, Color.green);
+            }
+            else
+            {
+                displayScoreText = showText(0.3f, goodText);
+                pressedCoroutine = ChangeColor(0.3f, Color.yellow);
+            }
+            StartCoroutine(displayScoreText);
+            StartCoroutine(pressedCoroutine);
+        }
     }
 
     private void SpawnUltNote()
