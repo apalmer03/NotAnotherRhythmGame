@@ -799,7 +799,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '"Special 1 (Rename)": A + A + S
+  m_Text: '"Special 1 (Rename)": A + S + A
 
     "Special 2 (Rename)": Space + A +
     A'
