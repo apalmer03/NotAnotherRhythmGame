@@ -53,21 +53,12 @@ public class GameProcess : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOverUI.SetActive(true);
-        //scoreBackground.SetActive(true);
+        scoreBackground.SetActive(true);
         music.Stop();
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
+        calculateLetter(false);
         AnalyticsResult analytics_gameover = Analytics.CustomEvent("Game Over");
-        //totScore = nSys.GetTotal();
-
-        //totScore = totScore - 200; //200 point penalty for losing
-        //if (totScore < 0)
-        //{
-        //    totScore = 0;
-        //}
-
-        //scoreUI.text = "Total Score: " + totScore.ToString(); //Update if score was deducted
-        //calculateLetter();
     }
     private void LevelComplete()
     {
@@ -78,35 +69,43 @@ public class GameProcess : MonoBehaviour
         NoteSystem.SetActive(false);
         Destroy(player.GetComponent<MainCharacterController>());
         totScore = nSys.GetTotal();
-        calculateLetter();
+        calculateLetter(true);
         AnalyticsResult analytics_gameover = Analytics.CustomEvent("Level Complete");
     }
 
-    public void calculateLetter()
+    public void calculateLetter(bool successfulFinish)
     { //Temp score values for the demo, will adjust / add complexity later
-        if (totScore >= 3400)
+
+        if(successfulFinish == false)
         {
-            scoreS.SetActive(true);
-        }
-        else if (totScore >= 2600)
-        {
-            scoreA.SetActive(true);
-        }
-        else if (totScore >= 1900)
-        {
-            scoreB.SetActive(true);
-        }
-        else if (totScore >= 1200)
-        {
-            scoreC.SetActive(true);
-        }
-        else if (totScore >= 600)
-        {
-            scoreD.SetActive(true);
+            scoreF.SetActive(true);
         }
         else
         {
-            scoreF.SetActive(true);
+            if (totScore >= 3400)
+            {
+                scoreS.SetActive(true);
+            }
+            else if (totScore >= 2600)
+            {
+                scoreA.SetActive(true);
+            }
+            else if (totScore >= 1900)
+            {
+                scoreB.SetActive(true);
+            }
+            else if (totScore >= 1200)
+            {
+                scoreC.SetActive(true);
+            }
+            else if (totScore >= 600)
+            {
+                scoreD.SetActive(true);
+            }
+            else
+            {
+                scoreF.SetActive(true);
+            }
         }
     }
 
