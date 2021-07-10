@@ -30,14 +30,17 @@ public class NoteSystem : MonoBehaviour
     private Health enemyHealth;
     private Health playerHealth;
     public Text comboText;
+    public Text multiplierText;
     public Text scoreText;
     private int comboNum = 0;
+    private int ultMultiplier = 1;
     private int missNum = 0;
     private int hitNum = 0;
     public int totalscore = 0;
     public GameObject missText;
     public GameObject perfectText;
     public GameObject goodText;
+    public GameObject ultFireBackground;
     // The number of seconds for each song beat
     public float secPerBeat;
 
@@ -246,40 +249,71 @@ public class NoteSystem : MonoBehaviour
                 {
                     player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
                 }
+
                 missText.SetActive(false);
                 comboNum++;
-                comboText.text = "Combo x " + comboNum.ToString();
+                comboText.text = "Combo : " + comboNum.ToString();
+                multiplierText.text = "Multiplier: x" + multiplier.ToString();
+                
                 if (comboNum == 2)
                 {
                     comboText.gameObject.SetActive(true);
                 }
 
-                if (comboNum >= 70)
+                //Double multiplier during ultimate like in Guitar Hero
+                if(ultFlag == true)
                 {
-                    multiplier = 6;
-                }
-                else if (comboNum >= 52)
-                {
-                    multiplier = 5;
-                }
-                else if (comboNum >= 36)
-                {
-                    multiplier = 4;
-                }
-                else if (comboNum >= 22)
-                {
-                    multiplier = 3;
-                }
-                else if (comboNum >= 10)
-                {
-                    multiplier = 2;
+                    ultMultiplier = 2;
+                    ultFireBackground.SetActive(true);
                 }
                 else
                 {
-                    multiplier = 1;
+                    ultMultiplier = 1;
+                    ultFireBackground.SetActive(false);
+                }
+
+                if (comboNum >= 234)
+                {
+                    multiplier = ultMultiplier * 10;
+                }
+                else if (comboNum >= 192)
+                {
+                    multiplier = ultMultiplier * 9;
+                }
+                else if (comboNum >= 154)
+                {
+                    multiplier = ultMultiplier * 8;
+                }
+                else if (comboNum >= 120)
+                {
+                    multiplier = ultMultiplier * 7;
+                }
+                else if (comboNum >= 90)
+                {
+                    multiplier = ultMultiplier * 6;
+                }
+                else if (comboNum >= 64)
+                {
+                    multiplier = ultMultiplier * 5;
+                }
+                else if (comboNum >= 42)
+                {
+                    multiplier = ultMultiplier * 4;
+                }
+                else if (comboNum >= 24)
+                {
+                    multiplier = ultMultiplier * 3;
+                }
+                else if (comboNum >= 10)
+                {
+                    multiplier = ultMultiplier * 2;
+                }
+                else
+                {
+                    multiplier = ultMultiplier * 1;
                 }
                 totalscore = totalscore + (10 * multiplier);
-                scoreText.text = "Total Score: " + totalscore.ToString();
+                scoreText.text = "Total Score : " + totalscore.ToString();
                 AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
                 Debug.Log("Analytics result " + analytics_comboCounter);
                 AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);

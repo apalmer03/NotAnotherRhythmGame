@@ -24,8 +24,8 @@ public class GameProcess : MonoBehaviour
     public GameObject scoreD;
     public GameObject scoreF;
     private bool isGameOver = false;
-    public NoteSystem nSys; //TEST
-    private int totScore = 0; //TEST
+    public NoteSystem nSys;
+    private int totScore = 0;
 
     // Start is called before the first frame update
     void Start()
