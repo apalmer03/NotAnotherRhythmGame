@@ -5,14 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class LSMenu : MonoBehaviour
 {
+    public Animator transition1;
+    public Animator transition2;
+    public float transitionTime = 2.5f;
+
     public void PlayTutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(LoadLevel("Tutorial"));
     }
 
     public void PlayLevelOne()
     {
-        SceneManager.LoadScene("NewLevel");
+        StartCoroutine(LoadLevel("NewLevel"));
     }
 
+    IEnumerator LoadLevel(string levelName)
+    {
+        transition1.SetTrigger("StartLevel");
+        transition2.SetTrigger("StartLevel");
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(levelName);
+    }
 }
