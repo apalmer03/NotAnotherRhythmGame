@@ -26,6 +26,7 @@ public class GameProcess : MonoBehaviour
     private bool isGameOver = false;
     public NoteSystem nSys;
     private int totScore = 0;
+    public GameObject pausePage;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class GameProcess : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if (playerHealth.currHealth <= 0 && !isGameOver)
         {
             isGameOver = true;
@@ -47,6 +48,18 @@ public class GameProcess : MonoBehaviour
             isGameOver = true;
             LevelComplete();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+        music.Pause();
+        AudioListener.pause = true;
+        pausePage.gameObject.SetActive(true);
     }
 
     private void GameOver()
@@ -76,7 +89,7 @@ public class GameProcess : MonoBehaviour
     public void calculateLetter(bool successfulFinish)
     { //Temp score values for the demo, will adjust / add complexity later
 
-        if(successfulFinish == false)
+        if (successfulFinish == false)
         {
             scoreF.SetActive(true);
         }
