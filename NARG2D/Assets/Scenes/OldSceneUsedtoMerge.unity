@@ -308,7 +308,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60bfd072918779345aef76bf7e212b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -463,7 +463,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60bfd072918779345aef76bf7e212b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -920,7 +920,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60bfd072918779345aef76bf7e212b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1146,7 +1146,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1514377873
-  m_SortingLayer: -1
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b9dab3fc34f8dda43ac1a6502537b0bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1699,7 +1699,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1218151215
-  m_SortingLayer: 1
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -1746,6 +1746,7 @@ MonoBehaviour:
   currHealth: 0
   maxHealth: 100
   isBlocking: 0
+  isJumping: 0
   healthBar: {fileID: 925022861}
 --- !u!114 &818624086
 MonoBehaviour:
@@ -1760,9 +1761,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 876882100}
-  ultimateAttack: {fileID: 2133593143}
   gameOver: {fileID: 158197294}
+  soundFX: []
+  ultimateAttack: {fileID: 2133593143}
   multi: {fileID: 1179049917}
+  specialAtkCnt: 0
+  specialAtk1Cnt: 0
+  specialAtk2Cnt: 0
+  special1: {fileID: 0}
+  special2: {fileID: 0}
+  time: 0
+  seconds: 0
 --- !u!114 &818624087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1792,6 +1801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatTempo: 0
   hasStarted: 0
+  ultimateButtons: {fileID: 0}
 --- !u!1 &846034435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1901,7 @@ MonoBehaviour:
   currHealth: 0
   maxHealth: 200
   isBlocking: 0
+  isJumping: 0
   healthBar: {fileID: 1953459942}
 --- !u!114 &876882102
 MonoBehaviour:
@@ -1905,6 +1916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelComplete: {fileID: 675272998}
+  blueFire: {fileID: 0}
+  orangeFire: {fileID: 0}
 --- !u!1 &925022859
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,7 +2448,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1218151215
-  m_SortingLayer: 1
+  m_SortingLayer: -3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2477,9 +2490,25 @@ MonoBehaviour:
   bpm: 120
   speed: 4
   note: {fileID: -135923387736583854, guid: 2711dbbb25be1441db3d8ce87db04ff8, type: 3}
+  ultUp: {fileID: 0}
+  ultDown: {fileID: 0}
+  ultLeft: {fileID: 0}
+  ultRight: {fileID: 0}
+  ultUpDown: {fileID: 0}
+  ultUpLeft: {fileID: 0}
+  ultUpRight: {fileID: 0}
+  ultLeftRight: {fileID: 0}
+  ultDownLeft: {fileID: 0}
+  ultDownRight: {fileID: 0}
   actionNote: {fileID: -7391872941002718040, guid: 84eb4796773c7df4e9e375b214df4427, type: 3}
   comboText: {fileID: 846034437}
+  multiplierText: {fileID: 0}
+  scoreText: {fileID: 0}
+  totalscore: 0
   missText: {fileID: 16980439}
+  perfectText: {fileID: 0}
+  goodText: {fileID: 0}
+  ultFireBackground: {fileID: 0}
   secPerBeat: 0
   songPosition: 0
   songPositionInBeats: 0
@@ -2487,10 +2516,15 @@ MonoBehaviour:
   musicSource: {fileID: 1179049922}
   firstBeatOffset: 0
   currentBeat: 0
-  ultimateScroller: {fileID: 2133593144}
+  actions_list: 
   gameOver: {fileID: 158197294}
+  outerRing: {fileID: 0}
+  multiplier: 1
+  ultimateScroller: {fileID: 2133593144}
   damageUltGoodNote: 10
   damageUltPerfectNote: 20
+  ultTimer: 10
+  ultDuration: 0
 --- !u!82 &1179049922
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2810,7 +2844,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60bfd072918779345aef76bf7e212b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3007,7 +3041,6 @@ MonoBehaviour:
   timeVal: 0
   timeText: {fileID: 1257706392}
   musicTrack: {fileID: 0}
-  musicClip: {fileID: 0}
 --- !u!114 &1257706392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3259,7 +3292,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1514377873
-  m_SortingLayer: -1
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0c39cb3fba8414d69a3b94c481a233f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3429,7 +3462,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3588,7 +3621,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1632847679
-  m_SortingLayer: 2
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60bfd072918779345aef76bf7e212b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4078,6 +4111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatTempo: 120
   hasStarted: 0
+  ultimateButtons: {fileID: 0}
 --- !u!4 &2133593145
 Transform:
   m_ObjectHideFlags: 0
