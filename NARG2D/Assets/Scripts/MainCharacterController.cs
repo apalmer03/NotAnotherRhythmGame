@@ -82,8 +82,24 @@ public class MainCharacterController : MonoBehaviour
         seconds = seconds % 60;
     }
 
+    public void doAction(int action)
+    { 
+        if (action==1)
+        {
+            soundFX[3].Play();
+            StartCoroutine(Block());
+            // attack.Append("D");
+        }
+        if (action==2)
+        {
+            soundFX[2].Play();
+            StartCoroutine(Jump());
+            // attack.Append("D");
+        }
+    }  
     public void doAction()
-    {
+    {   
+
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space"))
@@ -246,10 +262,15 @@ public class MainCharacterController : MonoBehaviour
     IEnumerator Jump()
     {
         anim.SetTrigger("Jump");
-        playerHealth.isJumping = true;
-        yield return new WaitForSeconds(1f);
+        if(playerHealth.isJumping = true){
+            yield return new WaitForSeconds(0.8f);
+        }
+        else{
+            playerHealth.isJumping = true;
+            yield return new WaitForSeconds(0.8f);
+        }
         playerHealth.isJumping = false;
-        KeyPressAnalytics("Jump", "Space");
+        // KeyPressAnalytics("Jump", "Space");
     }
 
     IEnumerator Attack()
@@ -260,7 +281,7 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "J");
+        // KeyPressAnalytics("Attack", "J");
     }
 
     IEnumerator Uppercut()
@@ -271,17 +292,23 @@ public class MainCharacterController : MonoBehaviour
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Kick", "K");
+        // KeyPressAnalytics("Kick", "K");
     }
 
     IEnumerator Block()
     {
 
         anim.SetTrigger("Block");
-        playerHealth.isBlocking = true;
-        yield return new WaitForSeconds(1f);
+
+        if(playerHealth.isBlocking = true){
+            yield return new WaitForSeconds(0.8f);
+        }
+        else{
+            playerHealth.isBlocking = true;
+            yield return new WaitForSeconds(0.8f);
+        }
         playerHealth.isBlocking = false;
-        KeyPressAnalytics("Block", "S");
+        // KeyPressAnalytics("Block", "S");
     }
 
     IEnumerator Special1()
@@ -294,7 +321,7 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk1Cnt++;
-        KeyPressAnalytics("Special1", "SpaceJJ");
+        // KeyPressAnalytics("Special1", "SpaceJJ");
     }
 
     IEnumerator Special2()
@@ -307,7 +334,7 @@ public class MainCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
-        KeyPressAnalytics("Special2", "JKJ");
+        // KeyPressAnalytics("Special2", "JKJ");
     }
 
     IEnumerator Ultimate()
@@ -316,7 +343,7 @@ public class MainCharacterController : MonoBehaviour
         transform.position = new Vector3(0, -3.5f, -5f);
         yield return new WaitForSeconds(15f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Ultimate", "H");
+        // KeyPressAnalytics("Ultimate", "H");
 
     }
     public void KeyPressAnalytics(string actionType, string keyPressed)
@@ -331,8 +358,8 @@ public class MainCharacterController : MonoBehaviour
             {"Special2", "JKJ"},
             { "Ultimate", "H"}
         };
-        AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
-        Debug.Log("Analytics Result(action used): " + analytics_actionType);
+        // AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
+        // Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
 
     private IEnumerator ShowSpecial1(float waitTime)

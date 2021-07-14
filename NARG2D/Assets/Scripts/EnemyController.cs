@@ -55,13 +55,13 @@ public class EnemyController : MonoBehaviour
         }
         else if (action == ActionNote.Action.Attack)
         {
-            Debug.Log("Enemy Attack");
+            Debug.Log("Enemy Attack-Melee");
             StartCoroutine(Attack());
             //GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
         else if (action == ActionNote.Action.UpperCut)
         {
-            Debug.Log("Enemy UpperCut");
+            Debug.Log("Enemy MagicBall");
             StartCoroutine(Magic());
             //GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
@@ -96,7 +96,8 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Punch");
         transform.position = new Vector3(0, -3.5f, -5f);
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(0.5f);
+      
         if (playerHealth.isBlocking)
         {
 
@@ -106,11 +107,20 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy Attack Failed to Block!");
-            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
-            playerHealth.DamagePlayer(40);
+            yield return new WaitForSeconds(0.1f);
+            if(playerHealth.isBlocking)
+            {
+                GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                Debug.Log("Enemy Attack Blocked-backup!");
+            }
+            else{
+                Debug.Log("Enemy Attack Failed to Block!");
+                GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
+                playerHealth.DamagePlayer(40);
+            }
+           
         }
-
+        yield return new WaitForSeconds(1.00f);
         transform.position = enemyStartPosition;
     }
 
@@ -118,19 +128,33 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Magic");
         startTime = Time.time;
-        shootFireBall = true;
-        yield return new WaitForSeconds(0.5f);
+        
+       
+        //  
+       
         if (playerHealth.isJumping)
         {
+            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
             Debug.Log("Enemy Attack Blocked!");
             AnalyticsResult analytics_blocking = Analytics.CustomEvent("Successful jump");
         }
         else
         {
-            Debug.Log("Enemy Attack Failed to Block!");
-            GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
-            playerHealth.DamagePlayer(60);
+            yield return new WaitForSeconds(0.1f);
+            if(playerHealth.isJumping)
+            {
+                GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                Debug.Log("Enemy Attack Blocked-backup!");
+            }
+            else
+            {
+                Debug.Log("Enemy Attack Failed to Block!");
+                GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[1].Play();
+                playerHealth.DamagePlayer(60);
+            }
         }
+        shootFireBall = true;
+        yield return new WaitForSeconds(1.00f);
         shootFireBall = false;
         blueFire.transform.position = fireStartPos;
     }
@@ -139,7 +163,7 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Charge");
         orangeFire.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         orangeFire.SetActive(false);
     }
 
@@ -147,7 +171,7 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetTrigger("Charge");
         blueFire.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         blueFire.SetActive(false);
 
     }

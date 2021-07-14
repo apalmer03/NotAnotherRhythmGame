@@ -649,7 +649,8 @@ MonoBehaviour:
   songPositionInBeats: 0
   dspSongTime: 0
   musicSource: {fileID: 54951522}
-  firstBeatOffset: 0
+  firstBeatOffset: 0.08
+  beatsShownInAdvance: 0
   currentBeat: 0
   actions_list: 
   gameOver: {fileID: 158197294}
@@ -3205,7 +3206,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fa6bedcc803be1c448140a538e8d549b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4e085d4b57fb4334495dc12d19da6135, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4717,7 +4718,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b8e723f1fe72c4ba096cbb063a361866, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0ba6d49496a236645bb30f68d08b2223, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4830,7 +4831,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6f6d897d827ce01468a063a732aad4ae, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 19795ef3b8f1d0e4d8662e74a1c44bed, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -11545,7 +11546,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8566a58808bc02644bcce6b158ff95c3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 94fd362252f70cc4f9ce95ad4294860b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
