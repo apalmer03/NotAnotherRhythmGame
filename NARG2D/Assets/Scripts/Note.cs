@@ -42,19 +42,12 @@ public class Note : MonoBehaviour
         }
         else if (onBeatState && !firstOnBeat)
         {
+            colorIndex += Time.deltaTime * colorSpeed;
             // transform to green
-            if (colorIndex <= 1.0f && transform.localScale.x > 0.24f)
+            if (colorIndex <= 1.0f && transform.localScale.x <= 0.24f)
             {
-                colorIndex += Time.deltaTime * colorSpeed;
-                mRenderer.material.color = Color.Lerp(Color.white, new Color(204.0f / 255.0f, 128.0f / 255.0f, 0f, 1.0f), colorIndex);
+                mRenderer.material.color = Color.Lerp(Color.white, Color.green, colorIndex);
             }
-            // transform to yellow
-            else if (colorIndex <= 1.0f && transform.localScale.x <= 0.24f)
-            {
-                mRenderer.material.color = Color.Lerp(new Color(204.0f / 255.0f, 128.0f / 255.0f, 0f, 1.0f), Color.green, colorIndex);
-                colorIndex += Time.deltaTime * colorSpeed;
-            }
-
         }
     }
 
