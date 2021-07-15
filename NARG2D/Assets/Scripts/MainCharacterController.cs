@@ -22,6 +22,7 @@ public class MainCharacterController : MonoBehaviour
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
+    private Animator enemyAnim;
     public AudioSource[] soundFX;
 
     public GameObject ultimateAttack;
@@ -46,22 +47,13 @@ public class MainCharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /* prototype
-        RenderSettings.ambientLight = Color.white;
-        selfRenderer = GetComponent<Renderer>();
-        enemyRenderer = enemy.GetComponent<Renderer>();
-        rigidbody.transform.position = heroStartPosition;
-         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        heroColor = lv0Color;
-        selfRenderer.material.SetColor("_Color", heroColor);
-        */
-
 
         heroStartPosition = new Vector3(-4f, -3.55f, -5f);
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
+        enemyAnim = enemy.GetComponent<Animator>();
         gameObject.GetComponent<MainCharacterController>().enabled = false;
         playerUltimate = GetComponent<Ultimate>();
         ultimate = ultimateAttack.GetComponent<UltimateScroller>();
@@ -98,8 +90,11 @@ public class MainCharacterController : MonoBehaviour
         }
     }  
     public void doAction()
-    {   
-
+    {
+        if (!isIdle())
+        {
+            return;
+        }
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space"))
@@ -277,7 +272,16 @@ public class MainCharacterController : MonoBehaviour
     {
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Punch");
-        enemyHealth.DamagePlayer(5);
+        if (enemyHealth.isBlocking)
+        {
+            soundFX[3].Play();
+        }
+        else
+        {
+            enemyHealth.DamagePlayer(5);
+            enemyAnim.SetTrigger("lighthit");
+            soundFX[1].Play();
+        }
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
@@ -288,7 +292,8 @@ public class MainCharacterController : MonoBehaviour
     {
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Kick");
-        enemyHealth.DamagePlayer(5);
+        enemyAnim.SetTrigger("heavyhit");
+        enemyHealth.DamagePlayer(8);
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
@@ -373,5 +378,10 @@ public class MainCharacterController : MonoBehaviour
         special2.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         special2.SetActive(false);
+    }
+
+    private bool isIdle()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Idle");
     }
 }

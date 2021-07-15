@@ -17,7 +17,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: mixamorig:Hips
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -38,8 +38,8 @@ ModelImporter:
       name: Smash
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 9
-      lastFrame: 82
+      firstFrame: 12
+      lastFrame: 77
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
