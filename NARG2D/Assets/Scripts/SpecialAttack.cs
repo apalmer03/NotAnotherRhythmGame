@@ -13,8 +13,8 @@ public class SpecialAttack : MonoBehaviour
     private int maxCombo = 3;
     void Start()
     {
-        List<string> move1 = new List<string>() {" ","J","J"};
-        List<string> move2 = new List<string>() {"J","K","J"};
+        List<string> move1 = new List<string>() {" ","A","A"};
+        List<string> move2 = new List<string>() {"A","S","A"};
         attackDictionary.Add("Special1", move1);
         attackDictionary.Add("Special2", move2);
     }

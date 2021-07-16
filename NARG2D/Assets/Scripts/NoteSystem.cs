@@ -284,7 +284,10 @@ public class NoteSystem : MonoBehaviour
                 }
                 else
                 {
-                    player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                    if (ultAction.Count != 0)
+                    {
+                        player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                    }
                 }
 
                 missText.SetActive(false);
