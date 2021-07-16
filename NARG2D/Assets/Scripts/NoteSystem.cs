@@ -260,6 +260,7 @@ public class NoteSystem : MonoBehaviour
                 }
                 //initialize the fields of the music note
                 nextIndex++;
+                ultNextIndex = ultNextIndex + 2;
             }
         }
         else
@@ -272,6 +273,7 @@ public class NoteSystem : MonoBehaviour
                 SpawnUltNote();
                 //initialize the fields of the music note
                 ultNextIndex++;
+                nextIndex = ultNextIndex / 2;
             }
         }
         
