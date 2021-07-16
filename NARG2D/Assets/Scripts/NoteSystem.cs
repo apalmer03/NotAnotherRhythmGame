@@ -60,9 +60,12 @@ public class NoteSystem : MonoBehaviour
 
     // keep all the position-in-beats of notes in the song
     float[] beats;
-
+    float[] ultbeats;
+ 
+ 
     // the index of the next note to be spawned
     int nextIndex = 0;
+    private int ultNextIndex = 0;
 
     public float beatsShownInAdvance = 0;
     float songLength = float.MaxValue;
@@ -112,6 +115,7 @@ public class NoteSystem : MonoBehaviour
     public float ultDuration;
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
+   
 
     // Start is called before the first frame update
     void Start()
@@ -129,6 +133,7 @@ public class NoteSystem : MonoBehaviour
         songLength = (float)musicSource.clip.length;
         // Initialize notes array
         beats = new float[265];
+        ultbeats = new float[265];
         actions = new object[265];
         attack_pattern = new int[12][];
         attack_pattern[0] = new int[] { 4, 4, 4, 4, 4, 4, 4, 4 };
@@ -157,8 +162,14 @@ public class NoteSystem : MonoBehaviour
         for (var i = 0; i < 133; i++)
         {
             beats[i] = 2*i;
-
+            ultbeats[i] = i;
         }
+        
+        for (var i = 0; i < 265; i++)
+        {
+            ultbeats[i] = i;
+        }
+        
         for (var p = 0; p < (133 / 8)+1; p++)
         {
             if (p < 2)
@@ -234,28 +245,36 @@ public class NoteSystem : MonoBehaviour
             totalscore = totalscore + 500;
         }
 
-        if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
+        if (!ultFlag)
         {
-            // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
-            // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().doAction((int)actions[nextIndex]);
-            GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
-            if (!ultFlag)
+            if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
             {
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().doAction((int)actions[nextIndex]);
+                GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
                 SpawnNote();
+                if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle && !ultFlag)
+                {
+                    SpawnActionNote((ActionNote.Action)actions[nextIndex]);
+                    //Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
+                }
+                //initialize the fields of the music note
+                nextIndex++;
             }
-            else
-            {
-                SpawnUltNote();
-            }
-            if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle && !ultFlag)
-            {
-                SpawnActionNote((ActionNote.Action)actions[nextIndex]);
-                Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
-            }
-            //initialize the fields of the music note
-            nextIndex++;
         }
-
+        else
+        {
+            if (ultNextIndex < ultbeats.Length && ultbeats[ultNextIndex] < songPositionInBeats + beatsShownInAdvance)
+            {
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().doAction((int)actions[nextIndex]);
+                GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
+                SpawnUltNote();
+                //initialize the fields of the music note
+                ultNextIndex++;
+            }
+        }
+        
         updateNote();
 
         float err = songPositionInBeats - beats[currentBeat];
@@ -495,7 +514,7 @@ public class NoteSystem : MonoBehaviour
         }
         ultNote.GetComponent<UltimateNote>().SetNote(instance);
         ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
-        ultNote.duration = 1.0f;
+        ultNote.duration = secPerBeat;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
@@ -532,12 +551,12 @@ public class NoteSystem : MonoBehaviour
     public void UltNoteHit(int damage)
     {
         enemyHealth.DamagePlayer(damage);
-        Debug.Log("Hit On Time");
+        //Debug.Log("Hit On Time");
     }
 
     public void UltNoteMissed()
     {
-        Debug.Log("Missed Note");
+        //Debug.Log("Missed Note");
     }
 
     public void UltNormalHit()
