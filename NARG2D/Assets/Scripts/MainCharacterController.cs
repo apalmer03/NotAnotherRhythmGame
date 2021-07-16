@@ -321,7 +321,8 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial1 = ShowSpecial1(1.2f);
         StartCoroutine(showSpecial1);
         //transform.position = new Vector3(0, -3.5f, -5f);
-        //anim.SetTrigger("Special1");
+        anim.SetTrigger("Special1");
+        anim.ResetTrigger("Punch");
         enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
@@ -334,7 +335,8 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial2 = ShowSpecial2(1.2f);
         StartCoroutine(showSpecial2);
         //transform.position = new Vector3(0, -3.5f, -5f);
-        //anim.SetTrigger("Special2");
+        anim.SetTrigger("Special2");
+        anim.ResetTrigger("Punch");
         enemyHealth.DamagePlayer(10);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
