@@ -66,6 +66,7 @@ public class EnemyController : MonoBehaviour
         else if (action == ActionNote.Action.Block)
         {
             Debug.Log("Enemy Block");
+            StartCoroutine(Block());
             //anim.SetTrigger("Charge");
             //    GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
