@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using System;
+using UnityEngine.Analytics;
 
 public class TutorialMainCharacterController : MonoBehaviour
 {
@@ -20,9 +22,26 @@ public class TutorialMainCharacterController : MonoBehaviour
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
+    private Animator enemyAnim;
     public AudioSource[] soundFX;
 
+    // public GameObject ultimateAttack;
+    // private Ultimate playerUltimate;
+    public GameObject multi;
+    private TutorialNoteSystem noteSystem;
+    // private UltimateScroller ultimate;
+
     private bool tutorialCompleted = false;
+    private List<String> specialAttack = new List<String>();
+    private TutorialSpecialAttack specialLookup;
+    private int specialMax = 3;
+    private string specialMove;
+
+    public int specialAtkCnt = 0;
+    public int specialAtk1Cnt = 0;
+    public int specialAtk2Cnt = 0;
+    public GameObject special1;
+    public GameObject special2;
 
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS)
@@ -41,19 +60,31 @@ public class TutorialMainCharacterController : MonoBehaviour
         */
 
 
-        heroStartPosition = new Vector3((float)-4.0000, -2.55f, 0);
+        heroStartPosition = new Vector3(-4f, -3.55f, -5f);
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
+        // enemyAnim = enemy.GetComponent<Animator>();
+        gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
+        // playerUltimate = GetComponent<Ultimate>();
+        // ultimate = ultimateAttack.GetComponent<UltimateScroller>();
+        specialLookup = GetComponent<TutorialSpecialAttack>();
+        noteSystem = multi.GetComponent<TutorialNoteSystem>();
+        specialAtkCnt = 0;
+        specialAtk1Cnt = 0;
+        specialAtk2Cnt = 0;
+        special1.SetActive(false);
+        special2.SetActive(false);
         rigidbody = GetComponent<Rigidbody2D>();
+
         // gameObject.GetComponent<TutorialMainCharacterController>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-    	GameObject go = GameObject.FindGameObjectWithTag("Instruction");
+        GameObject go = GameObject.FindGameObjectWithTag("Instruction");
         TutorialInstructionController tic = go.GetComponent<TutorialInstructionController>();
         this.tutorialCompleted = tic.tutorialCompleted;
 
@@ -67,24 +98,29 @@ public class TutorialMainCharacterController : MonoBehaviour
         //     gameOver.SetActive(true);
         // }
         // Jump (No double jumping)
+        StringBuilder attack = new StringBuilder();
+
         if (Input.GetKeyDown("space") && isGrounded)
         {
             soundFX[0].Play();
             rigidbody.velocity = Vector2.up * jumpVelocity;
             anim.SetTrigger("Jump");
+            attack.Append(" ");
         }
 
         // Attack (Dash Right)
         if (Input.GetKeyDown(KeyCode.A))
         {
-    		soundFX[1].Play();
-        	StartCoroutine(Attack());
+            soundFX[1].Play();
+            StartCoroutine(Attack());
+            attack.Append("A");
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             soundFX[2].Play();
-            //StartCoroutine(Uppercut());
+            StartCoroutine(Uppercut());
+            attack.Append("S");
         }
 
         // Block
@@ -92,6 +128,37 @@ public class TutorialMainCharacterController : MonoBehaviour
         {
             soundFX[3].Play();
             StartCoroutine(Block());
+            attack.Append("D");
+        }
+
+        if (attack.Length != 0)
+        {
+
+            specialAttack.Add(attack.ToString());
+            Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
+            attack.Clear();
+        }
+
+        specialMove = specialLookup.CheckSpecial(specialAttack);
+        if (specialMove != null)
+        {
+            print(specialMove);
+            switch (specialMove)
+            {
+                case "Special1":
+                    StartCoroutine(Special1());
+                    Debug.Log("Special1");
+                    break;
+                case "Special2":
+                    StartCoroutine(Special2());
+                    Debug.Log("Special2");
+                    break;
+            }
+        }
+
+        if (specialAttack.Count == specialMax)
+        {
+            specialAttack.RemoveAt(0);
         }
     }
 
@@ -114,44 +181,84 @@ public class TutorialMainCharacterController : MonoBehaviour
 
     IEnumerator Attack()
     {
-    	// Regular
-    	if (this.tutorialCompleted) 
-    	{
-			anim.SetTrigger("Attack");
-		    transform.position = new Vector3(0, -2.55f, 0);
-		    enemyHealth.DamagePlayer(5);
-		    yield return new WaitForSeconds(0.5f);
-		    transform.position = heroStartPosition;
-		}
-		// Tutorial - No damage
-		else
-		{
-			anim.SetTrigger("Attack");
-			transform.position = new Vector3(0, -2.55f, 0);
-        	yield return new WaitForSeconds(0.5f);
-        	transform.position = heroStartPosition;
-		}
+        // Regular
+        if (this.tutorialCompleted) 
+        {
+            anim.SetTrigger("Attack");
+            transform.position = new Vector3(0, -2.55f, 0);
+            enemyHealth.DamagePlayer(5);
+            yield return new WaitForSeconds(0.5f);
+            transform.position = heroStartPosition;
+        }
+        // Tutorial - No damage
+        else
+        {
+            anim.SetTrigger("Attack");
+            transform.position = new Vector3(0, -2.55f, 0);
+            yield return new WaitForSeconds(0.5f);
+            transform.position = heroStartPosition;
+        }
     }
 
-    /*
+    
     IEnumerator Uppercut()
     {
-        rigidbody.transform.position = new Vector3(3, 3, 0);
-        enemyRenderer.material.SetColor("_Color", Color.black);
-        selfRenderer.material.SetColor("_Color", Color.white);
-        enemyHealth.DamagePlayer(5 + level*2);
-        yield return new WaitForSeconds(0.2f);
-        enemyRenderer.material.SetColor("_Color", Color.red);
-        selfRenderer.material.SetColor("_Color", heroColor);
-        rigidbody.transform.position = heroStartPosition;
+        transform.position = new Vector3(0, -3.5f, -5f);
+        // anim.SetTrigger("Kick");
+        // enemyAnim.SetTrigger("heavyhit");
+        enemyHealth.DamagePlayer(8);
+        // playerUltimate.fillBar(20, noteSystem.GetMultiplier());
+        yield return new WaitForSeconds(0.5f);
+        transform.position = heroStartPosition;
     }
-    */
+    
     IEnumerator Block()
     {
         anim.SetTrigger("Sit");
         playerHealth.isBlocking = true;
         yield return new WaitForSeconds(0.5f);
         playerHealth.isBlocking = false;
+    }
+
+    IEnumerator Special1()
+    {
+        IEnumerator showSpecial1 = ShowSpecial1(1.2f);
+        StartCoroutine(showSpecial1);
+        //transform.position = new Vector3(0, -3.5f, -5f);
+        // anim.SetTrigger("Special1");
+        // anim.ResetTrigger("Punch");
+        enemyHealth.DamagePlayer(20);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk1Cnt++;
+        // KeyPressAnalytics("Special1", "SpaceJJ");
+    }
+
+    IEnumerator Special2()
+    {
+        IEnumerator showSpecial2 = ShowSpecial2(1.2f);
+        StartCoroutine(showSpecial2);
+        //transform.position = new Vector3(0, -3.5f, -5f);
+        // anim.SetTrigger("Special2");
+        // anim.ResetTrigger("Punch");
+        enemyHealth.DamagePlayer(10);
+        yield return new WaitForSeconds(0.2f);
+        specialAtkCnt++;
+        specialAtk2Cnt++;
+        // KeyPressAnalytics("Special2", "JKJ");
+    }
+
+    private IEnumerator ShowSpecial1(float waitTime)
+    {
+        special1.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        special1.SetActive(false);
+    }
+    private IEnumerator ShowSpecial2(float waitTime)
+    {
+        special2.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        special2.SetActive(false);
     }
 
 }
