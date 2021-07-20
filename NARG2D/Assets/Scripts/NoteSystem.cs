@@ -61,8 +61,8 @@ public class NoteSystem : MonoBehaviour
     // keep all the position-in-beats of notes in the song
     float[] beats;
     float[] ultbeats;
- 
- 
+
+
     // the index of the next note to be spawned
     int nextIndex = 0;
     private int ultNextIndex = 0;
@@ -115,7 +115,7 @@ public class NoteSystem : MonoBehaviour
     public float ultDuration;
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
-   
+
 
     // Start is called before the first frame update
     void Start()
@@ -141,12 +141,12 @@ public class NoteSystem : MonoBehaviour
         attack_pattern[1] = new int[] { 4, 4, 5, 1, 4, 4, 4, 4 };
 
         attack_pattern[2] = new int[] { 4, 4, 5, 1, 5, 1, 4, 4 };
-        
+
         attack_pattern[3] = new int[] { 4, 4, 4, 4, 6, 2, 4, 4 };
-        
+
         attack_pattern[4] = new int[] { 5, 1, 4, 4, 6, 2, 4, 4 };
         attack_pattern[5] = new int[] { 6, 2, 4, 4, 3, 3, 5, 1 };
-       
+
         attack_pattern[6] = new int[] { 6, 2, 4, 3, 6, 2, 4, 3 };
         attack_pattern[7] = new int[] { 5, 1, 4, 3, 5, 1, 4, 3 };
 
@@ -155,47 +155,53 @@ public class NoteSystem : MonoBehaviour
         attack_pattern[10] = new int[] { 6, 2, 6, 2, 4, 4, 3, 3 };
 
         attack_pattern[11] = new int[] { 5, 1, 5, 1, 6, 2, 6, 2 };
-        
+
         ultDuration = ultTimer;
 
 
         for (var i = 0; i < 133; i++)
         {
-            beats[i] = 2*i;
+            beats[i] = 2 * i;
             ultbeats[i] = i;
         }
-        
+
         for (var i = 0; i < 265; i++)
         {
             ultbeats[i] = i;
         }
-        
-        for (var p = 0; p < (133 / 8)+1; p++)
+
+        for (var p = 0; p < (133 / 8) + 1; p++)
         {
             if (p < 2)
             {
                 actions_list.AddRange(attack_pattern[0]);
             }
-            else if(p<5){
-                actions_list.AddRange(attack_pattern[p-1]);
+            else if (p < 5)
+            {
+                actions_list.AddRange(attack_pattern[p - 1]);
             }
-            else if(p<=6){
+            else if (p <= 6)
+            {
                 actions_list.AddRange(attack_pattern[8]);
             }
-            else if(p<=8){
+            else if (p <= 8)
+            {
                 var patt = Random.Range(6, 10);
                 actions_list.AddRange(attack_pattern[patt]);
             }
-             else if(p<=9){
+            else if (p <= 9)
+            {
                 var patt = Random.Range(9, 10);
                 actions_list.AddRange(attack_pattern[patt]);
             }
             //final showdown
-            else if(p==10){
-                 actions_list.AddRange(attack_pattern[11]);
+            else if (p == 10)
+            {
+                actions_list.AddRange(attack_pattern[11]);
             }
-            else{
-                var patt=Random.Range(2, 11);;
+            else
+            {
+                var patt = Random.Range(2, 11); ;
                 actions_list.AddRange(attack_pattern[patt]);
             }
         }
@@ -276,7 +282,7 @@ public class NoteSystem : MonoBehaviour
                 nextIndex = ultNextIndex / 2;
             }
         }
-        
+
         updateNote();
 
         float err = songPositionInBeats - beats[currentBeat];
@@ -289,13 +295,13 @@ public class NoteSystem : MonoBehaviour
                 topRing.onBeatState = true;
             }
         }
-        if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
-        { 
-            Debug.Log("Error margin:"+err);
+        if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3) | Input.GetKeyDown(KeyCode.Escape))))
+        {
+            Debug.Log("Error margin:" + err);
             // check if hit on beat
             if (Mathf.Abs(err) <= marginOfError)
             {
-               
+
                 // Debug.Log();
                 // check note hit score
                 checkNoteHit();
@@ -315,14 +321,14 @@ public class NoteSystem : MonoBehaviour
                 comboNum++;
                 comboText.text = "Combo : " + comboNum.ToString();
                 multiplierText.text = "Multiplier: x" + multiplier.ToString();
-                
+
                 if (comboNum == 2)
                 {
                     comboText.gameObject.SetActive(true);
                 }
 
                 //Double multiplier during ultimate like in Guitar Hero
-                if(ultFlag == true)
+                if (ultFlag == true)
                 {
                     ultMultiplier = 2;
                     ultFireBackground.SetActive(true);

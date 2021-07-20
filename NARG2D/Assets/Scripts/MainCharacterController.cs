@@ -43,6 +43,7 @@ public class MainCharacterController : MonoBehaviour
     public GameObject special2;
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
+    public bool paused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -75,23 +76,23 @@ public class MainCharacterController : MonoBehaviour
     }
 
     public void doAction(int action)
-    { 
-        if (action==1)
+    {
+        if (action == 1)
         {
             soundFX[3].Play();
             StartCoroutine(Block());
             // attack.Append("D");
         }
-        if (action==2)
+        if (action == 2)
         {
             soundFX[2].Play();
             StartCoroutine(Jump());
             // attack.Append("D");
         }
-    }  
+    }
     public void doAction()
     {
-        if (!isIdle())
+        if (!isIdle() || paused)
         {
             return;
         }
@@ -257,10 +258,12 @@ public class MainCharacterController : MonoBehaviour
     IEnumerator Jump()
     {
         anim.SetTrigger("Jump");
-        if(playerHealth.isJumping = true){
+        if (playerHealth.isJumping = true)
+        {
             yield return new WaitForSeconds(0.8f);
         }
-        else{
+        else
+        {
             playerHealth.isJumping = true;
             yield return new WaitForSeconds(0.8f);
         }
@@ -305,10 +308,12 @@ public class MainCharacterController : MonoBehaviour
 
         anim.SetTrigger("Block");
 
-        if(playerHealth.isBlocking = true){
+        if (playerHealth.isBlocking = true)
+        {
             yield return new WaitForSeconds(0.8f);
         }
-        else{
+        else
+        {
             playerHealth.isBlocking = true;
             yield return new WaitForSeconds(0.8f);
         }

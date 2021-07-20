@@ -26,6 +26,8 @@ public class GameProcess : MonoBehaviour
     private bool isGameOver = false;
     public NoteSystem nSys;
     private int totScore = 0;
+    public GameObject pausePage;
+    private bool gamePaused = false;
     private Animator playerAnim;
     private Animator enemyAnim;
 
@@ -40,7 +42,7 @@ public class GameProcess : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if (playerHealth.currHealth <= 0 && !isGameOver)
         {
             isGameOver = true;
@@ -51,6 +53,37 @@ public class GameProcess : MonoBehaviour
             isGameOver = true;
             LevelComplete();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!gamePaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+    }
+
+    public void ResumeGame()
+    {
+        player.GetComponent<MainCharacterController>().paused = false;
+        gamePaused = false;
+        Time.timeScale = 1;
+        music.Play();
+        AudioListener.pause = false;
+        pausePage.gameObject.SetActive(false);
+    }
+
+    public void PauseGame()
+    {
+        player.GetComponent<MainCharacterController>().paused = true;
+        gamePaused = true;
+        Time.timeScale = 0f;
+        music.Pause();
+        AudioListener.pause = true;
+        pausePage.gameObject.SetActive(true);
     }
 
     private void GameOver()
@@ -82,7 +115,7 @@ public class GameProcess : MonoBehaviour
     public void calculateLetter(bool successfulFinish)
     { //Temp score values for the demo, will adjust / add complexity later
 
-        if(successfulFinish == false)
+        if (successfulFinish == false)
         {
             scoreF.SetActive(true);
         }
