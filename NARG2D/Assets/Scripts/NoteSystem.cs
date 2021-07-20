@@ -60,11 +60,14 @@ public class NoteSystem : MonoBehaviour
 
     // keep all the position-in-beats of notes in the song
     float[] beats;
-
+    float[] ultbeats;
+ 
+ 
     // the index of the next note to be spawned
     int nextIndex = 0;
+    private int ultNextIndex = 0;
 
-    float beatsShownInAdvance = 0;
+    public float beatsShownInAdvance = 0;
     float songLength = float.MaxValue;
     public int currentBeat = 0;
 
@@ -112,6 +115,7 @@ public class NoteSystem : MonoBehaviour
     public float ultDuration;
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
+   
 
     // Start is called before the first frame update
     void Start()
@@ -129,30 +133,69 @@ public class NoteSystem : MonoBehaviour
         songLength = (float)musicSource.clip.length;
         // Initialize notes array
         beats = new float[265];
+        ultbeats = new float[265];
         actions = new object[265];
-        attack_pattern = new int[8][];
+        attack_pattern = new int[12][];
         attack_pattern[0] = new int[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        attack_pattern[1] = new int[] { 4, 4, 5, 4, 1, 4, 4, 4 };
-        attack_pattern[2] = new int[] { 4, 4, 4, 4, 6, 4, 2, 4 };
-        attack_pattern[3] = new int[] { 5, 4, 1, 4, 4, 6, 4, 2 };
+
+        attack_pattern[1] = new int[] { 4, 4, 5, 1, 4, 4, 4, 4 };
+
+        attack_pattern[2] = new int[] { 4, 4, 5, 1, 5, 1, 4, 4 };
+        
+        attack_pattern[3] = new int[] { 4, 4, 4, 4, 6, 2, 4, 4 };
+        
+        attack_pattern[4] = new int[] { 5, 1, 4, 4, 6, 2, 4, 4 };
+        attack_pattern[5] = new int[] { 6, 2, 4, 4, 3, 3, 5, 1 };
+       
+        attack_pattern[6] = new int[] { 6, 2, 4, 3, 6, 2, 4, 3 };
+        attack_pattern[7] = new int[] { 5, 1, 4, 3, 5, 1, 4, 3 };
+
+        attack_pattern[8] = new int[] { 5, 1, 4, 4, 6, 2, 4, 4 };
+        attack_pattern[9] = new int[] { 5, 1, 5, 1, 4, 4, 3, 3 };
+        attack_pattern[10] = new int[] { 6, 2, 6, 2, 4, 4, 3, 3 };
+
+        attack_pattern[11] = new int[] { 5, 1, 5, 1, 6, 2, 6, 2 };
+        
         ultDuration = ultTimer;
 
 
         for (var i = 0; i < 133; i++)
         {
-            beats[i] = 2 * i;
-
+            beats[i] = 2*i;
+            ultbeats[i] = i;
         }
-        for (var p = 0; p < 133 / 8; p++)
+        
+        for (var i = 0; i < 265; i++)
         {
-            //actions_list.AddRange(attack_pattern[patt]);
-            if (p < 4)
+            ultbeats[i] = i;
+        }
+        
+        for (var p = 0; p < (133 / 8)+1; p++)
+        {
+            if (p < 2)
             {
                 actions_list.AddRange(attack_pattern[0]);
             }
-            else
-            {
-                var patt = Random.Range(1, 3);
+            else if(p<5){
+                actions_list.AddRange(attack_pattern[p-1]);
+            }
+            else if(p<=6){
+                actions_list.AddRange(attack_pattern[8]);
+            }
+            else if(p<=8){
+                var patt = Random.Range(6, 10);
+                actions_list.AddRange(attack_pattern[patt]);
+            }
+             else if(p<=9){
+                var patt = Random.Range(9, 10);
+                actions_list.AddRange(attack_pattern[patt]);
+            }
+            //final showdown
+            else if(p==10){
+                 actions_list.AddRange(attack_pattern[11]);
+            }
+            else{
+                var patt=Random.Range(2, 11);;
                 actions_list.AddRange(attack_pattern[patt]);
             }
         }
@@ -202,26 +245,38 @@ public class NoteSystem : MonoBehaviour
             totalscore = totalscore + 500;
         }
 
-        if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
+        if (!ultFlag)
         {
-            GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
-            if (!ultFlag)
+            if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
             {
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().doAction((int)actions[nextIndex]);
+                GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
                 SpawnNote();
+                if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle && !ultFlag)
+                {
+                    SpawnActionNote((ActionNote.Action)actions[nextIndex]);
+                    //Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
+                }
+                //initialize the fields of the music note
+                nextIndex++;
+                ultNextIndex = ultNextIndex + 2;
             }
-            else
-            {
-                SpawnUltNote();
-            }
-            if ((ActionNote.Action)actions[nextIndex] != ActionNote.Action.Idle && !ultFlag)
-            {
-                SpawnActionNote((ActionNote.Action)actions[nextIndex]);
-                // Debug.Log(string.Format("Execute at song(beat) number {0}", songPositionInBeats));
-            }
-            //initialize the fields of the music note
-            nextIndex++;
         }
-
+        else
+        {
+            if (ultNextIndex < ultbeats.Length && ultbeats[ultNextIndex] < songPositionInBeats + beatsShownInAdvance)
+            {
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().soundFX[3].Play();
+                // GameObject.FindWithTag("Player").GetComponent<MainCharacterController>().doAction((int)actions[nextIndex]);
+                GameObject.Find("CurrentBeat").GetComponent<Text>().text = string.Format("{0}/{1}", (int)songPositionInBeats, (int)songLength / secPerBeat);
+                SpawnUltNote();
+                //initialize the fields of the music note
+                ultNextIndex++;
+                nextIndex = ultNextIndex / 2;
+            }
+        }
+        
         updateNote();
 
         float err = songPositionInBeats - beats[currentBeat];
@@ -235,10 +290,13 @@ public class NoteSystem : MonoBehaviour
             }
         }
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3))))
-        {
+        { 
+            Debug.Log("Error margin:"+err);
             // check if hit on beat
             if (Mathf.Abs(err) <= marginOfError)
             {
+               
+                // Debug.Log();
                 // check note hit score
                 checkNoteHit();
                 if (!ultFlag)
@@ -247,7 +305,10 @@ public class NoteSystem : MonoBehaviour
                 }
                 else
                 {
-                    player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                    if (ultAction.Count != 0)
+                    {
+                        player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                    }
                 }
 
                 missText.SetActive(false);
@@ -455,7 +516,7 @@ public class NoteSystem : MonoBehaviour
         }
         ultNote.GetComponent<UltimateNote>().SetNote(instance);
         ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
-        ultNote.duration = 1.0f;
+        ultNote.duration = secPerBeat;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
@@ -492,12 +553,12 @@ public class NoteSystem : MonoBehaviour
     public void UltNoteHit(int damage)
     {
         enemyHealth.DamagePlayer(damage);
-        Debug.Log("Hit On Time");
+        //Debug.Log("Hit On Time");
     }
 
     public void UltNoteMissed()
     {
-        Debug.Log("Missed Note");
+        //Debug.Log("Missed Note");
     }
 
     public void UltNormalHit()

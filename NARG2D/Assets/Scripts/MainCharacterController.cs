@@ -22,6 +22,7 @@ public class MainCharacterController : MonoBehaviour
     public GameObject gameOver;
     private int level = 0;
     private Animator anim;
+    private Animator enemyAnim;
     public AudioSource[] soundFX;
 
     public GameObject ultimateAttack;
@@ -46,22 +47,13 @@ public class MainCharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /* prototype
-        RenderSettings.ambientLight = Color.white;
-        selfRenderer = GetComponent<Renderer>();
-        enemyRenderer = enemy.GetComponent<Renderer>();
-        rigidbody.transform.position = heroStartPosition;
-         Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        heroColor = lv0Color;
-        selfRenderer.material.SetColor("_Color", heroColor);
-        */
-
 
         heroStartPosition = new Vector3(-4f, -3.55f, -5f);
         transform.position = heroStartPosition;
         enemyHealth = enemy.GetComponent<Health>();
         playerHealth = GetComponent<Health>();
         anim = GetComponent<Animator>();
+        enemyAnim = enemy.GetComponent<Animator>();
         gameObject.GetComponent<MainCharacterController>().enabled = false;
         playerUltimate = GetComponent<Ultimate>();
         ultimate = ultimateAttack.GetComponent<UltimateScroller>();
@@ -82,8 +74,27 @@ public class MainCharacterController : MonoBehaviour
         seconds = seconds % 60;
     }
 
+    public void doAction(int action)
+    { 
+        if (action==1)
+        {
+            soundFX[3].Play();
+            StartCoroutine(Block());
+            // attack.Append("D");
+        }
+        if (action==2)
+        {
+            soundFX[2].Play();
+            StartCoroutine(Jump());
+            // attack.Append("D");
+        }
+    }  
     public void doAction()
     {
+        if (!isIdle())
+        {
+            return;
+        }
         StringBuilder attack = new StringBuilder();
         // Jump (No double jumping)
         if (Input.GetKeyDown("space"))
@@ -246,42 +257,63 @@ public class MainCharacterController : MonoBehaviour
     IEnumerator Jump()
     {
         anim.SetTrigger("Jump");
-        playerHealth.isJumping = true;
-        yield return new WaitForSeconds(1f);
+        if(playerHealth.isJumping = true){
+            yield return new WaitForSeconds(0.8f);
+        }
+        else{
+            playerHealth.isJumping = true;
+            yield return new WaitForSeconds(0.8f);
+        }
         playerHealth.isJumping = false;
-        KeyPressAnalytics("Jump", "Space");
+        // KeyPressAnalytics("Jump", "Space");
     }
 
     IEnumerator Attack()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Punch");
-        enemyHealth.DamagePlayer(5);
+        if (enemyHealth.isBlocking)
+        {
+            soundFX[3].Play();
+        }
+        else
+        {
+            enemyHealth.DamagePlayer(5);
+            enemyAnim.SetTrigger("lighthit");
+            soundFX[1].Play();
+        }
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Attack", "J");
+        // KeyPressAnalytics("Attack", "J");
     }
 
     IEnumerator Uppercut()
     {
         transform.position = new Vector3(0, -3.5f, -5f);
         anim.SetTrigger("Kick");
-        enemyHealth.DamagePlayer(5);
+        enemyAnim.SetTrigger("heavyhit");
+        enemyHealth.DamagePlayer(8);
         playerUltimate.fillBar(20, noteSystem.GetMultiplier());
         yield return new WaitForSeconds(0.5f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Kick", "K");
+        // KeyPressAnalytics("Kick", "K");
     }
 
     IEnumerator Block()
     {
 
         anim.SetTrigger("Block");
-        playerHealth.isBlocking = true;
-        yield return new WaitForSeconds(1f);
+
+        if(playerHealth.isBlocking = true){
+            yield return new WaitForSeconds(0.8f);
+        }
+        else{
+            playerHealth.isBlocking = true;
+            yield return new WaitForSeconds(0.8f);
+        }
         playerHealth.isBlocking = false;
-        KeyPressAnalytics("Block", "S");
+        // KeyPressAnalytics("Block", "S");
     }
 
     IEnumerator Special1()
@@ -289,12 +321,13 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial1 = ShowSpecial1(1.2f);
         StartCoroutine(showSpecial1);
         //transform.position = new Vector3(0, -3.5f, -5f);
-        //anim.SetTrigger("Special1");
+        anim.SetTrigger("Special1");
+        anim.ResetTrigger("Punch");
         enemyHealth.DamagePlayer(20);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk1Cnt++;
-        KeyPressAnalytics("Special1", "SpaceJJ");
+        // KeyPressAnalytics("Special1", "SpaceJJ");
     }
 
     IEnumerator Special2()
@@ -302,12 +335,13 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial2 = ShowSpecial2(1.2f);
         StartCoroutine(showSpecial2);
         //transform.position = new Vector3(0, -3.5f, -5f);
-        //anim.SetTrigger("Special2");
+        anim.SetTrigger("Special2");
+        anim.ResetTrigger("Punch");
         enemyHealth.DamagePlayer(10);
         yield return new WaitForSeconds(0.2f);
         specialAtkCnt++;
         specialAtk2Cnt++;
-        KeyPressAnalytics("Special2", "JKJ");
+        // KeyPressAnalytics("Special2", "JKJ");
     }
 
     IEnumerator Ultimate()
@@ -316,7 +350,7 @@ public class MainCharacterController : MonoBehaviour
         transform.position = new Vector3(0, -3.5f, -5f);
         yield return new WaitForSeconds(15f);
         transform.position = heroStartPosition;
-        KeyPressAnalytics("Ultimate", "H");
+        // KeyPressAnalytics("Ultimate", "H");
 
     }
     public void KeyPressAnalytics(string actionType, string keyPressed)
@@ -331,8 +365,8 @@ public class MainCharacterController : MonoBehaviour
             {"Special2", "JKJ"},
             { "Ultimate", "H"}
         };
-        AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
-        Debug.Log("Analytics Result(action used): " + analytics_actionType);
+        // AnalyticsResult analytics_actionType = Analytics.CustomEvent("ActionUsed: " + actionType + ", " + keyPressed);
+        // Debug.Log("Analytics Result(action used): " + analytics_actionType);
     }
 
     private IEnumerator ShowSpecial1(float waitTime)
@@ -346,5 +380,10 @@ public class MainCharacterController : MonoBehaviour
         special2.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         special2.SetActive(false);
+    }
+
+    private bool isIdle()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Idle");
     }
 }

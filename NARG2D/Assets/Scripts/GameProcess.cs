@@ -27,12 +27,16 @@ public class GameProcess : MonoBehaviour
     public NoteSystem nSys;
     private int totScore = 0;
     public GameObject pausePage;
+    private Animator playerAnim;
+    private Animator enemyAnim;
 
     // Start is called before the first frame update
     void Start()
     {
         playerHealth = player.GetComponent<Health>();
         enemyHealth = enemy.GetComponent<Health>();
+        playerAnim = player.GetComponent<Animator>();
+        enemyAnim = enemy.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -65,6 +69,7 @@ public class GameProcess : MonoBehaviour
     private void GameOver()
     {
         Time.timeScale = 0;
+
         gameOverUI.SetActive(true);
         scoreBackground.SetActive(true);
         music.Stop();
@@ -76,6 +81,7 @@ public class GameProcess : MonoBehaviour
     private void LevelComplete()
     {
         Time.timeScale = 0;
+
         levelCompUI.SetActive(true);
         scoreBackground.SetActive(true);
         music.Stop();
