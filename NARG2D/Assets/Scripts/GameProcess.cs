@@ -27,6 +27,7 @@ public class GameProcess : MonoBehaviour
     public NoteSystem nSys;
     private int totScore = 0;
     public GameObject pausePage;
+    private bool gamePaused = false;
     private Animator playerAnim;
     private Animator enemyAnim;
 
@@ -54,12 +55,29 @@ public class GameProcess : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseGame();
+            if (!gamePaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
         }
+    }
+
+    private void ResumeGame()
+    {
+        gamePaused = false;
+        Time.timeScale = 1;
+        music.Play();
+        AudioListener.pause = false;
+        pausePage.gameObject.SetActive(false);
     }
 
     private void PauseGame()
     {
+        gamePaused = true;
         Time.timeScale = 0f;
         music.Pause();
         AudioListener.pause = true;
