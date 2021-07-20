@@ -66,8 +66,9 @@ public class GameProcess : MonoBehaviour
         }
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
+        player.GetComponent<MainCharacterController>().paused = false;
         gamePaused = false;
         Time.timeScale = 1;
         music.Play();
@@ -75,8 +76,9 @@ public class GameProcess : MonoBehaviour
         pausePage.gameObject.SetActive(false);
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
+        player.GetComponent<MainCharacterController>().paused = true;
         gamePaused = true;
         Time.timeScale = 0f;
         music.Pause();
