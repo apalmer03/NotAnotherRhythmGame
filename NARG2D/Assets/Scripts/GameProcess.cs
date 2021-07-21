@@ -150,12 +150,14 @@ public class GameProcess : MonoBehaviour
 
     public void Retry()
     {
+        ResumeGame();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Back()
     {
+        ResumeGame();
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
