@@ -509,8 +509,7 @@ Transform:
   - {fileID: 1096026606}
   - {fileID: 1063972163}
   - {fileID: 1144665599}
-  - {fileID: 1532159410}
-  - {fileID: 2017199208}
+  - {fileID: 307127100}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -662,6 +661,8 @@ MonoBehaviour:
   damageUltPerfectNote: 20
   ultTimer: 15
   ultDuration: 0
+  rings: {fileID: 307127099}
+  gameStarted: 0
 --- !u!1 &85418813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1072,7 @@ MonoBehaviour:
   time: 0
   seconds: 0
   paused: 0
+  gameStarted: 0
 --- !u!114 &140889066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1858,6 +1860,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &307127099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307127100}
+  m_Layer: 0
+  m_Name: Rings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &307127100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307127099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1532159410}
+  - {fileID: 2017199208}
+  m_Father: {fileID: 54951521}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &353304327
 GameObject:
   m_ObjectHideFlags: 0
@@ -12784,8 +12818,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 12.118199}
   m_LocalScale: {x: 0.24, y: 0.24, z: 1}
   m_Children: []
-  m_Father: {fileID: 54951521}
-  m_RootOrder: 3
+  m_Father: {fileID: 307127100}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1532159411
 SpriteRenderer:
@@ -18886,7 +18920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1821499123
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18921,8 +18955,9 @@ MonoBehaviour:
   countdownTime: 3
   countdownDisplay: {fileID: 1821499126}
   bpm: 120
-  circle: {fileID: 0}
+  rings: {fileID: 307127099}
   player: {fileID: 140889060}
+  noteSystem: {fileID: 54951520}
 --- !u!114 &1821499125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19716,8 +19751,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 12.118199}
   m_LocalScale: {x: 0.44, y: 0.44, z: 1}
   m_Children: []
-  m_Father: {fileID: 54951521}
-  m_RootOrder: 4
+  m_Father: {fileID: 307127100}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2017199209
 SpriteRenderer:
