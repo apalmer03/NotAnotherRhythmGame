@@ -577,7 +577,7 @@ public class NoteSystem : MonoBehaviour
         ultNoteRing.Enqueue(ultNote);
         ultNote.GetComponent<UltimateNote>().SetNote(instance);
         ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
-        ultNote.duration = 2*secPerBeat;
+        ultNote.duration = secPerBeat;
     }
 
     private void SpawnActionNote(ActionNote.Action action)

@@ -372,11 +372,11 @@ public class MainCharacterController : MonoBehaviour
 
     }
     
-    IEnumerator UltimateDamage()
+    /*IEnumerator UltimateDamage()
     {
         soundFX[1].Play();
         enemyHealth.DamagePlayer(5);
-    }
+    }*/
     public void KeyPressAnalytics(string actionType, string keyPressed)
     {
         Dictionary<string, string> analytics_inputAction = new Dictionary<string, string>
