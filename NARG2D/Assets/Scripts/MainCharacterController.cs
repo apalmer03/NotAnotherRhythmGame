@@ -33,7 +33,7 @@ public class MainCharacterController : MonoBehaviour
 
     private List<String> specialAttack = new List<String>();
     private SpecialAttack specialLookup;
-    private int specialMax = 3;
+    private int specialMax = 4;
     private string specialMove;
 
     public int specialAtkCnt = 0;
@@ -41,6 +41,7 @@ public class MainCharacterController : MonoBehaviour
     public int specialAtk2Cnt = 0;
     public GameObject special1;
     public GameObject special2;
+    public GameObject special3;
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
     public bool paused = false;
@@ -66,6 +67,7 @@ public class MainCharacterController : MonoBehaviour
         specialAtk2Cnt = 0;
         special1.SetActive(false);
         special2.SetActive(false);
+        special3.SetActive(false);
     }
 
     // Update is called once per frame
@@ -105,7 +107,12 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Jump());
             attack.Append(" ");
         }
-
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            soundFX[2].Play();
+            StartCoroutine(Uppercut());
+            attack.Append("S");
+        }
         // Attack (Dash Right)
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -113,14 +120,7 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Attack());
             attack.Append("A");
         }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            soundFX[2].Play();
-            StartCoroutine(Uppercut());
-            attack.Append("S");
-        }
-
+        
         // Block
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -128,6 +128,7 @@ public class MainCharacterController : MonoBehaviour
             StartCoroutine(Block());
             attack.Append("D");
         }
+        
 
         if (attack.Length != 0)
         {
@@ -150,6 +151,10 @@ public class MainCharacterController : MonoBehaviour
                 case "Special2":
                     StartCoroutine(Special2());
                     Debug.Log("Special2");
+                    break;
+                case "Special3":
+                    StartCoroutine(Special3());
+                    Debug.Log("Special3");
                     break;
             }
         }
@@ -363,6 +368,14 @@ public class MainCharacterController : MonoBehaviour
         // KeyPressAnalytics("Special2", "JKJ");
     }
     
+    IEnumerator Special3()
+    {
+        IEnumerator showSpecial3 = ShowSpecial3(1.2f);
+        StartCoroutine(showSpecial3);
+        //transform.position = new Vector3(0, -3.5f, -5f);
+        enemyHealth.DamagePlayer(10);
+        yield return new WaitForSeconds(0.2f);
+    }
 
     IEnumerator Ultimate()
     {
@@ -406,6 +419,13 @@ public class MainCharacterController : MonoBehaviour
         special2.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         special2.SetActive(false);
+    }
+    
+    private IEnumerator ShowSpecial3(float waitTime)
+    {
+        special3.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        special3.SetActive(false);
     }
 
     private bool isIdle()

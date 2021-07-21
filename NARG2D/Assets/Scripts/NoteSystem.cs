@@ -303,7 +303,7 @@ public class NoteSystem : MonoBehaviour
         }
         if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3) | Input.GetKeyDown(KeyCode.Escape))) && gameStarted)
         {
-            Debug.Log("Error margin:" + err);
+            //Debug.Log("Error margin:" + err);
             // check if hit on beat
             if ((Mathf.Abs(err) <= marginOfError) && !ultFlag)
             {
