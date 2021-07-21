@@ -361,6 +361,21 @@ public class MainCharacterController : MonoBehaviour
         specialAtk2Cnt++;
         // KeyPressAnalytics("Special2", "JKJ");
     }
+    
+    IEnumerator Special3()
+    {
+        
+    }
+    
+    IEnumerator Special4()
+    {
+        
+    }
+    
+    IEnumerator Special5()
+    {
+        
+    }
 
     IEnumerator Ultimate()
     {
