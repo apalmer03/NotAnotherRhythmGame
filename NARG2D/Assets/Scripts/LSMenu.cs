@@ -24,6 +24,11 @@ public class LSMenu : MonoBehaviour
         StartCoroutine(LoadLevel("LevelTwo"));
     }
 
+    public void PlayLevelThree()
+    {
+        StartCoroutine(LoadLevel("LevelThree"));
+    }
+
     IEnumerator LoadLevel(string levelName)
     {
         transition1.SetTrigger("StartLevel");
