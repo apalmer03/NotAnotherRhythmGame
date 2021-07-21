@@ -212,8 +212,8 @@ public class NoteSystem : MonoBehaviour
             actions[i] = (ActionNote.Action)actions_list.ToArray()[i];
         }
         // beatsShownInAdvance = 1.0f;
-        currentBeat = 9;
-        nextIndex = 10;
+        currentBeat = 7;
+        nextIndex = 8;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
