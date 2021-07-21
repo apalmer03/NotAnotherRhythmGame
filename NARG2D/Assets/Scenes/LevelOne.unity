@@ -6664,7 +6664,12 @@ MonoBehaviour:
 
     Control Ultimate: Arrow Keys
 
-    Jump: Space'
+    Jump: Space
+
+    Special Moves 1:  Space->A->A
+
+    Special
+    Move 2:  A->S->A'
 --- !u!222 &1267138468
 CanvasRenderer:
   m_ObjectHideFlags: 0
