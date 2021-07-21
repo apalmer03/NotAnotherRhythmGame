@@ -88,16 +88,16 @@ public class NoteSystem : MonoBehaviour
     private Ultimate playerUltimate;
     private bool ultFlag;
 
-    public static readonly int RATIO_CHANCE_UP = 75;
-    public static readonly int RATIO_CHANCE_DOWN = 75;
-    public static readonly int RATIO_CHANCE_LEFT = 75;
-    public static readonly int RATIO_CHANCE_RIGHT = 75;
-    public static readonly int RATIO_CHANCE_UPDOWN = 10;
-    public static readonly int RATIO_CHANCE_UPLEFT = 10;
-    public static readonly int RATIO_CHANCE_UPRIGHT = 10;
+    public static readonly int RATIO_CHANCE_UP = 0;
+    public static readonly int RATIO_CHANCE_DOWN = 0;
+    public static readonly int RATIO_CHANCE_LEFT = 0;
+    public static readonly int RATIO_CHANCE_RIGHT = 0;
+    public static readonly int RATIO_CHANCE_UPDOWN = 0;
+    public static readonly int RATIO_CHANCE_UPLEFT = 0;
+    public static readonly int RATIO_CHANCE_UPRIGHT = 0;
     public static readonly int RATIO_CHANCE_LEFTRIGHT = 10;
-    public static readonly int RATIO_CHANCE_DOWNLEFT = 10;
-    public static readonly int RATIO_CHANCE_DOWNRIGHT = 10;
+    public static readonly int RATIO_CHANCE_DOWNLEFT = 0;
+    public static readonly int RATIO_CHANCE_DOWNRIGHT = 0;
 
     public static readonly int RATIO_TOTAL = RATIO_CHANCE_UP
                                              + RATIO_CHANCE_DOWN
