@@ -44,6 +44,7 @@ public class MainCharacterController : MonoBehaviour
     public float time = 0.0f;
     public int seconds = 0; // TOTAL TIME USER SPENT IN TUTORIAL LEVEL (UNITY ANALYTICS) 
     public bool paused = false;
+    public bool gameStarted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +93,7 @@ public class MainCharacterController : MonoBehaviour
     }
     public void doAction()
     {
-        if (!isIdle() || paused)
+        if (!isIdle() || paused || !gameStarted)
         {
             return;
         }
@@ -371,7 +372,7 @@ public class MainCharacterController : MonoBehaviour
         // KeyPressAnalytics("Ultimate", "H");
 
     }
-    
+
     /*IEnumerator UltimateDamage()
     {
         soundFX[1].Play();

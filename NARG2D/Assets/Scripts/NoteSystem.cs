@@ -117,7 +117,8 @@ public class NoteSystem : MonoBehaviour
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
     private Queue<UltimateNote> ultNoteRing = new Queue<UltimateNote>();
-
+    public GameObject rings;
+    public bool gameStarted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -211,8 +212,8 @@ public class NoteSystem : MonoBehaviour
             actions[i] = (ActionNote.Action)actions_list.ToArray()[i];
         }
         // beatsShownInAdvance = 1.0f;
-        // currentBeat = 9;
-        // nextIndex = 10;
+        currentBeat = 9;
+        nextIndex = 10;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
@@ -221,7 +222,7 @@ public class NoteSystem : MonoBehaviour
         ultFlag = false;
         // Start the music
         musicSource.Play();
-        // gameObject.SetActive(false);
+        rings.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -268,7 +269,7 @@ public class NoteSystem : MonoBehaviour
                 //initialize the fields of the music note
                 nextIndex++;
                 ultNextIndex = ultNextIndex + 2;
-                
+
             }
         }
         else
@@ -282,16 +283,14 @@ public class NoteSystem : MonoBehaviour
                 //initialize the fields of the music note
                 ultNextIndex++;
                 nextIndex = ultNextIndex / 2;
-                
+
             }
         }
-        
+
         updateNote();
         updateUltNote();
 
-        //updateNote();
-
-        float err = songPositionInBeats - beats[currentBeat]; 
+        float err = songPositionInBeats - beats[currentBeat];
         float ultErr = songPositionInBeats - ultbeats[ultCurrentBeat];
         // show on beat indicator
         if (noteRing.Count != 0)
@@ -302,7 +301,7 @@ public class NoteSystem : MonoBehaviour
                 topRing.onBeatState = true;
             }
         }
-        if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3) | Input.GetKeyDown(KeyCode.Escape))))
+        if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3) | Input.GetKeyDown(KeyCode.Escape))) && gameStarted)
         {
             Debug.Log("Error margin:" + err);
             // check if hit on beat
@@ -322,10 +321,10 @@ public class NoteSystem : MonoBehaviour
                 {
                     comboText.gameObject.SetActive(true);
                 }
-                
+
                 ultMultiplier = 1;
                 ultFireBackground.SetActive(false);
-                
+
                 if (comboNum >= 234)
                 {
                     multiplier = ultMultiplier * 10;
@@ -390,7 +389,7 @@ public class NoteSystem : MonoBehaviour
                 {
                     player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
                 }
-                
+
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo : " + comboNum.ToString();
@@ -475,9 +474,9 @@ public class NoteSystem : MonoBehaviour
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
             }
-            
-           
-            
+
+
+
             // destroy ring whether hit or miss
             destroyNote();
             destroyUltNote();
@@ -547,7 +546,7 @@ public class NoteSystem : MonoBehaviour
             StartCoroutine(pressedCoroutine);
         }
     }
-    
+
     private void checkUltNoteHit()
     {
         if (ultNoteRing.Count != 0)
@@ -569,7 +568,7 @@ public class NoteSystem : MonoBehaviour
             StartCoroutine(pressedCoroutine);
         }
     }
-    
+
     private void updateUltNote()
     {
         if (ultNoteRing.Count != 0)
