@@ -14,15 +14,11 @@ public class SpecialAttack : MonoBehaviour
     void Start()
     {
         List<string> move1 = new List<string>() {" ","A","A"};
-        List<string> move2 = new List<string>() {"A","S","A"};
-        List<string> move3 = new List<string>() {"D","SA"}; 
-        List<string> move4 = new List<string>() {"A","A","S","SA"};
-        List<string> move5 = new List<string>() {"S", "SA"};
+        List<string> move2 = new List<string>() {"A","S","A","A"};
+        List<string> move3 = new List<string>() {"D","S","A"};
         attackDictionary.Add("Special1", move1);
         attackDictionary.Add("Special2", move2);
-        attackDictionary.Add("Special3", move2);
-        attackDictionary.Add("Special4", move2);
-        attackDictionary.Add("Special5", move2);
+        attackDictionary.Add("Special3", move3);
     }
 
     // Update is called once per frame

@@ -45,10 +45,10 @@ public class UltimateNote : MonoBehaviour
         {
             colorIndex += Time.deltaTime * colorSpeed;
             // transform to green
-            if (colorIndex <= 1.0f)
+            /*if (colorIndex <= 1.0f)
             {
                 mRenderer.material.color = Color.Lerp(Color.white, Color.green, colorIndex);
-            }
+            }*/
         }
     }
 
