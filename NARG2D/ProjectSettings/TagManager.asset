@@ -63,3 +63,6 @@ TagManager:
   - name: Top
     uniqueID: 657120017
     locked: 0
+  - name: Rings
+    uniqueID: 3889113235
+    locked: 0
