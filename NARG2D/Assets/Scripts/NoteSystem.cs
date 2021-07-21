@@ -111,10 +111,11 @@ public class NoteSystem : MonoBehaviour
                                              + RATIO_CHANCE_DOWNRIGHT;
     private UltimateNote ultNote;
     private Queue<int> ultAction = new Queue<int>();
-    public float ultTimer = 10f;
+    public float ultTimer = 1000f;
     public float ultDuration;
     private Renderer outerRingRenderer;
     private Queue<Note> noteRing = new Queue<Note>();
+    private Queue<UltimateNote> ultNoteRing = new Queue<UltimateNote>();
 
 
     // Start is called before the first frame update
@@ -267,6 +268,7 @@ public class NoteSystem : MonoBehaviour
                 //initialize the fields of the music note
                 nextIndex++;
                 ultNextIndex = ultNextIndex + 2;
+                
             }
         }
         else
@@ -280,10 +282,14 @@ public class NoteSystem : MonoBehaviour
                 //initialize the fields of the music note
                 ultNextIndex++;
                 nextIndex = ultNextIndex / 2;
+                
             }
         }
-
+        
         updateNote();
+        updateUltNote();
+
+        //updateNote();
 
         float err = songPositionInBeats - beats[currentBeat];
         // show on beat indicator
@@ -304,13 +310,15 @@ public class NoteSystem : MonoBehaviour
 
                 // Debug.Log();
                 // check note hit score
-                checkNoteHit();
+                
                 if (!ultFlag)
                 {
+                    checkNoteHit();
                     player.gameObject.GetComponent<MainCharacterController>().doAction();
                 }
                 else
                 {
+                    checkUltNoteHit();
                     if (ultAction.Count != 0)
                     {
                         player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
@@ -403,6 +411,7 @@ public class NoteSystem : MonoBehaviour
             }
             // destroy ring whether hit or miss
             destroyNote();
+            destroyUltNote();
         }
 
 
@@ -465,6 +474,51 @@ public class NoteSystem : MonoBehaviour
             StartCoroutine(pressedCoroutine);
         }
     }
+    
+    private void checkUltNoteHit()
+    {
+        if (ultNoteRing.Count != 0)
+        {
+            UltimateNote top = ultNoteRing.Peek();
+            float scale = top.transform.localScale.x;
+            IEnumerator displayScoreText;
+            if (scale <= 0.44f && scale >= 0.24f)
+            {
+                displayScoreText = showText(0.3f, goodText);
+                pressedCoroutine = ChangeColor(0.3f, Color.yellow);
+            }
+            else
+            {
+                displayScoreText = showText(0.3f, perfectText);
+                pressedCoroutine = ChangeColor(0.3f, Color.green);
+            }
+            StartCoroutine(displayScoreText);
+            StartCoroutine(pressedCoroutine);
+        }
+    }
+    
+    private void updateUltNote()
+    {
+        if (ultNoteRing.Count != 0)
+        {
+            UltimateNote top = ultNoteRing.Peek();
+            // dequeue and destroy if note scale is down 
+            if (top.i >= 1.0f)
+            {
+                destroyUltNote();
+            }
+        }
+    }
+
+    private void destroyUltNote()
+    {
+        if (ultNoteRing.Count != 0 && ultNoteRing.Peek().transform.localScale.x <= 0.55f)
+        {
+            UltimateNote top = ultNoteRing.Dequeue();
+            top.Destroy();
+            Destroy(top.gameObject);
+        }
+    }
 
     private void SpawnUltNote()
     {
@@ -520,9 +574,10 @@ public class NoteSystem : MonoBehaviour
             ultNote = Instantiate(ultDownRight, noteRingPos, Quaternion.identity);
             ultAction.Enqueue(9);
         }
+        ultNoteRing.Enqueue(ultNote);
         ultNote.GetComponent<UltimateNote>().SetNote(instance);
         ultNote.transform.parent = GameObject.Find("NoteSystem").transform;
-        ultNote.duration = secPerBeat;
+        ultNote.duration = 2*secPerBeat;
     }
 
     private void SpawnActionNote(ActionNote.Action action)
