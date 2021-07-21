@@ -30,6 +30,11 @@ public class GameProcess : MonoBehaviour
     private bool gamePaused = false;
     private Animator playerAnim;
     private Animator enemyAnim;
+    public GameObject startTutorial;
+    public Text tutorialText;
+    public GameObject centerRing;
+    public GameObject outerRing;
+    public GameObject controls;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +69,21 @@ public class GameProcess : MonoBehaviour
                 ResumeGame();
             }
         }
+    }
+
+    public void StartTutorial()
+    {
+        player.GetComponent<MainCharacterController>().paused = false;
+        gamePaused = false;
+        Time.timeScale = 1;
+        music.Play();
+        AudioListener.pause = false;
+        startTutorial.gameObject.SetActive(false);
+        tutorialText.text = "Light Attack - A\nHeavy Attack - S\nBlock: D\nEngage Ultimate: F\nControl Ultimate\nArrow Keys\nJump: Space";
+
+        centerRing.gameObject.SetActive(true);
+        outerRing.gameObject.SetActive(true);
+        controls.gameObject.SetActive(true);
     }
 
     public void ResumeGame()

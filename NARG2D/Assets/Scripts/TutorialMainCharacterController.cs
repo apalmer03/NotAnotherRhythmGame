@@ -25,11 +25,11 @@ public class TutorialMainCharacterController : MonoBehaviour
     private Animator enemyAnim;
     public AudioSource[] soundFX;
 
-    // public GameObject ultimateAttack;
-    // private Ultimate playerUltimate;
+    public GameObject ultimateAttack;
+    private Ultimate playerUltimate;
     public GameObject multi;
     private TutorialNoteSystem noteSystem;
-    // private UltimateScroller ultimate;
+    private UltimateScroller ultimate;
 
     private bool tutorialCompleted = false;
     private List<String> specialAttack = new List<String>();
@@ -160,6 +160,15 @@ public class TutorialMainCharacterController : MonoBehaviour
         {
             specialAttack.RemoveAt(0);
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && playerUltimate.isFull())
+        {
+            playerUltimate.resetBar();
+            //ultimate.Activate();
+            noteSystem.ActivateUlt();
+            enemyHealth.DamagePlayer(20);
+            StartCoroutine(Ultimate());
+        }
     }
 
 
@@ -259,6 +268,215 @@ public class TutorialMainCharacterController : MonoBehaviour
         special2.SetActive(true);
         yield return new WaitForSeconds(waitTime);
         special2.SetActive(false);
+    }
+
+    public void doUltAction(int ultAction)
+    {
+
+        switch (ultAction)
+        {
+            case 0:
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 1:
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 2:
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 3:
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 4:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 5:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 6:
+                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 7:
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 8:
+                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+            case 9:
+                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    soundFX[1].Play();
+                    enemyHealth.DamagePlayer(5);
+                    //KeyPressAnalytics("Jump", "Space");
+                }
+                break;
+        }
+    }
+
+    IEnumerator Ultimate()
+    {
+        anim.SetTrigger("Ultimate");
+        transform.position = new Vector3(0, -3.5f, -5f);
+        yield return new WaitForSeconds(15f);
+        transform.position = heroStartPosition;
+        // KeyPressAnalytics("Ultimate", "H");
+
+    }
+
+    public void doAction(int action)
+    { 
+        if (action==1)
+        {
+            soundFX[3].Play();
+            StartCoroutine(Block());
+            // attack.Append("D");
+        }
+        if (action==2)
+        {
+            soundFX[2].Play();
+            StartCoroutine(Jump());
+            // attack.Append("D");
+        }
+    }  
+    public void doAction()
+    {
+        if (!isIdle())
+        {
+            return;
+        }
+        StringBuilder attack = new StringBuilder();
+        // Jump (No double jumping)
+        if (Input.GetKeyDown("space"))
+        {
+            soundFX[0].Play();
+            StartCoroutine(Jump());
+            attack.Append(" ");
+        }
+
+        // Attack (Dash Right)
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            soundFX[1].Play();
+            StartCoroutine(Attack());
+            attack.Append("A");
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            soundFX[2].Play();
+            StartCoroutine(Uppercut());
+            attack.Append("S");
+        }
+
+        // Block
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            soundFX[2].Play();
+            StartCoroutine(Block());
+            attack.Append("D");
+        }
+
+        if (attack.Length != 0)
+        {
+
+            specialAttack.Add(attack.ToString());
+            Debug.Log("Attack: " + attack + " SpecailAttack: " + specialAttack[specialAttack.Count - 1]);
+            attack.Clear();
+        }
+
+        specialMove = specialLookup.CheckSpecial(specialAttack);
+        if (specialMove != null)
+        {
+            print(specialMove);
+            switch (specialMove)
+            {
+                case "Special1":
+                    StartCoroutine(Special1());
+                    Debug.Log("Special1");
+                    break;
+                case "Special2":
+                    StartCoroutine(Special2());
+                    Debug.Log("Special2");
+                    break;
+            }
+        }
+        if (specialAttack.Count == specialMax)
+        {
+            specialAttack.RemoveAt(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && playerUltimate.isFull())
+        {
+            playerUltimate.resetBar();
+            //ultimate.Activate();
+            noteSystem.ActivateUlt();
+            enemyHealth.DamagePlayer(20);
+            StartCoroutine(Ultimate());
+        }
+    }
+
+    IEnumerator Jump()
+    {
+        anim.SetTrigger("Jump");
+        if(playerHealth.isJumping = true){
+            yield return new WaitForSeconds(0.8f);
+        }
+        else{
+            playerHealth.isJumping = true;
+            yield return new WaitForSeconds(0.8f);
+        }
+        playerHealth.isJumping = false;
+        // KeyPressAnalytics("Jump", "Space");
+    }
+
+    private bool isIdle()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Idle");
     }
 
 }
