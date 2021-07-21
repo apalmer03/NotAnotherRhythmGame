@@ -652,6 +652,7 @@ MonoBehaviour:
   firstBeatOffset: 0.08
   beatsShownInAdvance: 0
   currentBeat: 0
+  ultCurrentBeat: 0
   actions_list: 
   gameOver: {fileID: 158197294}
   outerRing: {fileID: 2017199207}
@@ -659,7 +660,7 @@ MonoBehaviour:
   ultimateScroller: {fileID: 805471601}
   damageUltGoodNote: 10
   damageUltPerfectNote: 20
-  ultTimer: 100
+  ultTimer: 15
   ultDuration: 0
 --- !u!1 &85418813
 GameObject:

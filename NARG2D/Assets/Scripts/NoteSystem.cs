@@ -70,6 +70,7 @@ public class NoteSystem : MonoBehaviour
     public float beatsShownInAdvance = 0;
     float songLength = float.MaxValue;
     public int currentBeat = 0;
+    public int ultCurrentBeat = 0;
 
     float marginOfError = 0.4f;
     float colorMargin = 0.5f;
@@ -88,16 +89,16 @@ public class NoteSystem : MonoBehaviour
     private Ultimate playerUltimate;
     private bool ultFlag;
 
-    public static readonly int RATIO_CHANCE_UP = 0;
-    public static readonly int RATIO_CHANCE_DOWN = 0;
-    public static readonly int RATIO_CHANCE_LEFT = 0;
-    public static readonly int RATIO_CHANCE_RIGHT = 0;
-    public static readonly int RATIO_CHANCE_UPDOWN = 0;
-    public static readonly int RATIO_CHANCE_UPLEFT = 0;
-    public static readonly int RATIO_CHANCE_UPRIGHT = 0;
+    public static readonly int RATIO_CHANCE_UP = 75;
+    public static readonly int RATIO_CHANCE_DOWN = 75;
+    public static readonly int RATIO_CHANCE_LEFT = 75;
+    public static readonly int RATIO_CHANCE_RIGHT = 75;
+    public static readonly int RATIO_CHANCE_UPDOWN = 10;
+    public static readonly int RATIO_CHANCE_UPLEFT = 10;
+    public static readonly int RATIO_CHANCE_UPRIGHT = 10;
     public static readonly int RATIO_CHANCE_LEFTRIGHT = 10;
-    public static readonly int RATIO_CHANCE_DOWNLEFT = 0;
-    public static readonly int RATIO_CHANCE_DOWNRIGHT = 0;
+    public static readonly int RATIO_CHANCE_DOWNLEFT = 10;
+    public static readonly int RATIO_CHANCE_DOWNRIGHT = 10;
 
     public static readonly int RATIO_TOTAL = RATIO_CHANCE_UP
                                              + RATIO_CHANCE_DOWN
@@ -163,7 +164,6 @@ public class NoteSystem : MonoBehaviour
         for (var i = 0; i < 133; i++)
         {
             beats[i] = 2 * i;
-            ultbeats[i] = i;
         }
 
         for (var i = 0; i < 265; i++)
@@ -291,7 +291,8 @@ public class NoteSystem : MonoBehaviour
 
         //updateNote();
 
-        float err = songPositionInBeats - beats[currentBeat];
+        float err = songPositionInBeats - beats[currentBeat]; 
+        float ultErr = songPositionInBeats - ultbeats[ultCurrentBeat];
         // show on beat indicator
         if (noteRing.Count != 0)
         {
@@ -305,26 +306,91 @@ public class NoteSystem : MonoBehaviour
         {
             Debug.Log("Error margin:" + err);
             // check if hit on beat
-            if (Mathf.Abs(err) <= marginOfError)
+            if ((Mathf.Abs(err) <= marginOfError) && !ultFlag)
             {
 
                 // Debug.Log();
                 // check note hit score
-                
-                if (!ultFlag)
+                checkNoteHit();
+                player.gameObject.GetComponent<MainCharacterController>().doAction();
+                missText.SetActive(false);
+                comboNum++;
+                comboText.text = "Combo : " + comboNum.ToString();
+                multiplierText.text = "Multiplier: x" + multiplier.ToString();
+
+                if (comboNum == 2)
                 {
-                    checkNoteHit();
-                    player.gameObject.GetComponent<MainCharacterController>().doAction();
+                    comboText.gameObject.SetActive(true);
+                }
+                
+                ultMultiplier = 1;
+                ultFireBackground.SetActive(false);
+                
+                if (comboNum >= 234)
+                {
+                    multiplier = ultMultiplier * 10;
+                }
+                else if (comboNum >= 192)
+                {
+                    multiplier = ultMultiplier * 9;
+                }
+                else if (comboNum >= 154)
+                {
+                    multiplier = ultMultiplier * 8;
+                }
+                else if (comboNum >= 120)
+                {
+                    multiplier = ultMultiplier * 7;
+                }
+                else if (comboNum >= 90)
+                {
+                    multiplier = ultMultiplier * 6;
+                }
+                else if (comboNum >= 64)
+                {
+                    multiplier = ultMultiplier * 5;
+                }
+                else if (comboNum >= 42)
+                {
+                    multiplier = ultMultiplier * 4;
+                }
+                else if (comboNum >= 24)
+                {
+                    multiplier = ultMultiplier * 3;
+                }
+                else if (comboNum >= 10)
+                {
+                    multiplier = ultMultiplier * 2;
                 }
                 else
                 {
-                    checkUltNoteHit();
-                    if (ultAction.Count != 0)
+                    multiplier = ultMultiplier * 1;
+                }
+                totalscore = totalscore + (10 * multiplier);
+                scoreText.text = "Total Score : " + totalscore.ToString();
+                AnalyticsResult analytics_comboCounter = Analytics.CustomEvent("Combo Length: " + comboNum);
+                Debug.Log("Analytics result " + analytics_comboCounter);
+                AnalyticsResult analytics_hitCounter = Analytics.CustomEvent("Combo Length: " + hitNum++);
+                Debug.Log("Analytics result " + analytics_hitCounter);
+            }
+            else if ((Mathf.Abs(ultErr) <= marginOfError) && ultFlag)
+            {
+                if (ultNoteRing.Count != 0)
+                {
+                    UltimateNote ultTopRing = ultNoteRing.Peek();
+                    if (Mathf.Abs(ultErr) <= colorMargin && ultErr <= 0 && ultTopRing.firstOnBeat)
                     {
-                        player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                        ultTopRing.onBeatState = true;
                     }
                 }
-
+                // Debug.Log();
+                // check note hit score
+                checkUltNoteHit();
+                if (ultAction.Count != 0)
+                {
+                    player.gameObject.GetComponent<MainCharacterController>().doUltAction(ultAction.Peek());
+                }
+                
                 missText.SetActive(false);
                 comboNum++;
                 comboText.text = "Combo : " + comboNum.ToString();
@@ -409,6 +475,9 @@ public class NoteSystem : MonoBehaviour
                 AnalyticsResult analytics_missCounter = Analytics.CustomEvent("Miss Counter: " + missNum++);
                 Debug.Log("Analytics result" + analytics_missCounter);
             }
+            
+           
+            
             // destroy ring whether hit or miss
             destroyNote();
             destroyUltNote();
@@ -419,6 +488,10 @@ public class NoteSystem : MonoBehaviour
         if (songPositionInBeats > beats[currentBeat] + marginOfError)
         {
             currentBeat++;
+        }
+        if (songPositionInBeats > ultbeats[ultCurrentBeat] + marginOfError)
+        {
+            ultCurrentBeat++;
         }
 
     }
