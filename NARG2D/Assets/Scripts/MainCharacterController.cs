@@ -177,7 +177,6 @@ public class MainCharacterController : MonoBehaviour
                 {
                     soundFX[1].Play();
                     enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
                 }
                 break;
             case 1:
@@ -185,7 +184,6 @@ public class MainCharacterController : MonoBehaviour
                 {
                     soundFX[1].Play();
                     enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
                 }
                 break;
             case 2:
@@ -193,7 +191,6 @@ public class MainCharacterController : MonoBehaviour
                 {
                     soundFX[1].Play();
                     enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
                 }
                 break;
             case 3:
@@ -201,56 +198,72 @@ public class MainCharacterController : MonoBehaviour
                 {
                     soundFX[1].Play();
                     enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
                 }
                 break;
             case 4:
-                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.DownArrow))
+                if (Input.GetKey(KeyCode.UpArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
                 break;
             case 5:
-                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.UpArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
+
                 break;
             case 6:
-                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
+
                 break;
             case 7:
-                if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
+
                 break;
             case 8:
-                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
+
                 break;
             case 9:
-                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    soundFX[1].Play();
-                    enemyHealth.DamagePlayer(5);
-                    //KeyPressAnalytics("Jump", "Space");
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        soundFX[1].Play();
+                        enemyHealth.DamagePlayer(5);
+                    }
                 }
+
                 break;
         }
     }
@@ -357,6 +370,12 @@ public class MainCharacterController : MonoBehaviour
         transform.position = heroStartPosition;
         // KeyPressAnalytics("Ultimate", "H");
 
+    }
+    
+    IEnumerator UltimateDamage()
+    {
+        soundFX[1].Play();
+        enemyHealth.DamagePlayer(5);
     }
     public void KeyPressAnalytics(string actionType, string keyPressed)
     {

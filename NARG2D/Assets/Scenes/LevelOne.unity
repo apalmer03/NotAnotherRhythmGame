@@ -659,7 +659,7 @@ MonoBehaviour:
   ultimateScroller: {fileID: 805471601}
   damageUltGoodNote: 10
   damageUltPerfectNote: 20
-  ultTimer: 15
+  ultTimer: 100
   ultDuration: 0
 --- !u!1 &66640805
 GameObject:
