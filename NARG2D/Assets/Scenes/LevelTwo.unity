@@ -3365,7 +3365,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1427432759}
           m_TargetAssemblyTypeName: GameProcess, Assembly-CSharp
           m_MethodName: ResumeGame
           m_Mode: 1
