@@ -1148,7 +1148,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1427432759}
         m_TargetAssemblyTypeName: GameProcess, Assembly-CSharp
         m_MethodName: Retry
         m_Mode: 1
@@ -2352,7 +2352,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1427432759}
         m_TargetAssemblyTypeName: GameProcess, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
@@ -3417,7 +3417,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1427432759}
         m_TargetAssemblyTypeName: GameProcess, Assembly-CSharp
         m_MethodName: Retry
         m_Mode: 1
@@ -24386,7 +24386,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1427432759}
         m_TargetAssemblyTypeName: GameProcess, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
