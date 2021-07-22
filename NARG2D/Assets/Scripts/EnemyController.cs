@@ -101,6 +101,8 @@ public class EnemyController : MonoBehaviour
     IEnumerator Attack()
     {
         anim.SetTrigger("Punch");
+        anim.ResetTrigger("lighthit");
+        anim.ResetTrigger("heavyhit");
         transform.position = new Vector3(0, -3.5f, -5f);
         // yield return new WaitForSeconds(0.5f);
       
@@ -137,6 +139,8 @@ public class EnemyController : MonoBehaviour
     IEnumerator Magic()
     {
         anim.SetTrigger("Magic");
+        anim.ResetTrigger("lighthit");
+        anim.ResetTrigger("heavyhit");
         startTime = Time.time;
         
        

@@ -303,7 +303,9 @@ public class NoteSystem : MonoBehaviour
                 topRing.onBeatState = true;
             }
         }
-        if (Input.anyKeyDown && (!(Input.GetKeyDown(KeyCode.Keypad0) | Input.GetKeyDown(KeyCode.KeypadPeriod) | Input.GetKeyDown(KeyCode.KeypadEnter) | Input.GetKeyDown(KeyCode.Keypad3) | Input.GetKeyDown(KeyCode.Escape))) && gameStarted)
+        if (gameStarted && (Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.A) ||
+            Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.F)
+            || Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right")))
         {
             //Debug.Log("Error margin:" + err);
             // check if hit on beat
