@@ -509,8 +509,7 @@ Transform:
   - {fileID: 1096026606}
   - {fileID: 1063972163}
   - {fileID: 1144665599}
-  - {fileID: 1532159410}
-  - {fileID: 2017199208}
+  - {fileID: 1147774216}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -662,7 +661,7 @@ MonoBehaviour:
   damageUltPerfectNote: 20
   ultTimer: 15
   ultDuration: 0
-  rings: {fileID: 0}
+  rings: {fileID: 1147774215}
   gameStarted: 0
 --- !u!1 &85418813
 GameObject:
@@ -6668,6 +6667,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 54951521}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1147774215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1147774216}
+  m_Layer: 0
+  m_Name: Rings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1147774216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147774215}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 12.118199}
+  m_LocalScale: {x: 0.44, y: 0.44, z: 1}
+  m_Children:
+  - {fileID: 1532159410}
+  - {fileID: 2017199208}
+  m_Father: {fileID: 54951521}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1187732648
 GameObject:
@@ -12850,11 +12881,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1532159409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.118199}
-  m_LocalScale: {x: 0.24, y: 0.24, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5454545, y: 0.5454545, z: 1}
   m_Children: []
-  m_Father: {fileID: 54951521}
-  m_RootOrder: 3
+  m_Father: {fileID: 1147774216}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1532159411
 SpriteRenderer:
@@ -19044,9 +19075,9 @@ MonoBehaviour:
   countdownTime: 3
   countdownDisplay: {fileID: 1821499126}
   bpm: 120
-  rings: {fileID: 0}
+  rings: {fileID: 1147774215}
   player: {fileID: 140889060}
-  noteSystem: {fileID: 0}
+  noteSystem: {fileID: 54951520}
 --- !u!114 &1821499125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24438,11 +24469,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017199207}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.118199}
-  m_LocalScale: {x: 0.44, y: 0.44, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 54951521}
-  m_RootOrder: 4
+  m_Father: {fileID: 1147774216}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2017199209
 SpriteRenderer:

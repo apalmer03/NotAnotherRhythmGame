@@ -373,6 +373,8 @@ public class MainCharacterController : MonoBehaviour
         IEnumerator showSpecial3 = ShowSpecial3(1.2f);
         StartCoroutine(showSpecial3);
         //transform.position = new Vector3(0, -3.5f, -5f);
+        anim.SetTrigger("Special3");
+        anim.ResetTrigger("Punch");
         enemyHealth.DamagePlayer(10);
         yield return new WaitForSeconds(0.2f);
     }
