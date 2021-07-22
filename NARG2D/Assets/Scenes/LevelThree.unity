@@ -5360,7 +5360,14 @@ MonoBehaviour:
     Special Moves 1:  Space->A->A
 
     Special
-    Move 2:  A->S->A'
+    Move 2:  A->S->A
+
+    Special Move 3:  D->S+A
+
+    Special Move 4:  A->A->S->A
+
+    Special
+    Move 5:  S->S+A'
 --- !u!222 &957038931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19040,7 +19047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1821499123
 RectTransform:
   m_ObjectHideFlags: 0

@@ -5419,7 +5419,14 @@ MonoBehaviour:
     Special Moves 1:  Space->A->A
 
     Special
-    Move 2:  A->S->A'
+    Move 2:  A->S->A
+
+    Special Move 3:  D->S+A
+
+    Special Move 4:  A->A->S->A
+
+    Special
+    Move 5:  S->S+A'
 --- !u!222 &1048625165
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12427,7 +12434,6 @@ MonoBehaviour:
   tutorialText: {fileID: 0}
   centerRing: {fileID: 0}
   outerRing: {fileID: 0}
-  controls: {fileID: 0}
 --- !u!4 &1427432760
 Transform:
   m_ObjectHideFlags: 0

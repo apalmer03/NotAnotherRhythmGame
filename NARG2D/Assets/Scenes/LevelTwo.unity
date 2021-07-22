@@ -3787,7 +3787,14 @@ MonoBehaviour:
     Special Moves 1:  Space->A->A
 
     Special
-    Move 2:  A->S->A'
+    Move 2:  A->S->A
+
+    Special Move 3:  D->S+A
+
+    Special Move 4:  A->A->S->A
+
+    Special
+    Move 5:  S->S+A'
 --- !u!222 &780599445
 CanvasRenderer:
   m_ObjectHideFlags: 0
