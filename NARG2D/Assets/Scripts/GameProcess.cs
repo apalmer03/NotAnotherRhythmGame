@@ -139,23 +139,23 @@ public class GameProcess : MonoBehaviour
         }
         else
         {
-            if (totScore >= 4600)
+            if (totScore >= 7000)
             {
                 scoreS.SetActive(true);
             }
-            else if (totScore >= 3500)
+            else if (totScore >= 5500)
             {
                 scoreA.SetActive(true);
             }
-            else if (totScore >= 2500)
+            else if (totScore >= 4000)
             {
                 scoreB.SetActive(true);
             }
-            else if (totScore >= 1600)
+            else if (totScore >= 2500)
             {
                 scoreC.SetActive(true);
             }
-            else if (totScore >= 800)
+            else if (totScore >= 1000)
             {
                 scoreD.SetActive(true);
             }
