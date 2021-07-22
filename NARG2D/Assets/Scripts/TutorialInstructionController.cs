@@ -45,7 +45,7 @@ public class TutorialInstructionController : MonoBehaviour
         AudioListener.pause = true;
         centerRing.gameObject.SetActive(false);
         outerRing.gameObject.SetActive(false);
-        controls.gameObject.SetActive(true);
+        controls.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
