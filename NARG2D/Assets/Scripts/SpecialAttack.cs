@@ -71,14 +71,22 @@ public class SpecialAttack : MonoBehaviour
                 }
                 foreach (var key in attackDictionary[move])
                 {
-                    if (!arePermutation(list[index], key))
+                    if (index < list.Count)
                     {
-                        Debug.Log("move: " + key + " Input: " + list[index]);
+                        if (!arePermutation(list[index], key))
+                        {
+                            Debug.Log("move: " + key + " Input: " + list[index]);
+                            flag = false;
+                            break;
+                        }
+                        flag = true;
+                        index++;
+                    }
+                    else
+                    {
                         flag = false;
                         break;
                     }
-                    flag = true;
-                    index++;
                 }
                 if (flag == true)
                 {

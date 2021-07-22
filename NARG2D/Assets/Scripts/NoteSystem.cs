@@ -270,7 +270,7 @@ public class NoteSystem : MonoBehaviour
                 }
                 //initialize the fields of the music note
                 nextIndex++;
-                ultNextIndex = ultNextIndex + 2;
+                ultNextIndex = nextIndex*2;
 
             }
         }
