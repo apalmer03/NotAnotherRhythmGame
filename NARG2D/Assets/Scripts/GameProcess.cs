@@ -34,7 +34,6 @@ public class GameProcess : MonoBehaviour
     public Text tutorialText;
     public GameObject centerRing;
     public GameObject outerRing;
-    public GameObject controls;
 
     // Start is called before the first frame update
     void Start()
@@ -83,7 +82,6 @@ public class GameProcess : MonoBehaviour
 
         centerRing.gameObject.SetActive(true);
         outerRing.gameObject.SetActive(true);
-        controls.gameObject.SetActive(true);
     }
 
     public void ResumeGame()
