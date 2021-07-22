@@ -213,7 +213,9 @@ public class NoteSystem : MonoBehaviour
         }
         // beatsShownInAdvance = 1.0f;
         currentBeat = 7;
+        ultCurrentBeat = 7;
         nextIndex = 8;
+        ultNextIndex = 8;
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         enemyHealth = enemy.GetComponent<Health>();
