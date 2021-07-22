@@ -624,6 +624,12 @@ PlayerSettings:
   vrEditorSettings: {}
   cloudServicesEnabled:
     Analytics: 1
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -637,11 +643,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 0d5857db-d641-416c-93e0-194a7c0998ca
+  cloudProjectId: cc0f6ecd-a700-4cfe-a20b-2bfe3ec2a7d4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: NARG2D
-  organizationId: not-another-rhythm-game
+  organizationId: mattsc25
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0
