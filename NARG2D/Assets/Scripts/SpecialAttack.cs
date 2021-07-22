@@ -58,6 +58,40 @@ public class SpecialAttack : MonoBehaviour
                 index = 0;
             }
         }
+        index = 1;
+        flag = false;
+        if (list.Count > 0)
+        {
+            foreach (var move in attackDictionary.Keys)
+            {
+                if (list.Count < attackDictionary[move].Count)
+                {
+                    flag = false;
+                    continue;
+                }
+                foreach (var key in attackDictionary[move])
+                {
+                    if (!arePermutation(list[index], key))
+                    {
+                        Debug.Log("move: " + key + " Input: " + list[index]);
+                        flag = false;
+                        break;
+                    }
+                    flag = true;
+                    index++;
+                }
+                if (flag == true)
+                {
+                    while (index > 0)
+                    {
+                        list.RemoveAt(0);
+                        index--;
+                    }
+                    return move;
+                }
+                index = 1;
+            }
+        }
         return null;
     }
     
